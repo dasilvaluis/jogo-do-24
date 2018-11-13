@@ -1,0 +1,124 @@
+$card-padding: 20px;
+$card-button-color: #d92a47;
+$card-triangle-height: 300px;
+
+.card {
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  position: relative;
+
+  background-color: #040182;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: calc(100% - #{$card-padding} * 2);
+    height: calc(100% - #{$card-padding} * 2);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: #ffc90d;
+    border-radius: 50%;
+  }
+
+  &__number {
+    display: inline-block;
+    width: 145px;
+    height: 145px;
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #050c19;
+    font-size: 135px;
+    font-family: 'Old Standard TT', Georgia, serif;
+
+    &:nth-of-type(1) {
+      top: $card-padding + 5px;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    &:nth-of-type(2) {
+      top: 50%;
+      right: $card-padding + 5px;
+      transform: translate(0, -50%) rotate(90deg);
+    }
+
+    &:nth-of-type(3) {
+      bottom: $card-padding + 5px;
+      left: 50%;
+      transform: translate(-50%, 0) rotate(180deg);
+    }
+
+    &:nth-of-type(4) {
+      top: 50%;
+      left: $card-padding + 5px;
+      transform: translate(0, -50%) rotate(270deg);
+    }
+  }
+
+  &__submit-button {
+    display: inline-block;
+    width: 125px;
+    height: 125px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: #d92a47;
+    border: 2px solid white;
+    outline: #d92a47;
+
+    cursor: pointer;
+  }
+
+  &__triangle  {
+    display: flex;
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform-origin: left center;
+
+    &:nth-of-type(1) {
+      transform: translate(0, -50%) rotate(45deg);
+    }
+
+    &:nth-of-type(2) {
+      transform: translate(0, -50%) rotate(135deg);
+    }
+
+    &:nth-of-type(3) {
+      transform: translate(0, -50%) rotate(225deg);
+    }
+
+    &:nth-of-type(4) {
+      transform: translate(0, -50%) rotate(315deg);
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+    &::before {
+      border-width: 65px 200px 65px 0;
+      border-color: transparent #d92a47 transparent transparent;
+    }
+    &::after {
+      border-width: 65px 0 65px 65px;
+      border-color: transparent transparent transparent #d92a47;
+    }
+  }
+}
