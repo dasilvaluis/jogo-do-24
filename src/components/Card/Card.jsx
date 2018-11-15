@@ -9,17 +9,25 @@ class Card extends Component {
   render() {
     return (
       <div className="card">
-        <div className="card__number">{this.props.numbers[0]}</div>
-        <div className="card__number">{this.props.numbers[1]}</div>
-        <div className="card__number">{this.props.numbers[2]}</div>
-        <div className="card__number">{this.props.numbers[3]}</div>
-        <span className="card__triangle"></span>
-        <span className="card__triangle"></span>
-        <span className="card__triangle"></span>
-        <span className="card__triangle"></span>
-        <button className="card__submit-button"></button>
+        <div>
+          <span className="card__triangle"></span>
+          <span className="card__triangle"></span>
+          <span className="card__triangle"></span>
+          <span className="card__triangle"></span>
+        </div>
+        <button className="card__submit-button" onClick={this.handleSubmitClick.bind(this)}></button>
+        <div>
+          <div className="card__number">{this.props.numbers[0]}</div>
+          <div className="card__number">{this.props.numbers[1]}</div>
+          <div className="card__number">{this.props.numbers[2]}</div>
+          <div className="card__number">{this.props.numbers[3]}</div>
+        </div>
       </div>
     )
+  }
+
+  handleSubmitClick() {
+    this.props.onSubmit();
   }
 }
 

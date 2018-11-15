@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import logo from './images/logo.svg';
-import Card from './components/Card';
+import Board from './components/Board';
 import './styles/css/App.css';
 
 class App extends Component {
@@ -12,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <div className="app-container">
-        <Card numbers={['8','1','8','4']}/>
+        <Board />
       </div>
     );
   }
