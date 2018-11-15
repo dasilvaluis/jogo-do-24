@@ -1,10 +1,12 @@
+$card-length: 550px;
 $card-padding: 20px;
 $card-button-color: #d92a47;
 $card-triangle-height: 300px;
+$card-triangle-width: 140px;
 
 .card {
-  width: 500px;
-  height: 500px;
+  width: $card-length;
+  height: $card-length;
   margin: 0 auto;
   position: relative;
 
@@ -40,26 +42,26 @@ $card-triangle-height: 300px;
     font-family: 'Old Standard TT', Georgia, serif;
 
     &:nth-of-type(1) {
-      top: $card-padding + 5px;
+      top: $card-padding + 10px;
       left: 50%;
       transform: translate(-50%, 0);
     }
 
     &:nth-of-type(2) {
       top: 50%;
-      right: $card-padding + 5px;
+      right: $card-padding + 10px;
       transform: translate(0, -50%) rotate(90deg);
     }
 
     &:nth-of-type(3) {
-      bottom: $card-padding + 5px;
+      bottom: $card-padding + 10px;
       left: 50%;
       transform: translate(-50%, 0) rotate(180deg);
     }
 
     &:nth-of-type(4) {
       top: 50%;
-      left: $card-padding + 5px;
+      left: $card-padding + 10px;
       transform: translate(0, -50%) rotate(270deg);
     }
   }
@@ -79,6 +81,11 @@ $card-triangle-height: 300px;
     outline: #d92a47;
 
     cursor: pointer;
+
+    transition: transform 100ms ease;
+    &:active{
+      transform: translate(-50%, -50%) scale(.97);
+    }
   }
 
   &__triangle  {
@@ -113,11 +120,11 @@ $card-triangle-height: 300px;
       border-style: solid;
     }
     &::before {
-      border-width: 65px 200px 65px 0;
+      border-width: $card-triangle-width/2 230px $card-triangle-width/2 0;
       border-color: transparent #d92a47 transparent transparent;
     }
     &::after {
-      border-width: 65px 0 65px 65px;
+      border-width: $card-triangle-width/2 0 $card-triangle-width/2 65px;
       border-color: transparent transparent transparent #d92a47;
     }
   }
