@@ -11,7 +11,7 @@ class Card extends Component {
           <span className="card__triangle"></span>
           <span className="card__triangle"></span>
         </div>
-        <button className="card__submit-button" onClick={this.handleSubmitClick.bind(this)}></button>
+        <button className="card__submit-button" onClick={() => this.handleSubmitClick()}></button>
         <div>
           <div className="card__number">{this.props.numbers[0]}</div>
           <div className="card__number">{this.props.numbers[1]}</div>
