@@ -1,7 +1,7 @@
 {
   "cards": [
     {
-      "level": 0,
+      "grade": 0,
       "numbers": [
         2,
         4,
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "level": 3,
+      "grade": 3,
       "numbers": [
         5,
         8,
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "level": 3,
+      "grade": 3,
       "numbers": [
         5,
         4,
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "level": 1,
+      "grade": 1,
       "numbers": [
         8,
         1,
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "level": 2,
+      "grade": 2,
       "numbers": [
         21,
         14,
@@ -46,7 +46,7 @@
       ]
     },
     {
-      "level": 0,
+      "grade": 0,
       "numbers": [
         4,
         9,
@@ -55,7 +55,7 @@
       ]
     },
     {
-      "level": 1,
+      "grade": 1,
       "numbers": [
         8,
         1,
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "level": 1,
+      "grade": 1,
       "numbers": [
         8,
         1,
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "level": 1,
+      "grade": 1,
       "numbers": [
         3,
         9,
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "level": 1,
+      "grade": 1,
       "numbers": [
         1,
         8,
@@ -91,7 +91,7 @@
       ]
     },
     {
-      "level": 2,
+      "grade": 2,
       "numbers": [
         4,
         7,
@@ -100,7 +100,7 @@
       ]
     },
     {
-      "level": 1,
+      "grade": 1,
       "numbers": [
         1,
         5,
@@ -109,7 +109,7 @@
       ]
     },
     {
-      "level": 2,
+      "grade": 2,
       "numbers": [
         7,
         3,
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "level": 2,
+      "grade": 2,
       "numbers": [
         2,
         2,
@@ -127,7 +127,7 @@
       ]
     },
     {
-      "level": 2,
+      "grade": 2,
       "numbers": [
         4,
         4,
