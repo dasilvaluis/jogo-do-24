@@ -10,8 +10,6 @@ class Board extends Component {
       isLoaded: false,
       currentCard: {}
     };
-
-    this.ref = React.createRef();
   }
 
   render() {
@@ -24,7 +22,7 @@ class Board extends Component {
     }
     return (
       <div className="board">
-        <Card numbers={currentCard.numbers} onSubmit={this.loadRandomCard.bind(this)} />
+        <Card numbers={currentCard.numbers} onSubmit={() => this.loadRandomCard()} />
       </div>
     )
   }
@@ -58,8 +56,6 @@ class Board extends Component {
         }
       );
   }
-
-
 }
 
 export default Board;
