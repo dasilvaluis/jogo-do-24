@@ -14,15 +14,15 @@ class Board extends Component {
 
   render() {
     const { error, isLoaded, currentCard } = this.state;
-
     if (error) {
       return <div>Borrada!</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     }
+
     return (
       <div className="board">
-        <Card numbers={currentCard.numbers} onSubmit={() => this.loadRandomCard()} />
+        <Card numbers={currentCard.numbers} onReset={() => this.loadRandomCard()} />
       </div>
     )
   }
