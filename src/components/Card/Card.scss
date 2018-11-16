@@ -41,6 +41,17 @@ $card-triangle-width: 140px;
     font-size: 135px;
     font-family: 'Old Standard TT', Georgia, serif;
 
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+
+    &[disabled] {
+      cursor: default;
+      opacity: .4;
+    }
+
     &:nth-of-type(1) {
       top: $card-padding + 10px;
       left: 50%;
