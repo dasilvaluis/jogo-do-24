@@ -1,0 +1,45 @@
+$calculator-input-length: 70px;
+$calculator-operation-length: 45px;
+
+.calculator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 40px 0 30px;
+
+  &__input {
+    margin: 0 5px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+
+    // Hide number scroll
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+  }
+  &__number {
+    width: $calculator-input-length;
+    height: $calculator-input-length;
+    font-size: 25px;
+  }
+  &__operation {
+    width: $calculator-operation-length;
+    height: $calculator-operation-length;
+    font-size: 20px;
+  }
+}
+
