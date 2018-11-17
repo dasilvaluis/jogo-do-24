@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from '../Card';
+import Calculator from '../Calculator';
 
 class Board extends Component {
 
@@ -8,8 +9,10 @@ class Board extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      currentCard: {}
+      currentCard: {},
     };
+
+    this.calculator = React.createRef();
   }
 
   render() {
@@ -22,7 +25,10 @@ class Board extends Component {
 
     return (
       <div className="board">
-        <Card numbers={currentCard.numbers} onReset={() => this.loadRandomCard()} />
+        <Card numbers={currentCard.numbers}
+          onTryCard={() => this.handleTryCard()}
+          onNumberClicked={(number) => this.handleNumberClick(number)} />
+        <Calculator ref={this.calculator} />
       </div>
     )
   }
@@ -40,8 +46,8 @@ class Board extends Component {
       .then(
         (result) => {
           const cards = result.cards;
-          const random_array_index = Math.floor(Math.random() * Math.floor(cards.length));
-          const card = cards[random_array_index];
+          const randomIndex = Math.floor(Math.random() * Math.floor(cards.length));
+          const card = cards[randomIndex];
 
           this.setState({
             isLoaded: true,
@@ -55,6 +61,25 @@ class Board extends Component {
           })
         }
       );
+  }
+
+  /**
+   * Handle 'TryCard' button click
+   */
+  handleTryCard() {
+    this.reset();
+  }
+
+  /**
+   * Registers number on calculator
+   */
+  handleNumberClick(number) {
+    this.calculator.current.registerNumber(number);
+  }
+
+  reset() {
+    this.loadRandomCard();
+    this.calculator.current.reset();
   }
 }
 
