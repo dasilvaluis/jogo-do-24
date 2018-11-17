@@ -1,16 +1,19 @@
 $card-length: 550px;
 $card-padding: 20px;
-$card-button-color: #d92a47;
-$card-triangle-height: 300px;
-$card-triangle-width: 140px;
+$card-triangle1-height: $card-length * .409;
+$card-triangle2-height:  $card-length * .118;
+$card-triangle-width: $card-triangle1-height * .577;
+$card-submitbutton-length: $card-length * .227;
+$card-backgroudcolor: #040182;
+$card-circle-backgroundcolor: #ffc90d;
+$card-button-backgroundcolor: #d92a47;
 
 .card {
   width: $card-length;
   height: $card-length;
   margin: 0 auto;
   position: relative;
-
-  background-color: #040182;
+  background-color: $card-backgroudcolor;
 
   &::before {
     content: "";
@@ -23,7 +26,7 @@ $card-triangle-width: 140px;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    background-color: #ffc90d;
+    background-color: $card-circle-backgroundcolor;
     border-radius: 50%;
   }
 
@@ -46,6 +49,7 @@ $card-triangle-width: 140px;
     outline: none;
 
     cursor: pointer;
+    transition: opacity 200ms ease;
 
     &[disabled] {
       cursor: default;
@@ -79,21 +83,21 @@ $card-triangle-width: 140px;
 
   &__submit-button {
     display: inline-block;
-    width: 125px;
-    height: 125px;
+    width: $card-submitbutton-length;
+    height: $card-submitbutton-length;
 
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    background-color: #d92a47;
+    background-color: $card-button-backgroundcolor;
     border: 2px solid white;
-    outline: #d92a47;
+    outline: $card-button-backgroundcolor;
+    transition: transform 100ms ease;
 
     cursor: pointer;
 
-    transition: transform 100ms ease;
     &:active{
       transform: translate(-50%, -50%) scale(.97);
     }
@@ -101,8 +105,8 @@ $card-triangle-width: 140px;
 
   &__triangle  {
     display: flex;
-    position: absolute;
 
+    position: absolute;
     top: 50%;
     left: 50%;
     transform-origin: left center;
@@ -130,13 +134,15 @@ $card-triangle-width: 140px;
       height: 0;
       border-style: solid;
     }
+
     &::before {
-      border-width: $card-triangle-width/2 230px $card-triangle-width/2 0;
-      border-color: transparent #d92a47 transparent transparent;
+      border-width: $card-triangle-width/2 $card-triangle1-height $card-triangle-width/2 0;
+      border-color: transparent $card-button-backgroundcolor transparent transparent;
     }
+
     &::after {
-      border-width: $card-triangle-width/2 0 $card-triangle-width/2 65px;
-      border-color: transparent transparent transparent #d92a47;
+      border-width: $card-triangle-width/2 0 $card-triangle-width/2 $card-triangle2-height;
+      border-color: transparent transparent transparent $card-button-backgroundcolor;
     }
   }
 }

@@ -5,7 +5,7 @@ class Card extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      disbaled: false,
+      disabled: false,
       numberButtons: [
         {
           disabled: false
@@ -24,6 +24,7 @@ class Card extends Component {
   }
 
   render() {
+    const { disabled, numberButtons } = this.state;
     return (
       <div className="card">
         <div>
@@ -32,21 +33,29 @@ class Card extends Component {
           <span className="card__triangle"></span>
           <span className="card__triangle"></span>
         </div>
-        <button className="card__submit-button" onClick={() => this.handleSubmitClick()}></button>
+        <button className="card__submit-button" onClick={() => this.handleTryCard()}></button>
         <div>
-          <button className="card__number" disabled={this.state.numberButtons[0].disabled} data-value={this.props.numbers[0]} data-index="0"
+          <button className="card__number" disabled={numberButtons[0].disabled || disabled}
+              data-index="0"
+              data-value={this.props.numbers[0]}
               onClick={(e) => this.handleNumberClick(e)}>
             {this.props.numbers[0]}
           </button>
-          <button className="card__number" disabled={this.state.numberButtons[1].disabled} data-value={this.props.numbers[1]} data-index="1"
+          <button className="card__number" disabled={numberButtons[1].disabled || disabled}
+              data-index="1"
+              data-value={this.props.numbers[1]}
               onClick={(e) => this.handleNumberClick(e)}>
             {this.props.numbers[1]}
           </button>
-          <button className="card__number" disabled={this.state.numberButtons[2].disabled} data-value={this.props.numbers[2]} data-index="2"
+          <button className="card__number" disabled={numberButtons[2].disabled || disabled}
+              data-index="2"
+              data-value={this.props.numbers[2]}
               onClick={(e) => this.handleNumberClick(e)}>
             {this.props.numbers[2]}
           </button>
-          <button className="card__number" disabled={this.state.numberButtons[3].disabled} data-value={this.props.numbers[3]} data-index="3"
+          <button className="card__number" disabled={numberButtons[3].disabled || disabled}
+              data-index="3"
+              data-value={this.props.numbers[3]}
               onClick={(e) => this.handleNumberClick(e)}>
             {this.props.numbers[3]}
           </button>
@@ -55,24 +64,33 @@ class Card extends Component {
     )
   }
 
-  handleSubmitClick() {
-
+  handleTryCard() {
+    // Reset disabled state
     let _numberButtons = this.state.numberButtons;
     _numberButtons.map((x) => x.disabled = false)
+
     this.setState({
       numberButtons: _numberButtons
     });
 
-    this.props.onReset();
+    // Parent callback functions
+    this.props.onTryCard();
   }
 
   handleNumberClick(e) {
-    const buttonIndex = e.target.getAttribute('data-index');
+    // Disabled clicked number
+    const numberIndex = e.target.getAttribute('data-index');
     let _numberButtons = this.state.numberButtons;
-    _numberButtons[buttonIndex].disabled = true;
+    _numberButtons[numberIndex].disabled = true;
+
+    // Set State
     this.setState({
       numberButtons: _numberButtons
     });
+
+    // Parent callback functions
+    const numberValue = e.target.getAttribute('data-value');
+    this.props.onNumberClicked(numberValue);
   }
 }
 
