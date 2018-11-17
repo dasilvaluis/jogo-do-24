@@ -1,3 +1,21 @@
+@import 'variables';
+
 .app-container {
-  padding: 20px;
+  height: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+  background-color: #ffbf00;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+
+  @media (max-width: $breakpoint-desktop - 1px) {
+
+  }
+
+  @media (min-width: $breakpoint-medium) {
+
+  }
 }
