@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "sass src/styles/scss:src/styles/css && react-scripts build",
+    "build": "sass --update src/styles/scss:src/styles/css src/components:src/components && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sass": "sass --watch src/styles/scss:src/styles/css src/components:src/components"
