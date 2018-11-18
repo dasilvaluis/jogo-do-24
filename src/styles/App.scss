@@ -2,7 +2,7 @@
 
 html {
   height: 100%;
-  background-color: #ffbf00;
+  background-color: #efefef;
 }
 
 body {
@@ -17,16 +17,8 @@ body {
 
 .app-container {
   height: 100%;
-  padding: 40px;
+  padding: 40px 0 20px;
   box-sizing: border-box;
-
-  @media (max-width: $breakpoint-desktop - 1px) {
-
-  }
-
-  @media (min-width: $breakpoint-medium) {
-
-  }
 }
 
 .app-title {
@@ -40,4 +32,9 @@ body {
   margin-right: auto;
   font-family: $font-opensans;
   margin-bottom: 40px;
+}
+
+.app-footer {
+  margin-top: 75px;
+  text-align: center;
 }
