@@ -1,4 +1,6 @@
-$card-length: 550px;
+@import '../../styles/variables';
+
+$card-length: 570px;
 $card-padding: 20px;
 $card-triangle1-height: $card-length * .409;
 $card-triangle2-height:  $card-length * .118;
@@ -42,7 +44,8 @@ $card-button-backgroundcolor: #d92a47;
 
     color: #050c19;
     font-size: 135px;
-    font-family: 'Old Standard TT', Georgia, serif;
+    font-family: $font-oldstandard;
+    font-weight: 400;
 
     background-color: transparent;
     border: none;
