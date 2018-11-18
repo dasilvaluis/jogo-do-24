@@ -6,14 +6,17 @@ class Board extends Component {
 
   constructor(props) {
     super(props);
+
+    this.CORRECT_RESULT = 24;
+
+    this.calculator = React.createRef();
+    this.card = React.createRef();
+
     this.state = {
       error: null,
       isLoaded: false,
       currentCard: {},
     };
-
-    this.calculator = React.createRef();
-    this.card = React.createRef();
   }
 
   render() {
@@ -29,7 +32,10 @@ class Board extends Component {
         <Card ref={this.card} numbers={currentCard.numbers} grade={currentCard.grade}
           onTryCard={() => this.handleTryCard()}
           onNumberClicked={(number) => this.handleNumberClick(number)} />
-        <Calculator ref={this.calculator} onReset={() => this.handleCalculatorReset()} />
+
+        <Calculator ref={this.calculator}
+          onReset={() => this.handleCalculatorReset()}
+          onFinish={(result) => this.handleFinish(result)} />
       </div>
     )
   }
@@ -53,12 +59,6 @@ class Board extends Component {
           this.setState({
             isLoaded: true,
             currentCard: card,
-            numberButtons: [
-              { disabled: false },
-              { disabled: false },
-              { disabled: false },
-              { disabled: false }
-            ],
           })
         },
         (error) => {
@@ -68,6 +68,12 @@ class Board extends Component {
           })
         }
       );
+  }
+
+  reset() {
+    this.loadRandomCard();
+    this.calculator.current.reset();
+    this.card.current.reset();
   }
 
   /**
@@ -84,14 +90,23 @@ class Board extends Component {
     this.calculator.current.registerNumber(number);
   }
 
+  /**
+   * Handle Calculator reset
+   */
   handleCalculatorReset() {
     this.card.current.reset();
   }
 
-  reset() {
-    this.loadRandomCard();
-    this.calculator.current.reset();
-    this.card.current.reset();
+  /**
+   * Handle calculations finished
+   */
+  handleFinish(result) {
+    if (this.CORRECT_RESULT === result.value) {
+      alert('Great! Your result is 24!');    }
+    else {
+      alert(`Wrong, ${result.solution} is not equal to 24! Go back to school!`);
+    }
+    this.reset();
   }
 }
 
