@@ -7,18 +7,10 @@ class Card extends Component {
     this.state = {
       disabled: false,
       numberButtons: [
-        {
-          disabled: false
-        },
-        {
-          disabled: false
-        },
-        {
-          disabled: false
-        },
-        {
-          disabled: false
-        }
+        { disabled: false },
+        { disabled: false },
+        { disabled: false },
+        { disabled: false }
       ],
     };
   }
@@ -64,7 +56,7 @@ class Card extends Component {
     )
   }
 
-  handleTryCard() {
+  reset() {
     // Reset disabled state
     let _numberButtons = this.state.numberButtons;
     _numberButtons.map((x) => x.disabled = false)
@@ -72,6 +64,10 @@ class Card extends Component {
     this.setState({
       numberButtons: _numberButtons
     });
+  }
+
+  handleTryCard() {
+    this.reset();
 
     // Parent callback functions
     this.props.onTryCard();
