@@ -13,6 +13,7 @@ class Board extends Component {
     };
 
     this.calculator = React.createRef();
+    this.card = React.createRef();
   }
 
   render() {
@@ -25,10 +26,10 @@ class Board extends Component {
 
     return (
       <div className="board">
-        <Card numbers={currentCard.numbers}
+        <Card ref={this.card} numbers={currentCard.numbers} grade={currentCard.grade}
           onTryCard={() => this.handleTryCard()}
           onNumberClicked={(number) => this.handleNumberClick(number)} />
-        <Calculator ref={this.calculator} />
+        <Calculator ref={this.calculator} onReset={() => this.handleCalculatorReset()} />
       </div>
     )
   }
@@ -47,11 +48,17 @@ class Board extends Component {
         (result) => {
           const cards = result.cards;
           const randomIndex = Math.floor(Math.random() * Math.floor(cards.length));
-          const card = cards[randomIndex];
+          let card = cards[randomIndex];
 
           this.setState({
             isLoaded: true,
             currentCard: card,
+            numberButtons: [
+              { disabled: false },
+              { disabled: false },
+              { disabled: false },
+              { disabled: false }
+            ],
           })
         },
         (error) => {
@@ -77,9 +84,14 @@ class Board extends Component {
     this.calculator.current.registerNumber(number);
   }
 
+  handleCalculatorReset() {
+    this.card.current.reset();
+  }
+
   reset() {
     this.loadRandomCard();
     this.calculator.current.reset();
+    this.card.current.reset();
   }
 }
 
