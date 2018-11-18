@@ -22,7 +22,14 @@ class App extends Component {
             - The square in the card works as reset, and it will clear the numbers and load a new card.
           </small>
         </header>
+
         <Board />
+
+        <footer className="app-footer">
+          <small>
+            Luís Silva, Nov. 2018 | <a href="https://github.com/luism-s/jogo-do-24" target="_blank" rel="noopener noreferrer">Github</a>
+          </small>
+        </footer>
       </div>
     );
   }
