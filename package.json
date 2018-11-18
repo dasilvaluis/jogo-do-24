@@ -1,5 +1,6 @@
 {
   "name": "jogo-do-24",
+  "homepage": "http://luism-s.github.io/jogo-do-24",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,7 +13,9 @@
     "build": "sass --update src/styles:src/styles/css src/components:src/components && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass": "sass --watch src/styles:src/styles/css src/components:src/components"
+    "sass": "sass --watch src/styles:src/styles/css src/components:src/components",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -29,6 +32,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^3.0.0",
-    "eslint-plugin-react": "^7.11.0"
+    "eslint-plugin-react": "^7.11.0",
+    "gh-pages": "^2.0.1"
   }
 }
