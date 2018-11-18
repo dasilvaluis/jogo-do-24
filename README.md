@@ -9,3 +9,10 @@ Read more @ [Wikipedia](https://en.wikipedia.org/wiki/24_Game)
 - Click on each number and signs in the correct order, filling the blanks bellow the card.
 - When all blanks are filled submit your try and see the result!
 - The square in the card works as reset, and it will clear the numbers and load a new card.
+
+
+### TODO:
+- Mobile version
+- Proper Win/Lose response
+- Countdown timer per card
+- Card grade (difficulty)
