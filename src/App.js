@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import logo from './images/logo.svg';
-import './styles/css/App.css';
+import Board from './components/Board';
 
 class App extends Component {
   constructor(props) {
@@ -10,21 +9,27 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <div className="app-container" >
+        <header className="app-header">
+          <h1 className="app-title">Jogo do 24 / 24 Game</h1>
+          <p>The 24 Game is an arithmetical card game in which the objective is to find a way to manipulate four integers so that the end result is 24.
+            For example, for the card with the numbers 4, 7, 8, 8, a possible solution is (7-(8/8))*4=24.<br></br>
+            Read more @ <a href="https://en.wikipedia.org/wiki/24_Game" target="_blank" rel="noopener noreferrer">Wikipedia</a></p>
+          <small>
+            <b>Instructions:</b><br></br>
+            - Click on each number and signs in the correct order, filling the blanks bellow the card.<br></br>
+            - When all blanks are filled submit your try and see the result!<br></br>
+            - The square in the card works as reset, and it will clear the numbers and load a new card.
+          </small>
         </header>
+
+        <Board />
+
+        <footer className="app-footer">
+          <small>
+            Luís Silva, Nov. 2018 | <a href="https://github.com/luism-s/jogo-do-24" target="_blank" rel="noopener noreferrer">Github</a>
+          </small>
+        </footer>
       </div>
     );
   }

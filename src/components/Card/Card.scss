@@ -1,0 +1,151 @@
+@import '../../styles/variables';
+
+$card-length: 570px;
+$card-padding: 20px;
+$card-triangle1-height: $card-length * .409;
+$card-triangle2-height:  $card-length * .118;
+$card-triangle-width: $card-triangle1-height * .577;
+$card-submitbutton-length: $card-length * .227;
+$card-backgroudcolor: #040182;
+$card-circle-backgroundcolor: #ffc90d;
+$card-button-backgroundcolor: #d92a47;
+
+.card {
+  width: $card-length;
+  height: $card-length;
+  margin: 0 auto;
+  position: relative;
+  background-color: $card-backgroudcolor;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: calc(100% - #{$card-padding} * 2);
+    height: calc(100% - #{$card-padding} * 2);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: $card-circle-backgroundcolor;
+    border-radius: 50%;
+  }
+
+  &__number {
+    display: inline-block;
+    width: 145px;
+    height: 145px;
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #050c19;
+    font-size: 135px;
+    font-family: $font-oldstandard;
+    font-weight: 400;
+
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+    transition: opacity 200ms ease;
+
+    &[disabled] {
+      cursor: default;
+      opacity: .4;
+    }
+
+    &:nth-of-type(1) {
+      top: $card-padding + 10px;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    &:nth-of-type(2) {
+      top: 50%;
+      right: $card-padding + 10px;
+      transform: translate(0, -50%) rotate(90deg);
+    }
+
+    &:nth-of-type(3) {
+      bottom: $card-padding + 10px;
+      left: 50%;
+      transform: translate(-50%, 0) rotate(180deg);
+    }
+
+    &:nth-of-type(4) {
+      top: 50%;
+      left: $card-padding + 10px;
+      transform: translate(0, -50%) rotate(270deg);
+    }
+  }
+
+  &__submit-button {
+    display: inline-block;
+    width: $card-submitbutton-length;
+    height: $card-submitbutton-length;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: $card-button-backgroundcolor;
+    border: 2px solid white;
+    outline: $card-button-backgroundcolor;
+    transition: transform 100ms ease;
+
+    cursor: pointer;
+
+    &:active{
+      transform: translate(-50%, -50%) scale(.97);
+    }
+  }
+
+  &__triangle  {
+    display: flex;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: left center;
+
+    &:nth-of-type(1) {
+      transform: translate(0, -50%) rotate(45deg);
+    }
+
+    &:nth-of-type(2) {
+      transform: translate(0, -50%) rotate(135deg);
+    }
+
+    &:nth-of-type(3) {
+      transform: translate(0, -50%) rotate(225deg);
+    }
+
+    &:nth-of-type(4) {
+      transform: translate(0, -50%) rotate(315deg);
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+
+    &::before {
+      border-width: $card-triangle-width/2 $card-triangle1-height $card-triangle-width/2 0;
+      border-color: transparent $card-button-backgroundcolor transparent transparent;
+    }
+
+    &::after {
+      border-width: $card-triangle-width/2 0 $card-triangle-width/2 $card-triangle2-height;
+      border-color: transparent transparent transparent $card-button-backgroundcolor;
+    }
+  }
+}
