@@ -5,6 +5,9 @@ class Calculator extends Component {
   constructor(props) {
     super(props);
 
+    this.MAXIMUM_NUMBERS = 4;
+    this.MAXIMUM_OPERATIONS = 3;
+
     this.state = {
       complete: false,
       numbers: [],
@@ -55,12 +58,12 @@ class Calculator extends Component {
     let _operations = this.state.operations;
 
     // Return if to many numbers
-    if ( 4 <= _numbers.length ) { return; }
+    if ( this.MAXIMUM_NUMBERS <= _numbers.length ) { return; }
 
     // Push number
     _numbers.push(number);
     this.setState({
-      complete: 3 === _operations.length && 4 === _numbers.length,
+      complete: this.MAXIMUM_OPERATIONS === _operations.length && this.MAXIMUM_NUMBERS === _numbers.length,
       numbers: _numbers,
     });
   }
@@ -70,12 +73,12 @@ class Calculator extends Component {
     let _numbers = this.state.numbers;
 
     // Return if to many operations
-    if ( 3 <= _operations.length ) { return; }
+    if ( this.MAXIMUM_OPERATIONS <= _operations.length ) { return; }
 
     // Push operation
     _operations.push(operation);
     this.setState({
-      complete: 3 === _operations.length && 4 === _numbers.length,
+      complete: this.MAXIMUM_OPERATIONS === _operations.length && this.MAXIMUM_NUMBERS === _numbers.length,
       operations: _operations,
     });
   }
@@ -111,9 +114,19 @@ class Calculator extends Component {
         calc = `${calc}${operations[i-1]}${numbers[i]}`
       }
     }
-    console.log(this.getResult(calc));
+
+    // Return result to Board
+    this.props.onFinish({
+      'solution': calc,
+      'value': this.getResult(calc),
+    });
   }
 
+  /**
+   * Returns numeric result of string arithmetic calculation
+   * Expected format: 4+2/6-1; 5-3*9/1; ...
+   * @param {string} calc_string
+   */
   getResult(calc_string) {
     if (!this.validateCalcString(calc_string)) { return; }
     return eval(calc_string)
