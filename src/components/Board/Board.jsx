@@ -48,7 +48,7 @@ class Board extends Component {
    * Gets random card from endpoint
    */
   loadRandomCard() {
-    fetch("/data/cards.json")
+    fetch("./data/cards.json")
       .then(res => res.json())
       .then(
         (result) => {
