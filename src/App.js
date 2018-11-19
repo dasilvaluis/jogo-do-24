@@ -26,7 +26,7 @@ class App extends Component {
           <p>
             <small>
               <b>Known Issues:</b><br></br>
-              - Calculator doesn't support yet parenthesis, so the solution (7-8/8)*4=24 it's still not possible to achieve.
+              - Calculator doesn't support parenthesis yet, so the solution (7-8/8)*4=24 it's still not possible to achieve.
             </small>
           </p>
         </header>
