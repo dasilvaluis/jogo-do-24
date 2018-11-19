@@ -19,4 +19,4 @@ Play @ [https://luism-s.github.io/jogo-do-24/](https://luism-s.github.io/jogo-do
 - Card grade (difficulty)
 
 ### Knows issues/bugs
-- Calculator doesn't support yet parenthesis, so the solution (7-8/8)*4=24 it's still not possible.
+- Calculator doesn't support yet parenthesis, so the solution (7-8/8)*4=24 it's still not possible to achieve.
