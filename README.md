@@ -18,5 +18,5 @@ Play @ [https://luism-s.github.io/jogo-do-24/](https://luism-s.github.io/jogo-do
 - Countdown timer per card
 - Card grade (difficulty)
 
-### Knows issues/bugs
+### Knows issues/bugs:
 - Calculator doesn't support parenthesis yet, so the solution (7-8/8)*4=24 it's still not possible to achieve.
