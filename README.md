@@ -1,6 +1,6 @@
 # Jogo do 24 / 24 Game
 
-The 24 Game is an arithmetical card game in which the objective is to find a way to manipulate four integers so that the end result is 24. For example, for the card with the numbers 4, 7, 8, 8, a possible solution is (7-(8/8))*4=24.
+The 24 Game is an arithmetical card game in which the objective is to find a way to manipulate four integers so that the end result is 24. For example, for the card with the numbers 4, 7, 8, 8, a possible solution is 6*3+7-1=24
 
 Read more @ [Wikipedia](https://en.wikipedia.org/wiki/24_Game)
 
@@ -17,3 +17,6 @@ Play @ [https://luism-s.github.io/jogo-do-24/](https://luism-s.github.io/jogo-do
 - Proper Win/Lose response
 - Countdown timer per card
 - Card grade (difficulty)
+
+### Knows issues/bugs
+- Calculator doesn't support yet parenthesis, so the solution (7-8/8)*4=24 it's still not possible.
