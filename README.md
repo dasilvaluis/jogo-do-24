@@ -1,4 +1,4 @@
-# Jogo do 24 / 24 Game
+# Jogo do 24 / 24 Game (beta)
 
 The 24 Game is an arithmetical card game in which the objective is to find a way to manipulate four integers so that the end result is 24. For example, for the card with the numbers 4, 7, 8, 8, a possible solution is 6*3+7-1=24
 
