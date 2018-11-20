@@ -18,12 +18,20 @@ class Calculator extends Component {
         name: 'minus',
       },
       {
+        sign: '(',
+        name: 'open parenthesis',
+      },
+      {
         sign: '/',
         name: 'divide',
       },
       {
         sign: '*',
         name: 'multiply',
+      },
+      {
+        sign: ')',
+        name: 'close parenthesis',
       },
     ];
 
