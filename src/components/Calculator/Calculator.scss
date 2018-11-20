@@ -63,6 +63,7 @@ $calculator-buttons-gutter: 10px;
   &__button {
     width: $calculator-button-width;
     height: $calculator-button-width;
+    margin-top: $calculator-buttons-gutter;
     margin-left: $calculator-buttons-gutter;
     font-size: 20px;
     cursor: pointer;
@@ -78,7 +79,14 @@ $calculator-buttons-gutter: 10px;
     }
   }
 
+  &__operation {
+    margin-top: $calculator-buttons-gutter;
+    margin-left: $calculator-buttons-gutter;
+  }
+
   &__operations {
+    width: ( $calculator-button-width + $calculator-buttons-gutter ) * 3;
+    margin-top: -#{$calculator-buttons-gutter};
     margin-left: -#{$calculator-buttons-gutter};
   }
 
