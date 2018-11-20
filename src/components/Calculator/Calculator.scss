@@ -1,3 +1,6 @@
+$calculator-button-width: 45px;
+$calculator-buttons-gutter: 10px;
+
 .calculator {
   display: flex;
   flex-direction: column;
@@ -58,8 +61,9 @@
   }
 
   &__button {
-    width: 45px;
-    height: 45px;
+    width: $calculator-button-width;
+    height: $calculator-button-width;
+    margin-left: $calculator-buttons-gutter;
     font-size: 20px;
     cursor: pointer;
     background: white;
@@ -69,23 +73,20 @@
     outline: none;
     transition: transform 100ms ease;
 
-    & + & {
-      margin-left: 10px;
-    }
-
     &:active{
       transform: scale(.97);
     }
   }
 
-  &__operations-selector {
-    margin-right: 10px;
+  &__operations {
+    margin-left: -#{$calculator-buttons-gutter};
   }
 
   &__submit {
     @extend .calculator__button;
     width: 170px;
     font-size: 15px;
+    margin-top: 0;
 
     &[disabled] {
       //display: none;

@@ -8,6 +8,25 @@ class Calculator extends Component {
     this.MAXIMUM_NUMBERS = 4;
     this.MAXIMUM_OPERATIONS = 3;
 
+    this.operations = [
+      {
+        sign: '+',
+        name: 'add',
+      },
+      {
+        sign: '-',
+        name: 'minus',
+      },
+      {
+        sign: '/',
+        name: 'divide',
+      },
+      {
+        sign: '*',
+        name: 'multiply',
+      },
+    ];
+
     this.state = {
       complete: false,
       numbers: [],
@@ -17,6 +36,9 @@ class Calculator extends Component {
 
   render() {
     const { numbers, operations, complete } = this.state;
+    const buttonsMarkup = this.operations.map((el) => {
+      return <button className="calculator__button calculator__operation" onClick={(e) => this.handleOperationClick(e)} data-operation={el.sign} title={el.name}>{el.sign}</button>
+    });
     return (
       <div className="calculator">
         <div className="calculator__input-container">
@@ -29,11 +51,8 @@ class Calculator extends Component {
           <input className="calculator__input" type="number" value={numbers[3] ? numbers[3] : ''} disabled/>
         </div>
         <div className="calculator__controls">
-          <div className="calculator__operations-selector">
-            <button className="calculator__button" onClick={(e) => this.handleOperationClick(e)} data-operation="+">+</button>
-            <button className="calculator__button" onClick={(e) => this.handleOperationClick(e)} data-operation="-">-</button>
-            <button className="calculator__button" onClick={(e) => this.handleOperationClick(e)} data-operation="/">/</button>
-            <button className="calculator__button" onClick={(e) => this.handleOperationClick(e)} data-operation="*">x</button>
+          <div className="calculator__operations">
+            { buttonsMarkup }
           </div>
           <button className="calculator__submit" onClick={() => this.handleClear()}>Clear</button>
           <button className="calculator__submit" disabled={!complete} onClick={() => this.handleSubmit()}>Am I Smart?</button>
