@@ -156,6 +156,7 @@ class Calculator extends Component {
    */
   getResult(calc_string) {
     if (!this.validateCalcString(calc_string)) { return; }
+    // eslint-disable-next-line
     return eval(calc_string)
   }
 
