@@ -2,7 +2,7 @@ $calculator-button-width: 45px;
 $calculator-buttons-gutter: 10px;
 
 .calculator {
-  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,7 +47,7 @@ $calculator-buttons-gutter: 10px;
   }
 
   &__input-container {
-    max-width: 100%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
