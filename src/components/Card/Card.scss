@@ -102,7 +102,7 @@ $card-button-backgroundcolor: #d92a47;
     cursor: pointer;
 
     &:active{
-      transform: translate(-50%, -50%) scale(.97);
+      transform: scale(.96) translate(-50%, -50%) translateZ(0);
     }
   }
 
