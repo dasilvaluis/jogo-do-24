@@ -93,6 +93,9 @@ class Board extends Component {
    * @returns {void}
    */
   handleCalculatorReset() {
+    this.setState({
+      disabledNumbers: [false, false, false, false],
+    });
     this.card.current.reset();
   }
 
