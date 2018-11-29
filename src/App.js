@@ -12,7 +12,7 @@ class App extends Component {
       <div className="app-container">
         <header className="app-header">
           <h1 className="app-title">
-            Jogo do 24 / 24 Game <small>(beta)</small>
+            Jogo do 24 / 24 Game <small>(beta-2)</small>
           </h1>
           <p>
             The 24 Game is an arithmetical card game in which the objective is to
