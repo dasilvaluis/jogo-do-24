@@ -131,7 +131,7 @@ class Calculator extends Component {
     // Return result to Board
     this.props.onFinish({
       solution: calc,
-      value: this.getResult(calc),
+      value: Calculator.getResult(calc),
     });
   }
 
