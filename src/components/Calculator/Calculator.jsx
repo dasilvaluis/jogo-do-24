@@ -22,7 +22,7 @@ class Calculator extends Component {
   static getResult(calcString) {
     // eslint-disable-next-line
     const result = eval(calcString);
-    return this.isNumeric(result) ? result : 0;
+    return Calculator.isNumeric(result) ? result : 0;
   }
 
   constructor(props) {
@@ -230,12 +230,12 @@ class Calculator extends Component {
 
     // if empty operation or leading (
     if (null === lastSymbol || '(' === lastSymbol) {
-      if (this.isNumeric(symbol) || '(' === symbol) {
+      if (Calculator.isNumeric(symbol) || '(' === symbol) {
         return true;
       }
       // if leading ) - allow only operators and ) if theres is ( to close
     } else if (')' === lastSymbol) {
-      if (!this.isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
+      if (!Calculator.isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
         return true;
       }
 
@@ -243,17 +243,17 @@ class Calculator extends Component {
         return true;
       }
       // if leading number - allow operator, except (
-    } else if (null !== lastSymbol && this.isNumeric(lastSymbol)) {
+    } else if (null !== lastSymbol && Calculator.isNumeric(lastSymbol)) {
       if (')' === symbol && this.isParenthesisOpen()) {
         return true;
       }
 
-      if (!this.isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
+      if (!Calculator.isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
         return true;
       }
       // if leading operator [+-*/] - allow only numbers and (
-    } else if (!this.isNumeric(lastSymbol)) {
-      if (this.isNumeric(symbol) || '(' === symbol) {
+    } else if (!Calculator.isNumeric(lastSymbol)) {
+      if (Calculator.isNumeric(symbol) || '(' === symbol) {
         return true;
       }
     }
