@@ -15,6 +15,7 @@ class Board extends Component {
       error: null,
       isLoaded: false,
       currentCard: {},
+      disabledNumbers: [false, false, false, false],
     };
   }
 
@@ -39,6 +40,7 @@ class Board extends Component {
           this.setState({
             isLoaded: true,
             currentCard: card,
+            disabledNumbers: [false, false, false, false],
           });
         },
         (error) => {
@@ -68,11 +70,21 @@ class Board extends Component {
   /**
    * Number click handler
    *
-   * @param {number} number Number clicked
+   * @param {number} number Clicked number
+   * @param {number} index  Index of clicked number
    * @returns {void}
    */
-  handleNumberClick(number) {
-    this.calculator.current.registerNumber(number);
+  handleNumberClick(number, index) {
+    const { disabledNumbers } = this.state;
+    // Register number in calculator
+    const wasNumberInserted = this.calculator.current.registerNumber(number);
+
+    if (wasNumberInserted) {
+      disabledNumbers[index] = true;
+      this.setState({
+        disabledNumbers,
+      });
+    }
   }
 
   /**
@@ -99,7 +111,12 @@ class Board extends Component {
   }
 
   render() {
-    const { error, isLoaded, currentCard } = this.state;
+    const {
+      error,
+      isLoaded,
+      currentCard,
+      disabledNumbers,
+    } = this.state;
 
     if (error) {
       return <div>Borrada!</div>;
@@ -115,9 +132,10 @@ class Board extends Component {
           <Card
             ref={this.card}
             numbers={currentCard.numbers}
+            disabledNumbers={disabledNumbers}
             grade={currentCard.grade}
             onResetCard={() => this.handleResetCard()}
-            onNumberClicked={number => this.handleNumberClick(number)}
+            onNumberClicked={(number, index) => this.handleNumberClick(number, index)}
           />
         </div>
         <div>
