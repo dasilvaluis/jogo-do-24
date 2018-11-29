@@ -16,9 +16,6 @@ body {
 }
 
 .app-container {
-  max-width: 590px;
-  margin-left: auto;
-  margin-right: auto;
   padding: 40px 10px 20px;
   box-sizing: border-box;
 }
@@ -29,6 +26,14 @@ body {
 }
 
 .app-header {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: $font-opensans;
+  margin-bottom: 40px;
+}
+
+.app-main {
   font-family: $font-opensans;
   margin-bottom: 40px;
 }

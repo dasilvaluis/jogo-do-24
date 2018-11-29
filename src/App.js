@@ -36,7 +36,9 @@ class App extends Component {
           </p>
         </header>
 
-        <Board />
+        <main className="app-main">
+          <Board />
+        </main>
 
         <footer className="app-footer">
           <small>
