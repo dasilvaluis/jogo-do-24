@@ -176,7 +176,7 @@ class Calculator extends Component {
     const { numbers, operators, operation } = this.state;
 
     // Return if to many operators
-    if (this.MAXIMUM_OPERATORS < operators.length) { return false; }
+    if (this.MAXIMUM_OPERATORS <= operators.length && '(' !== operator && ')' !== operator) { return false; }
 
     // Push operator
     if (!this.isSymbolPossible(operator)) {
