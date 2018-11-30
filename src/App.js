@@ -20,7 +20,19 @@ class App extends Component {
             For example, for the card with the numbers 6, 3, 7, 1, a possible
             solution is 6*3+7-1=24.
             <br />
-            Read more @ <a href="https://en.wikipedia.org/wiki/24_Game" target="_blank" rel="noopener noreferrer">Wikipedia</a></p>
+            Read more @ <a href="https://en.wikipedia.org/wiki/24_Game" target="_blank" rel="noopener noreferrer">Wikipedia</a>
+          </p>
+          <p>
+            <small>
+              <b>Rules:</b>
+              <br />
+              - All numbers must be used in the calculation
+              <br />
+              - Final result should equal to 24
+              <br />
+              - You may use any math operation available in the calculator
+            </small>
+          </p>
           <p>
             <small>
               <b>Instructions:</b>
