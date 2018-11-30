@@ -13,10 +13,6 @@ Play @ [https://luism-s.github.io/jogo-do-24/](https://luism-s.github.io/jogo-do
 
 
 ### TODO:
-- Mobile version
 - Proper Win/Lose response
 - Countdown timer per card
 - Card grade (difficulty)
-
-### Knows issues/bugs:
-- Calculator doesn't support parenthesis yet, so the solution (7-8/8)*4=24 it's still not possible to achieve.
