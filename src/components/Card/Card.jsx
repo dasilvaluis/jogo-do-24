@@ -85,6 +85,7 @@ class Card extends Component {
                   data-index={i}
                   data-value={number}
                   onClick={e => this.handleNumberClick(e)}
+                  key={number}
                 >
                   {number}
                 </button>

@@ -41,16 +41,16 @@ class Calculator extends Component {
         name: 'subtract',
       },
       {
-        sign: '(',
-        name: 'open parenthesis',
-      },
-      {
         sign: '/',
         name: 'divide',
       },
       {
         sign: '*',
         name: 'multiply',
+      },
+      {
+        sign: '(',
+        name: 'open parenthesis',
       },
       {
         sign: ')',
@@ -270,28 +270,24 @@ class Calculator extends Component {
           <input className="calculator__input" type="text" value={operation.join(' ')} disabled />
         </div>
         <div className="calculator__controls">
-          <div className="calculator__operator-list">
-            {
-              this.AVAILABLE_OPERATORS.map(
-                el => (
-                  <button
-                    type="button"
-                    className="calculator__button calculator__operator"
-                    key={el.sign}
-                    onClick={e => this.handleOperatorClick(e)}
-                    data-operator={el.sign}
-                    title={el.name}
-                  >
-                    {el.sign}
-                  </button>
-                ),
-              )
-            }
-          </div>
-          <div className="calculator__submit-list">
-            <button type="button" className="calculator__submit" onClick={() => this.handleClear()}>C</button>
-            <button type="button" className="calculator__submit" disabled={!ready} onClick={() => this.handleSubmit()}>=</button>
-          </div>
+          {
+            this.AVAILABLE_OPERATORS.map(
+              el => (
+                <button
+                  type="button"
+                  className="calculator__button calculator__operator"
+                  key={el.sign}
+                  onClick={e => this.handleOperatorClick(e)}
+                  data-operator={el.sign}
+                  title={el.name}
+                >
+                  {el.sign}
+                </button>
+              ),
+            )
+          }
+          <button type="button" className="calculator__submit" onClick={() => this.handleClear()}>C</button>
+          <button type="button" className="calculator__submit" disabled={!ready} onClick={() => this.handleSubmit()}>=</button>
         </div>
       </div>
     );

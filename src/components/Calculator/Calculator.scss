@@ -20,13 +20,13 @@ $calculator-buttons-gutter: 10px;
 
   &__input {
     width: 100%;
-    height: 70px;
+    height: 50px;
     margin: 0 5px;
 
     border: none;
     border-radius: 5px;
 
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
     color: black;
 
@@ -60,19 +60,29 @@ $calculator-buttons-gutter: 10px;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+
+    width: ( $calculator-button-width + $calculator-buttons-gutter ) * 4 - $calculator-buttons-gutter;
   }
 
   &__controls {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+
+    width: ( $calculator-button-width + $calculator-buttons-gutter ) * 4;
+    margin-top: -#{$calculator-buttons-gutter};
+    margin-left: -#{$calculator-buttons-gutter};
+
+    > * {
+      margin-top: $calculator-buttons-gutter;
+      margin-left: $calculator-buttons-gutter;
+    }
   }
 
   &__button {
     width: $calculator-button-width;
     height: $calculator-button-width;
-    margin-top: $calculator-buttons-gutter;
-    margin-left: $calculator-buttons-gutter;
     font-size: 20px;
     cursor: pointer;
     background: white;
@@ -87,20 +97,8 @@ $calculator-buttons-gutter: 10px;
     }
   }
 
-  &__operator {
-    margin-top: $calculator-buttons-gutter;
-    margin-left: $calculator-buttons-gutter;
-  }
-
-  &__operator-list {
-    width: ( $calculator-button-width + $calculator-buttons-gutter ) * 3;
-    margin-top: -#{$calculator-buttons-gutter};
-    margin-left: -#{$calculator-buttons-gutter};
-  }
-
   &__submit {
     @extend .calculator__button;
-    width: 155px;
     font-size: 15px;
 
     &[disabled] {
