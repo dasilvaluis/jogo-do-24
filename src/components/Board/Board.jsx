@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Card from '../Card';
 import Calculator from '../Calculator';
+import CardActions from '../../actions/CardActions';
+import CalculatorActions from '../../actions/CalculatorActions';
 
 class Board extends Component {
   constructor(props) {
@@ -153,4 +156,14 @@ class Board extends Component {
   }
 }
 
-export default Board;
+const mapStateToProps = state => ({
+  card: state.card,
+  operation: state.operation,
+});
+
+const mapDispatchToProps = {
+  setCard: CardActions.setCard,
+  setOperation: CalculatorActions.setOperation,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

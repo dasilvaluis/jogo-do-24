@@ -101,14 +101,12 @@ class Card extends Component {
 Card.defaultProps = {
   numbers: [0, 0, 0, 0],
   disabledNumbers: [false, false, false, false],
-  grade: 0,
   onNumberClicked: () => {},
   onResetCard: () => {},
 };
 
 Card.propTypes = {
   numbers: PropTypes.instanceOf(Array),
-  grade: PropTypes.number,
   onNumberClicked: PropTypes.func,
   onResetCard: PropTypes.func,
   disabledNumbers: PropTypes.instanceOf(Array),
