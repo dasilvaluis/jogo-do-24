@@ -58,7 +58,7 @@ class Card extends Component {
     const numberValue = e.target.getAttribute('data-value');
 
     // Parent callback functions
-    this.props.onNumberClicked(numberValue, numberIndex);
+    this.props.onNumberClick(numberValue, numberIndex);
   }
 
   render() {
@@ -101,13 +101,13 @@ class Card extends Component {
 Card.defaultProps = {
   numbers: [0, 0, 0, 0],
   disabledNumbers: [false, false, false, false],
-  onNumberClicked: () => {},
+  onNumberClick: () => {},
   onResetCard: () => {},
 };
 
 Card.propTypes = {
   numbers: PropTypes.instanceOf(Array),
-  onNumberClicked: PropTypes.func,
+  onNumberClick: PropTypes.func,
   onResetCard: PropTypes.func,
   disabledNumbers: PropTypes.instanceOf(Array),
 };

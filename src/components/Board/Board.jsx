@@ -141,7 +141,7 @@ class Board extends Component {
             disabledNumbers={disabledNumbers}
             grade={currentCard.grade}
             onResetCard={() => this.handleResetCard()}
-            onNumberClicked={(number, index) => this.handleNumberClick(number, index)}
+            onNumberClick={(number, index) => this.handleNumberClick(number, index)}
           />
         </div>
         <div>
