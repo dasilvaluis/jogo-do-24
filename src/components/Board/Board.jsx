@@ -32,11 +32,11 @@ class Board extends Component {
    */
   loadRandomCard() {
     const randomIndex = Math.floor(Math.random() * cards.length);
-          const card = cards[randomIndex];
+    const card = cards[randomIndex];
 
-          this.setState({
-            disabledNumbers: [false, false, false, false],
-          });
+    this.setState({
+      disabledNumbers: [false, false, false, false],
+    });
 
     this.props.setCard(card);
   }
