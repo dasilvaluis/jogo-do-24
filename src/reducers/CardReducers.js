@@ -3,8 +3,8 @@ import {
 } from '../actions/types';
 
 const INITIAL_CARD = {
-  numbers: [],
   grade: 0,
+  numbers: [],
 };
 
 class CardReducers {
