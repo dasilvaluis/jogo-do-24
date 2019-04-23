@@ -1,30 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { isNumeric, getCalculationResult, isParenthesisOpen } from '../../Helpers';
 
 class Calculator extends Component {
-  /**
-   * Checks if given value is an integer or string representation of one
-   *
-   * @param {string|number} value Number or string
-   * @returns {bool} Is value an Integer
-   */
-  static isNumeric(value) {
-    return Number.isFinite(value) || (Number.isFinite(Number(value)) && typeof value === 'string')
-  }
-
-  /**
-   * Returns numeric result of string arithmetic calculation
-   * Expected format: 4+2/6-1; 5-3*9/1; ...
-   *
-   * @param {string} calcString String representing the operation
-   * @returns {number} Resulting integer, 0 on error
-   */
-  static getResult(calcString) {
-    // eslint-disable-next-line
-    const result = eval(calcString);
-    return Calculator.isNumeric(result) ? result : 0;
-  }
-
   constructor(props) {
     super(props);
 
@@ -64,19 +42,6 @@ class Calculator extends Component {
       operators: [],
       operation: [],
     };
-  }
-
-  /**
-   * Get the last symbol of the current operation
-   *
-   * @returns {string} Symbol String
-   */
-  getLastSymbol() {
-    const { operation } = this.state;
-    if (!operation.length) {
-      return null;
-    }
-    return operation[operation.length - 1];
   }
 
   /**
@@ -121,7 +86,7 @@ class Calculator extends Component {
    */
   handleSubmit() {
     const { operation } = this.state;
-    if (!operation.length || this.isParenthesisOpen()) { return; }
+    if (!operation.length || isParenthesisOpen(operation)) { return; }
 
     let calc = '';
     for (let i = 0; i < operation.length; i++) {
@@ -131,7 +96,7 @@ class Calculator extends Component {
     // Return result to Board
     this.props.onFinish({
       solution: calc,
-      value: Calculator.getResult(calc),
+      value: getCalculationResult(calc),
     });
   }
 
@@ -158,7 +123,7 @@ class Calculator extends Component {
     this.setState({
       ready: this.MAXIMUM_OPERATORS === operators.length
         && this.MAXIMUM_NUMBERS === numbers.length
-        && !this.isParenthesisOpen(),
+        && !this.isParenthesisOpen(operation),
       numbers,
       operation,
     });
@@ -191,32 +156,12 @@ class Calculator extends Component {
     this.setState({
       ready: this.MAXIMUM_OPERATORS === operators.length
         && this.MAXIMUM_NUMBERS === numbers.length
-        && !this.isParenthesisOpen(),
+        && !isParenthesisOpen(operation),
       operators,
       operation,
     });
 
     return true;
-  }
-
-  /**
-   * States if there's parenthesis left to close
-   *
-   * @returns {bool} Exists parenthesis to close
-   */
-  isParenthesisOpen() {
-    const { operation } = this.state;
-    let openParenthesisCount = 0;
-
-    for (let i = 0; i < operation.length; i++) {
-      if ('(' === operation[i]) {
-        openParenthesisCount += 1;
-      } else if (')' === operation[i]) {
-        openParenthesisCount -= 1;
-      }
-    }
-
-    return !!Math.abs(openParenthesisCount);
   }
 
   /**
@@ -226,34 +171,36 @@ class Calculator extends Component {
    * @returns {bool} Symbol is possble
    */
   isSymbolPossible(symbol) {
-    const lastSymbol = this.getLastSymbol();
+    const { operation } = this.state;
+
+    const lastSymbol = operation.length ? operation[operation.length - 1] : null;
 
     // if empty operation or leading (
     if (null === lastSymbol || '(' === lastSymbol) {
-      if (Calculator.isNumeric(symbol) || '(' === symbol) {
+      if (isNumeric(symbol) || '(' === symbol) {
         return true;
       }
       // if leading ) - allow only operators and ) if theres is ( to close
     } else if (')' === lastSymbol) {
-      if (!Calculator.isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
+      if (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
         return true;
       }
 
-      if (')' === symbol && this.isParenthesisOpen()) {
+      if (')' === symbol && isParenthesisOpen(operation)) {
         return true;
       }
       // if leading number - allow operator, except (
-    } else if (null !== lastSymbol && Calculator.isNumeric(lastSymbol)) {
-      if (')' === symbol && this.isParenthesisOpen()) {
+    } else if (null !== lastSymbol && isNumeric(lastSymbol)) {
+      if (')' === symbol && isParenthesisOpen(operation)) {
         return true;
       }
 
-      if (!Calculator.isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
+      if (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
         return true;
       }
       // if leading operator [+-*/] - allow only numbers and (
-    } else if (!Calculator.isNumeric(lastSymbol)) {
-      if (Calculator.isNumeric(symbol) || '(' === symbol) {
+    } else if (!isNumeric(lastSymbol)) {
+      if (isNumeric(symbol) || '(' === symbol) {
         return true;
       }
     }
