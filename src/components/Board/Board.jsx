@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from '../Card';
 import Calculator from '../Calculator';
 import CardActions from '../../actions/CardActions';
 import CalculatorActions from '../../actions/CalculatorActions';
+import { cards } from '../../data/cards';
 
 class Board extends Component {
   constructor(props) {
@@ -15,9 +17,6 @@ class Board extends Component {
     this.card = React.createRef();
 
     this.state = {
-      error: null,
-      isLoaded: false,
-      currentCard: {},
       disabledNumbers: [false, false, false, false],
     };
   }
@@ -32,27 +31,14 @@ class Board extends Component {
    * @returns {void}
    */
   loadRandomCard() {
-    fetch('./data/cards.json')
-      .then(res => res.json())
-      .then(
-        (result) => {
-          const { cards } = result;
-          const randomIndex = Math.floor(Math.random() * Math.floor(cards.length));
+    const randomIndex = Math.floor(Math.random() * cards.length);
           const card = cards[randomIndex];
 
           this.setState({
-            isLoaded: true,
-            currentCard: card,
             disabledNumbers: [false, false, false, false],
           });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        },
-      );
+
+    this.props.setCard(card);
   }
 
   reset() {
@@ -118,28 +104,21 @@ class Board extends Component {
 
   render() {
     const {
-      error,
-      isLoaded,
-      currentCard,
+      card,
+    } = this.props;
+
+    const {
       disabledNumbers,
     } = this.state;
-
-    if (error) {
-      return <div>Borrada!</div>;
-    }
-
-    if (!isLoaded) {
-      return <div>Loading...</div>;
-    }
 
     return (
       <div className="board">
         <div>
           <Card
             ref={this.card}
-            numbers={currentCard.numbers}
+            numbers={card.numbers}
             disabledNumbers={disabledNumbers}
-            grade={currentCard.grade}
+            grade={card.grade}
             onResetCard={() => this.handleResetCard()}
             onNumberClick={(number, index) => this.handleNumberClick(number, index)}
           />
@@ -155,6 +134,11 @@ class Board extends Component {
     );
   }
 }
+
+Board.propTypes = {
+  card: PropTypes.instanceOf(Object).isRequired,
+  setCard: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   card: state.card,

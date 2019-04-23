@@ -65,6 +65,10 @@ class Card extends Component {
     const { disabled } = this.state;
     const { numbers, disabledNumbers } = this.props;
 
+    if (0 === numbers.length) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <div className="card">
         <div>
@@ -85,7 +89,7 @@ class Card extends Component {
                   data-index={i}
                   data-value={number}
                   onClick={e => this.handleNumberClick(e)}
-                  key={number}
+                  key={`${Math.random() * 100}-${number}`}
                 >
                   {number}
                 </button>
