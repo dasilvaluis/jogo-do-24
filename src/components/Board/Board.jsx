@@ -52,7 +52,7 @@ class Board extends Component {
    *
    * @returns {void}
    */
-  handleResetCard() {
+  handleCardReset() {
     this.reset();
   }
 
@@ -119,7 +119,7 @@ class Board extends Component {
             numbers={card.numbers}
             disabledNumbers={disabledNumbers}
             grade={card.grade}
-            onResetCard={() => this.handleResetCard()}
+            onCardReset={() => this.handleCardReset()}
             onNumberClick={(number, index) => this.handleNumberClick(number, index)}
           />
         </div>
