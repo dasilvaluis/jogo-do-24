@@ -6,12 +6,6 @@ class Card extends Component {
     super(props);
     this.state = {
       disabled: false,
-      numberButtons: [
-        { disabled: false },
-        { disabled: false },
-        { disabled: false },
-        { disabled: false },
-      ],
     };
   }
 
@@ -22,16 +16,8 @@ class Card extends Component {
    */
   reset() {
     // Reset disabled state
-    let { numberButtons } = this.state;
-    numberButtons = [
-      { disabled: false },
-      { disabled: false },
-      { disabled: false },
-      { disabled: false },
-    ];
-
     this.setState({
-      numberButtons,
+      disabled: false,
     });
   }
 
@@ -63,7 +49,7 @@ class Card extends Component {
 
   render() {
     const { disabled } = this.state;
-    const { numbers, disabledNumbers } = this.props;
+    const { numbers } = this.props;
 
     if (0 === numbers.length) {
       return <div>Loading...</div>;
@@ -85,13 +71,13 @@ class Card extends Component {
                 <button
                   type="button"
                   className="card__number"
-                  disabled={disabledNumbers[i] || disabled}
+                  disabled={!number.active || disabled}
                   data-index={i}
-                  data-value={number}
+                  data-value={number.value}
                   onClick={e => this.handleNumberClick(e)}
-                  key={`${Math.random() * 100}-${number}`}
+                  key={`${Math.random() * 100}-${number.value}`}
                 >
-                  {number}
+                  {number.value}
                 </button>
               ),
             )
@@ -103,8 +89,7 @@ class Card extends Component {
 }
 
 Card.defaultProps = {
-  numbers: [0, 0, 0, 0],
-  disabledNumbers: [false, false, false, false],
+  numbers: [],
   onNumberClick: () => {},
   onCardReset: () => {},
 };
@@ -113,7 +98,6 @@ Card.propTypes = {
   numbers: PropTypes.instanceOf(Array),
   onNumberClick: PropTypes.func,
   onCardReset: PropTypes.func,
-  disabledNumbers: PropTypes.instanceOf(Array),
 };
 
 export default Card;

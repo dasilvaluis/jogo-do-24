@@ -15,10 +15,6 @@ class Board extends Component {
 
     this.calculator = React.createRef();
     this.card = React.createRef();
-
-    this.state = {
-      disabledNumbers: [false, false, false, false],
-    };
   }
 
   componentDidMount() {
@@ -31,12 +27,17 @@ class Board extends Component {
    * @returns {void}
    */
   loadRandomCard() {
-    const randomIndex = Math.floor(Math.random() * cards.length);
-    const card = cards[randomIndex];
+    const cardsCollection = [...cards];
+    const randomIndex = Math.floor(Math.random() * cardsCollection.length);
+    const card = { ...cardsCollection[randomIndex] };
 
-    this.setState({
-      disabledNumbers: [false, false, false, false],
-    });
+    card.numbers = card.numbers.reduce((acc, curr) => {
+      acc.push({
+        value: curr,
+        active: true,
+      });
+      return acc;
+    }, []);
 
     this.props.setCard(card);
   }
@@ -64,15 +65,18 @@ class Board extends Component {
    * @returns {void}
    */
   handleNumberClick(number, index) {
-    const { disabledNumbers } = this.state;
+    const {
+      card,
+    } = this.props;
+
     // Register number in calculator
     const wasNumberInserted = this.calculator.current.registerNumber(number);
 
     if (wasNumberInserted) {
-      disabledNumbers[index] = true;
-      this.setState({
-        disabledNumbers,
-      });
+      card.numbers[index].active = false;
+      console.log(card);
+
+      this.props.setCard(card);
     }
   }
 
@@ -82,9 +86,6 @@ class Board extends Component {
    * @returns {void}
    */
   handleCalculatorReset() {
-    this.setState({
-      disabledNumbers: [false, false, false, false],
-    });
     this.card.current.reset();
   }
 
@@ -106,10 +107,8 @@ class Board extends Component {
     const {
       card,
     } = this.props;
+    console.log(card);
 
-    const {
-      disabledNumbers,
-    } = this.state;
 
     return (
       <div className="board">
@@ -117,7 +116,6 @@ class Board extends Component {
           <Card
             ref={this.card}
             numbers={card.numbers}
-            disabledNumbers={disabledNumbers}
             grade={card.grade}
             onCardReset={() => this.handleCardReset()}
             onNumberClick={(number, index) => this.handleNumberClick(number, index)}
