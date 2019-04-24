@@ -123,7 +123,7 @@ class Calculator extends Component {
     this.setState({
       ready: this.MAXIMUM_OPERATORS === operators.length
         && this.MAXIMUM_NUMBERS === numbers.length
-        && !this.isParenthesisOpen(operation),
+        && !isParenthesisOpen(operation),
       numbers,
       operation,
     });
