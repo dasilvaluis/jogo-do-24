@@ -40,11 +40,11 @@ class Card extends Component {
    *
    * @returns {void}
    */
-  handleResetCard() {
+  handleResetClick() {
     this.reset();
 
     // Parent callback functions
-    this.props.onResetCard();
+    this.props.onCardReset();
   }
 
   /**
@@ -77,7 +77,7 @@ class Card extends Component {
           <span className="card__triangle" />
           <span className="card__triangle" />
         </div>
-        <button type="button" className="card__submit-button" onClick={() => this.handleResetCard()} />
+        <button type="button" className="card__submit-button" onClick={() => this.handleResetClick()} />
         <div>
           {
             numbers.map(
@@ -106,13 +106,13 @@ Card.defaultProps = {
   numbers: [0, 0, 0, 0],
   disabledNumbers: [false, false, false, false],
   onNumberClick: () => {},
-  onResetCard: () => {},
+  onCardReset: () => {},
 };
 
 Card.propTypes = {
   numbers: PropTypes.instanceOf(Array),
   onNumberClick: PropTypes.func,
-  onResetCard: PropTypes.func,
+  onCardReset: PropTypes.func,
   disabledNumbers: PropTypes.instanceOf(Array),
 };
 
