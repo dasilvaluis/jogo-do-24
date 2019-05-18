@@ -26,17 +26,12 @@ class Board extends Component {
    * @returns {void}
    */
   loadRandomCard() {
-    const cardsCollection = [...cards];
-    const randomIndex = Math.floor(Math.random() * cardsCollection.length);
-    const card = { ...cardsCollection[randomIndex] };
-
-    card.numbers = card.numbers.reduce((acc, curr) => {
-      acc.push({
-        value: curr,
-        active: true,
-      });
-      return acc;
-    }, []);
+    const randomIndex = Math.floor(Math.random() * cards.length);
+    const card = { ...cards[randomIndex] };
+    card.numbers = card.numbers.map(el => ({
+      value: el,
+      active: true,
+    }));
 
     this.props.setCard(card);
   }
@@ -62,7 +57,7 @@ class Board extends Component {
    * @param {number} index  Index of clicked number
    * @returns {void}
    */
-  handleNumberClick(number, index) {
+  handleNumberClick(number, numberIndex) {
     const {
       card,
     } = this.props;
@@ -71,8 +66,18 @@ class Board extends Component {
     const wasNumberInserted = this.calculator.current.registerNumber(number);
 
     if (wasNumberInserted) {
-      card.numbers[index].active = false;
-      this.props.setCard(card);
+      const updatedNumbers = card.numbers.map((el, i) => {
+        if (i !== numberIndex) {
+          return el;
+        }
+
+        return {
+          ...el,
+          active: false,
+        };
+      });
+
+      this.props.setCard({ ...card, numbers: updatedNumbers });
     }
   }
 
@@ -86,11 +91,11 @@ class Board extends Component {
       card,
     } = this.props;
 
-    card.numbers = card.numbers.map((el) => {
+    const updatedNumbers = card.numbers.map((el) => {
       el.active = true;
       return el;
     });
-    this.props.setCard(card);
+    this.props.setCard({ ...card, numbers: updatedNumbers });
   }
 
   /**
