@@ -40,8 +40,8 @@ class Card extends Component {
    * @returns {void}
    */
   handleNumberClick(e) {
-    const numberIndex = e.target.getAttribute('data-index');
-    const numberValue = e.target.getAttribute('data-value');
+    const numberIndex = parseInt(e.target.getAttribute('data-index'), 10);
+    const numberValue = parseInt(e.target.getAttribute('data-value'), 10);
 
     // Parent callback functions
     this.props.onNumberClick(numberValue, numberIndex);
