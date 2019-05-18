@@ -49,9 +49,11 @@ class Card extends Component {
 
   render() {
     const { disabled } = this.state;
-    const { numbers } = this.props;
+    const {
+      card,
+    } = this.props;
 
-    if (0 === numbers.length) {
+    if (0 === card.numbers.length) {
       return <div>Loading...</div>;
     }
 
@@ -66,7 +68,7 @@ class Card extends Component {
         <button type="button" className="card__submit-button" onClick={() => this.handleResetClick()} />
         <div>
           {
-            numbers.map(
+            card.numbers.map(
               (number, i) => (
                 <button
                   type="button"
@@ -89,13 +91,12 @@ class Card extends Component {
 }
 
 Card.defaultProps = {
-  numbers: [],
   onNumberClick: () => {},
   onCardReset: () => {},
 };
 
 Card.propTypes = {
-  numbers: PropTypes.instanceOf(Array),
+  card: PropTypes.instanceOf(Object).isRequired,
   onNumberClick: PropTypes.func,
   onCardReset: PropTypes.func,
 };

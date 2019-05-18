@@ -14,7 +14,6 @@ class Board extends Component {
     this.CORRECT_RESULT = 24;
 
     this.calculator = React.createRef();
-    this.card = React.createRef();
   }
 
   componentDidMount() {
@@ -45,7 +44,6 @@ class Board extends Component {
   reset() {
     this.loadRandomCard();
     this.calculator.current.reset();
-    this.card.current.reset();
   }
 
   /**
@@ -74,8 +72,6 @@ class Board extends Component {
 
     if (wasNumberInserted) {
       card.numbers[index].active = false;
-      console.log(card);
-
       this.props.setCard(card);
     }
   }
@@ -86,7 +82,15 @@ class Board extends Component {
    * @returns {void}
    */
   handleCalculatorReset() {
-    this.card.current.reset();
+    const {
+      card,
+    } = this.props;
+
+    card.numbers = card.numbers.map((el) => {
+      el.active = true;
+      return el;
+    });
+    this.props.setCard(card);
   }
 
   /**
@@ -107,16 +111,12 @@ class Board extends Component {
     const {
       card,
     } = this.props;
-    console.log(card);
-
 
     return (
       <div className="board">
         <div>
           <Card
-            ref={this.card}
-            numbers={card.numbers}
-            grade={card.grade}
+            card={card}
             onCardReset={() => this.handleCardReset()}
             onNumberClick={(number, index) => this.handleNumberClick(number, index)}
           />
