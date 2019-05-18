@@ -48,7 +48,8 @@
         "allowForLoopAfterthoughts": true
       }
     ],
-    "yoda": [0]
+    "yoda": [0],
+    "no-param-reassign": [2, { "props": false }]
 
   },
   "plugins": [
