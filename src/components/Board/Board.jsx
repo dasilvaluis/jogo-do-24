@@ -53,7 +53,7 @@ class Board extends Component {
    * Number click handler
    *
    * @param {number} number Clicked number
-   * @param {number} index  Index of clicked number
+   * @param {number} numberIndex  Index of clicked number
    * @returns {void}
    */
   handleNumberClick(number, numberIndex) {
@@ -62,20 +62,9 @@ class Board extends Component {
     } = this.props;
 
     // Register number in calculator
-    const wasNumberInserted = this.calculator.current.registerNumber(number);
-
-    if (wasNumberInserted) {
-      const updatedNumbers = card.numbers.map((el, i) => {
-        if (i !== numberIndex) {
-          return el;
-        }
-
-        return {
-          ...el,
-          active: false,
-        };
-      });
-
+    if (this.calculator.current.registerNumber(number)) {
+      const updatedNumbers = [...card.numbers];
+      updatedNumbers[numberIndex].active = false;
       this.props.setCard({ ...card, numbers: updatedNumbers });
     }
   }
