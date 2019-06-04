@@ -87,6 +87,16 @@ $card-button-backgroundcolor: #d92a47;
       opacity: .4;
     }
 
+    &[data-value='6']:after,
+    &[data-value='9']:after {
+      content: "";
+      position: absolute;
+      bottom: .05em;
+      height: 2px;
+      width: 50%;
+      background-color: black;
+    }
+
     &:nth-of-type(1) {
       top: 10px;
       left: 50%;
