@@ -176,33 +176,39 @@ class Calculator extends Component {
     const lastSymbol = operation.length ? operation[operation.length - 1] : null;
 
     // if empty operation or leading (
-    if (null === lastSymbol || '(' === lastSymbol) {
-      if (isNumeric(symbol) || '(' === symbol) {
-        return true;
-      }
-      // if leading ) - allow only operators and ) if theres is ( to close
-    } else if (')' === lastSymbol) {
-      if (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
-        return true;
-      }
+    if (
+      (null === lastSymbol || '(' === lastSymbol)
+      && (isNumeric(symbol) || '(' === symbol)
+    ) {
+      return true;
+    }
 
-      if (')' === symbol && isParenthesisOpen(operation)) {
-        return true;
-      }
-      // if leading number - allow operator, except (
-    } else if (null !== lastSymbol && isNumeric(lastSymbol)) {
-      if (')' === symbol && isParenthesisOpen(operation)) {
-        return true;
-      }
+    // if leading ) - allow only operators and ) if theres is ( to close
+    if (
+      ')' === lastSymbol
+      && (
+        (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol)
+        || (')' === symbol && isParenthesisOpen(operation))
+      )
+    ) {
+      return true;
+    }
 
-      if (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol) {
-        return true;
-      }
-      // if leading operator [+-*/] - allow only numbers and (
-    } else if (!isNumeric(lastSymbol)) {
-      if (isNumeric(symbol) || '(' === symbol) {
-        return true;
-      }
+    // if leading number - allow operator, except (
+    if (
+      null !== lastSymbol
+      && isNumeric(lastSymbol)
+      && (
+        (')' === symbol && isParenthesisOpen(operation))
+        || (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol)
+      )
+    ) {
+      return true;
+    }
+
+    // if leading operator [+-*/] - allow only numbers and (
+    if (!isNumeric(lastSymbol) && (isNumeric(symbol) || '(' === symbol)) {
+      return true;
     }
 
     return false;
