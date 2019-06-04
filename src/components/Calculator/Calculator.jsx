@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isNumeric, getCalculationResult, isParenthesisOpen } from '../../Helpers';
+import { isSymbolPossible, getCalculationResult, isParenthesisOpen } from '../../Helpers';
 
 class Calculator extends Component {
   constructor(props) {
@@ -113,7 +113,7 @@ class Calculator extends Component {
     if (this.MAXIMUM_NUMBERS <= numbers.length) { return false; }
 
     // Push number
-    if (!this.isSymbolPossible(number)) {
+    if (!isSymbolPossible(number, operation)) {
       // error
       return false;
     }
@@ -144,7 +144,7 @@ class Calculator extends Component {
     if (this.MAXIMUM_OPERATORS <= operators.length && '(' !== operator && ')' !== operator) { return false; }
 
     // Push operator
-    if (!this.isSymbolPossible(operator)) {
+    if (!isSymbolPossible(operator, operation)) {
       // error
       return false;
     }
@@ -162,56 +162,6 @@ class Calculator extends Component {
     });
 
     return true;
-  }
-
-  /**
-   * Test if is possible to append given symbol to operation array
-   *
-   * @param {string} symbol Symbol to test
-   * @returns {bool} Symbol is possble
-   */
-  isSymbolPossible(symbol) {
-    const { operation } = this.state;
-
-    const lastSymbol = operation.length ? operation[operation.length - 1] : null;
-
-    // if empty operation or leading (
-    if (
-      (null === lastSymbol || '(' === lastSymbol)
-      && (isNumeric(symbol) || '(' === symbol)
-    ) {
-      return true;
-    }
-
-    // if leading ) - allow only operators and ) if theres is ( to close
-    if (
-      ')' === lastSymbol
-      && (
-        (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol)
-        || (')' === symbol && isParenthesisOpen(operation))
-      )
-    ) {
-      return true;
-    }
-
-    // if leading number - allow operator, except (
-    if (
-      null !== lastSymbol
-      && isNumeric(lastSymbol)
-      && (
-        (')' === symbol && isParenthesisOpen(operation))
-        || (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol)
-      )
-    ) {
-      return true;
-    }
-
-    // if leading operator [+-*/] - allow only numbers and (
-    if (!isNumeric(lastSymbol) && (isNumeric(symbol) || '(' === symbol)) {
-      return true;
-    }
-
-    return false;
   }
 
   render() {

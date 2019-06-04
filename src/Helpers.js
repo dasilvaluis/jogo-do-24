@@ -61,3 +61,53 @@ export const getBracketsBalance = (operationArray) => {
  * @returns {bool} Exists parenthesis to close
  */
 export const isParenthesisOpen = operationArray => 0 < getBracketsBalance(operationArray);
+
+
+/**
+ * Test if is possible to append given symbol to operation array
+ *
+ * @param {string} symbol Symbol to test
+ * @param {Array} operation Operation to test the symbol agaisnt
+ * @returns {bool} Symbol is possble
+ */
+export const isSymbolPossible = (symbol, operation) => {
+  const lastSymbol = operation.length ? operation[operation.length - 1] : null;
+
+  // if empty operation or leading (
+  if (
+    (null === lastSymbol || '(' === lastSymbol)
+    && (isNumeric(symbol) || '(' === symbol)
+  ) {
+    return true;
+  }
+
+  // if leading ) - allow only operators and ) if theres is ( to close
+  if (
+    ')' === lastSymbol
+    && (
+      (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol)
+      || (')' === symbol && isParenthesisOpen(operation))
+    )
+  ) {
+    return true;
+  }
+
+  // if leading number - allow operator, except (
+  if (
+    null !== lastSymbol
+    && isNumeric(lastSymbol)
+    && (
+      (')' === symbol && isParenthesisOpen(operation))
+      || (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol)
+    )
+  ) {
+    return true;
+  }
+
+  // if leading operator [+-*/] - allow only numbers and (
+  if (!isNumeric(lastSymbol) && (isNumeric(symbol) || '(' === symbol)) {
+    return true;
+  }
+
+  return false;
+};
