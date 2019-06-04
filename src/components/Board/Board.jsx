@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from '../Card';
 import Calculator from '../Calculator';
-import CardActions from '../../actions/CardActions';
-import CalculatorActions from '../../actions/CalculatorActions';
+import { CardActions, CalculatorActions } from '../../actions';
 import { cards } from '../../data/cards';
 
 class Board extends Component {
