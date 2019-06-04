@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import CalculatorReducers from './CalculatorReducers';
-import CardReducers from './CardReducers';
+import operation from './OperationReducer';
+import card from './CardReducer';
 
 export default combineReducers({
-  card: CardReducers.setCard,
-  operation: CalculatorReducers.setOperation,
+  card,
+  operation,
 });
