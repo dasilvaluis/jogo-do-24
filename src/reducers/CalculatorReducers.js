@@ -1,13 +1,11 @@
-import {
-  SET_OPERATION,
-} from '../actions/types';
+import { types } from '../actions';
 
 const INITIAL_OPERATION = [];
 
 class CalculatorReducers {
   static setOperation(state = INITIAL_OPERATION, action) {
     switch (action.type) {
-      case SET_OPERATION:
+      case types.SET_OPERATION:
         return action.payload;
       default:
         return state;
