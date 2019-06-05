@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { OperationActions } from '../../actions';
 import { isSymbolPossible, getCalculationResult, isParenthesisOpen } from '../../Helpers';
 
 class Calculator extends Component {
@@ -35,13 +37,6 @@ class Calculator extends Component {
         name: 'close parenthesis',
       },
     ];
-
-    this.state = {
-      ready: false,
-      numbers: [],
-      operators: [],
-      operation: [],
-    };
   }
 
   /**
@@ -51,9 +46,6 @@ class Calculator extends Component {
    */
   reset() {
     this.setState({
-      ready: false,
-      numbers: [],
-      operators: [],
       operation: [],
     });
   }
@@ -76,6 +68,7 @@ class Calculator extends Component {
    */
   handleClear() {
     this.reset();
+    this.props.resetOperation();
     this.props.onReset();
   }
 
@@ -85,13 +78,10 @@ class Calculator extends Component {
    * @returns {void}
    */
   handleSubmit() {
-    const { operation } = this.state;
+    const { operation } = this.props;
     if (!operation.length || isParenthesisOpen(operation)) { return; }
 
-    let calc = '';
-    for (let i = 0; i < operation.length; i++) {
-      calc = `${calc}${operation[i]}`;
-    }
+    const calc = operation.join('');
 
     // Return result to Board
     this.props.onFinish({
@@ -101,47 +91,16 @@ class Calculator extends Component {
   }
 
   /**
-   * Registers number in the current operation
-   *
-   * @param {number} number Number to register
-   * @returns {bool} Successful
-   */
-  registerNumber(number) {
-    const { numbers, operators, operation } = this.state;
-
-    // Return if to many numbers
-    if (this.MAXIMUM_NUMBERS <= numbers.length) { return false; }
-
-    // Push number
-    if (!isSymbolPossible(number, operation)) {
-      // error
-      return false;
-    }
-
-    operation.push(number);
-    numbers.push(number);
-    this.setState({
-      ready: this.MAXIMUM_OPERATORS === operators.length
-        && this.MAXIMUM_NUMBERS === numbers.length
-        && !isParenthesisOpen(operation),
-      numbers,
-      operation,
-    });
-
-    return true;
-  }
-
-  /**
    * Registers operator in the current operation
    *
    * @param {string} operator Operator string [+-/*()]
    * @returns {bool} Successful
    */
   registerOperator(operator) {
-    const { numbers, operators, operation } = this.state;
+    const { usedNumbers, operation } = this.props;
 
-    // Return if to many operators
-    if (this.MAXIMUM_OPERATORS <= operators.length && '(' !== operator && ')' !== operator) { return false; }
+    // Return if used all numbers
+    if (this.MAXIMUM_NUMBERS <= usedNumbers.length && !('(' === operator || ')' === operator)) { return false; }
 
     // Push operator
     if (!isSymbolPossible(operator, operation)) {
@@ -149,23 +108,14 @@ class Calculator extends Component {
       return false;
     }
 
-    operation.push(operator);
-    if ('(' !== operator && ')' !== operator) {
-      operators.push(operator);
-    }
-    this.setState({
-      ready: this.MAXIMUM_OPERATORS === operators.length
-        && this.MAXIMUM_NUMBERS === numbers.length
-        && !isParenthesisOpen(operation),
-      operators,
-      operation,
-    });
+    this.props.addSymbol(operator);
+    this.props.setReady(this.MAXIMUM_NUMBERS <= usedNumbers.length && !isParenthesisOpen(operation));
 
     return true;
   }
 
   render() {
-    const { ready, operation } = this.state;
+    const { isReady, operation } = this.props;
 
     return (
       <div className="calculator">
@@ -190,7 +140,7 @@ class Calculator extends Component {
             )
           }
           <button type="button" className="calculator__submit" onClick={() => this.handleClear()}>C</button>
-          <button type="button" className="calculator__submit" disabled={!ready} onClick={() => this.handleSubmit()}>=</button>
+          <button type="button" className="calculator__submit" disabled={!isReady} onClick={() => this.handleSubmit()}>=</button>
         </div>
       </div>
     );
@@ -205,6 +155,24 @@ Calculator.defaultProps = {
 Calculator.propTypes = {
   onReset: PropTypes.func,
   onFinish: PropTypes.func,
+  addSymbol: PropTypes.func.isRequired,
+  resetOperation: PropTypes.func.isRequired,
+  setReady: PropTypes.func.isRequired,
+  usedNumbers: PropTypes.instanceOf(Array).isRequired,
+  operation: PropTypes.instanceOf(Array).isRequired,
+  isReady: PropTypes.bool.isRequired,
 };
 
-export default Calculator;
+const mapStateToProps = state => ({
+  usedNumbers: state.usedNumbers,
+  operation: state.operation,
+  isReady: state.isReady,
+});
+
+const mapDispatchToProps = {
+  addSymbol: OperationActions.addSymbol,
+  resetOperation: OperationActions.resetOperation,
+  setReady: OperationActions.setReady,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calculator);
