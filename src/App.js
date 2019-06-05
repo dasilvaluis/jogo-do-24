@@ -1,13 +1,12 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 import Board from './components/Board';
-import reducers from './reducers';
+import configureStore from './configureStore';
 
 class App extends Component {
   render() {
-    const store = createStore(reducers);
+    const store = configureStore();
 
     return (
       <Provider store={store}>
