@@ -7,19 +7,6 @@
 export const isNumeric = value => Number.isFinite(value) || (Number.isFinite(Number(value)) && typeof value === 'string');
 
 /**
- * Returns numeric result of string arithmetic calculation
- * Expected format: 4+2/6-1; 5-3*9/1; ...
- *
- * @param {string} calcString String representing the operation
- * @returns {number} Resulting integer, 0 on error
- */
-export const getCalculationResult = (calcString) => {
-  // eslint-disable-next-line no-eval
-  const result = eval(calcString);
-  return isNumeric(result) ? result : 0;
-};
-
-/**
  * Returns the balance of brackets in string
  *
  * @param {Array} operationArray Operation array

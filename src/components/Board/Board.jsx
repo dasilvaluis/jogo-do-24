@@ -62,6 +62,30 @@ class Board extends Component {
     return true;
   }
 
+  /**
+   * Registers operator in the current operation
+   *
+   * @param {string} operator Operator string [+-/*()]
+   * @returns {bool} Successful
+   */
+  registerOperator(operator) {
+    const { usedNumbers, operation } = this.props;
+
+    // Return if used all numbers
+    if (this.MAXIMUM_NUMBERS <= usedNumbers.length && !('(' === operator || ')' === operator)) { return false; }
+
+    // Push operator
+    if (!isSymbolPossible(operator, operation)) {
+      // error
+      return false;
+    }
+
+    this.props.addSymbol(operator);
+    this.props.setReady(this.MAXIMUM_NUMBERS <= usedNumbers.length && !isParenthesisOpen(operation));
+
+    return true;
+  }
+
   reset() {
     this.loadRandomCard();
     this.props.resetOperation();
@@ -145,6 +169,7 @@ class Board extends Component {
           <Calculator
             onReset={() => this.handleCalculatorReset()}
             onFinish={result => this.handleFinish(result)}
+            onOperatorClick={operator => this.registerOperator(operator)}
           />
         </div>
       </div>

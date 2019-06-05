@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { OperationActions } from '../../actions';
-import { isSymbolPossible, getCalculationResult, isParenthesisOpen } from '../../Helpers';
+import { isNumeric, isParenthesisOpen } from '../../Helpers';
 
 class Calculator extends Component {
   constructor(props) {
     super(props);
-
-    this.MAXIMUM_NUMBERS = 4;
-    this.MAXIMUM_OPERATORS = 3;
 
     this.AVAILABLE_OPERATORS = [
       {
@@ -40,15 +37,17 @@ class Calculator extends Component {
   }
 
   /**
-   * Reset Calculator
+   * Returns numeric result of string arithmetic calculation
+   * Expected format: 4+2/6-1; 5-3*9/1; ...
    *
-   * @returns {void}
+   * @param {string} calcString String representing the operation
+   * @returns {number} Resulting integer, 0 on error
    */
-  reset() {
-    this.setState({
-      operation: [],
-    });
-  }
+  getCalculationResult = (calcString) => {
+    // eslint-disable-next-line no-eval
+    const result = eval(calcString);
+    return isNumeric(result) ? result : 0;
+  };
 
   /**
    * Handle Operator button click
@@ -58,7 +57,7 @@ class Calculator extends Component {
    */
   handleOperatorClick(e) {
     const operatorValue = e.target.getAttribute('data-operator');
-    this.registerOperator(operatorValue);
+    this.props.onOperatorClick(operatorValue);
   }
 
   /**
@@ -67,7 +66,6 @@ class Calculator extends Component {
    * @returns {void}
    */
   handleClear() {
-    this.reset();
     this.props.resetOperation();
     this.props.onReset();
   }
@@ -86,32 +84,8 @@ class Calculator extends Component {
     // Return result to Board
     this.props.onFinish({
       solution: calc,
-      value: getCalculationResult(calc),
+      value: this.getCalculationResult(calc),
     });
-  }
-
-  /**
-   * Registers operator in the current operation
-   *
-   * @param {string} operator Operator string [+-/*()]
-   * @returns {bool} Successful
-   */
-  registerOperator(operator) {
-    const { usedNumbers, operation } = this.props;
-
-    // Return if used all numbers
-    if (this.MAXIMUM_NUMBERS <= usedNumbers.length && !('(' === operator || ')' === operator)) { return false; }
-
-    // Push operator
-    if (!isSymbolPossible(operator, operation)) {
-      // error
-      return false;
-    }
-
-    this.props.addSymbol(operator);
-    this.props.setReady(this.MAXIMUM_NUMBERS <= usedNumbers.length && !isParenthesisOpen(operation));
-
-    return true;
   }
 
   render() {
@@ -150,15 +124,14 @@ class Calculator extends Component {
 Calculator.defaultProps = {
   onReset: () => {},
   onFinish: () => {},
+  onOperatorClick: () => {},
 };
 
 Calculator.propTypes = {
   onReset: PropTypes.func,
   onFinish: PropTypes.func,
-  addSymbol: PropTypes.func.isRequired,
+  onOperatorClick: PropTypes.func,
   resetOperation: PropTypes.func.isRequired,
-  setReady: PropTypes.func.isRequired,
-  usedNumbers: PropTypes.instanceOf(Array).isRequired,
   operation: PropTypes.instanceOf(Array).isRequired,
   isReady: PropTypes.bool.isRequired,
 };
