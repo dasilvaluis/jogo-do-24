@@ -140,6 +140,27 @@ $card-button-backgroundcolor: #d92a47;
     }
   }
 
+  &__grade {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  &__grade-point {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white;
+
+    & + & {
+      margin-top: 3px;
+    }
+  }
+
   &__submit-button {
     display: inline-block;
     width: $card-submitbutton-width;
