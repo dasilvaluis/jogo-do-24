@@ -4,7 +4,7 @@ const INITIAL_OPERATION = [];
 
 export const operation = (state = INITIAL_OPERATION, action) => {
   switch (action.type) {
-    case types.RESET_OPERATION:
+    case types.RESET_CALCULATION:
       return INITIAL_OPERATION;
 
     case types.ADD_SYMBOL:

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 class Card extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       disabled: false,
     };
@@ -15,7 +16,6 @@ class Card extends Component {
    * @returns {void}
    */
   reset() {
-    // Reset disabled state
     this.setState({
       disabled: false,
     });
@@ -28,8 +28,6 @@ class Card extends Component {
    */
   handleResetClick() {
     this.reset();
-
-    // Parent callback functions
     this.props.onCardReset();
   }
 
@@ -43,15 +41,12 @@ class Card extends Component {
     const numberIndex = parseInt(e.target.getAttribute('data-index'), 10);
     const numberValue = parseInt(e.target.getAttribute('data-value'), 10);
 
-    // Parent callback functions
     this.props.onNumberClick(numberValue, numberIndex);
   }
 
   render() {
     const { disabled } = this.state;
-    const {
-      card,
-    } = this.props;
+    const { card } = this.props;
 
     if (0 === card.numbers.length) {
       return <div>Loading...</div>;
@@ -67,23 +62,19 @@ class Card extends Component {
         </div>
         <button type="button" className="card__submit-button" onClick={() => this.handleResetClick()} />
         <div>
-          {
-            card.numbers.map(
-              (number, i) => (
-                <button
-                  type="button"
-                  className="card__number"
-                  disabled={!number.active || disabled}
-                  data-index={i}
-                  data-value={number.value}
-                  onClick={e => this.handleNumberClick(e)}
-                  key={`${Math.random() * 100}-${number.value}`}
-                >
-                  {number.value}
-                </button>
-              ),
-            )
-          }
+          {card.numbers.map((number, i) => (
+            <button
+              type="button"
+              className="card__number"
+              disabled={!number.active || disabled}
+              data-index={i}
+              data-value={number.value}
+              onClick={e => this.handleNumberClick(e)}
+              key={`${Math.random() * 100}-${number.value}`}
+            >
+              {number.value}
+            </button>
+          ))}
         </div>
       </div>
     );

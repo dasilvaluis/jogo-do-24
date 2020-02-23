@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { operation, isReady } from './OperationReducer';
-import usedNumbers from './NumbersReducer';
-import card from './CardReducer';
+import { operation, isReady } from './operation-reducer';
+import usedNumbers from './numbers-reducer';
+import card from './card-reducer';
 
 export default combineReducers({
   card,
