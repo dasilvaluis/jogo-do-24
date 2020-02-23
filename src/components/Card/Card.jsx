@@ -54,6 +54,9 @@ class Card extends Component {
 
     return (
       <div className="card">
+        <div className="card__grade">
+          {Array(card.grade).fill(0).map(() => <span className="card__grade-point" /> )}
+        </div>
         <div>
           <span className="card__triangle" />
           <span className="card__triangle" />
