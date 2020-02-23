@@ -1,11 +1,11 @@
 import * as types from './types';
-import CardActions from './CardActions';
-import OperationActions from './OperationActions';
-import NumbersActions from './NumbersActions';
+import CardActions from './card-actions';
+import CalculationActions from './calculation-actions';
+import NumbersActions from './numbers-actions';
 
 export {
   types,
   CardActions,
-  OperationActions,
+  CalculationActions,
   NumbersActions,
 };

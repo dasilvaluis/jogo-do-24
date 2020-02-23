@@ -1,4 +1,4 @@
-import Card from './Card.jsx';
+import Card from './Card';
 import '../../styles/css/Fonts.css';
 import './Card.css';
 

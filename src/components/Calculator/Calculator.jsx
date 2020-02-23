@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { OperationActions } from '../../actions';
-import { isNumeric, isParenthesisOpen } from '../../Helpers';
+import { CalculationActions } from '../../actions';
+import { isNumeric, isParenthesisOpen } from '../../utils';
 
 class Calculator extends Component {
   constructor(props) {
@@ -143,9 +143,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  addSymbol: OperationActions.addSymbol,
-  resetOperation: OperationActions.resetOperation,
-  setReady: OperationActions.setReady,
+  addSymbol: CalculationActions.addSymbol,
+  resetOperation: CalculationActions.resetOperation,
+  setReady: CalculationActions.setReady,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calculator);

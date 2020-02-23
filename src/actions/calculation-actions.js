@@ -1,13 +1,12 @@
 import {
-  RESET_OPERATION,
+  RESET_CALCULATION,
   ADD_SYMBOL,
   SET_READY,
 } from './types';
 
 export default {
   resetOperation: () => ({
-    type: RESET_OPERATION,
-    payload: [],
+    type: RESET_CALCULATION,
   }),
 
   addSymbol: symbol => ({

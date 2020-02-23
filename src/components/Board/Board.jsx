@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from '../Card';
 import Calculator from '../Calculator';
-import { CardActions, OperationActions, NumbersActions } from '../../actions';
-import { cards } from '../../data/cards';
-import { isSymbolPossible, isParenthesisOpen } from '../../Helpers';
+import { CardActions, CalculationActions, NumbersActions } from '../../actions';
+import { cards } from '../../data/cards.json';
+import { isSymbolPossible, isParenthesisOpen } from '../../utils';
 
 class Board extends Component {
   constructor(props) {
@@ -152,9 +152,7 @@ class Board extends Component {
   }
 
   render() {
-    const {
-      card,
-    } = this.props;
+    const { card } = this.props;
 
     return (
       <div className="board">
@@ -196,10 +194,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setCard: CardActions.setCard,
-  addSymbol: OperationActions.addSymbol,
+  addSymbol: CalculationActions.addSymbol,
   addNumber: NumbersActions.addNumber,
-  setReady: OperationActions.setReady,
-  resetOperation: OperationActions.resetOperation,
+  setReady: CalculationActions.setReady,
+  resetOperation: CalculationActions.resetOperation,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);
