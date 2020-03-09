@@ -106,8 +106,6 @@ export const getRandomCard = (difficulty) => {
     ? cards.filter(card => card.grade === difficulty)
     : cards;
 
-  console.log('difficulty', difficulty);
-
   const randomIndex = Math.floor(Math.random() * filteredCards.length);
   const card = { ...filteredCards[randomIndex] };
 
