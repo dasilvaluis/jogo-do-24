@@ -1,3 +1,5 @@
+import { cards } from './data/cards.json';
+
 /**
  * Checks if given value is an integer or string representation of one
  *
@@ -97,4 +99,25 @@ export const isSymbolPossible = (symbol, operation) => {
   }
 
   return false;
+};
+
+export const getRandomCard = (difficulty) => {
+  const filteredCards = difficulty > 0
+    ? cards.filter(card => card.grade === difficulty)
+    : cards;
+
+  console.log('difficulty', difficulty);
+
+  const randomIndex = Math.floor(Math.random() * filteredCards.length);
+  const card = { ...filteredCards[randomIndex] };
+
+  const numbers = card.numbers.map(el => ({
+    value: el,
+    active: true,
+  }));
+
+  return {
+    numbers,
+    grade: card.grade,
+  };
 };

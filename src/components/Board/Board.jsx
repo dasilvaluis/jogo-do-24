@@ -3,9 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from '../Card';
 import Calculator from '../Calculator';
-import { CardActions, CalculationActions, NumbersActions } from '../../actions';
-import { cards } from '../../data/cards.json';
-import { isSymbolPossible, isParenthesisOpen } from '../../utils';
+import {
+  CardActions,
+  CalculationActions,
+  NumbersActions,
+} from '../../actions';
+import {
+  isSymbolPossible,
+  isParenthesisOpen,
+  getRandomCard,
+} from '../../utils';
 
 class Board extends Component {
   constructor(props) {
@@ -18,7 +25,12 @@ class Board extends Component {
   }
 
   componentDidMount() {
-    this.loadRandomCard();
+    const storedDifficulty = localStorage.getItem('24game_difficulty');
+    const difficulty = storedDifficulty !== null
+      ? parseInt(storedDifficulty, 10)
+      : this.props.difficulty;
+
+    this.props.setCard(getRandomCard(difficulty));
   }
 
   /**
@@ -27,14 +39,7 @@ class Board extends Component {
    * @returns {void}
    */
   loadRandomCard() {
-    const randomIndex = Math.floor(Math.random() * cards.length);
-    const card = { ...cards[randomIndex] };
-    card.numbers = card.numbers.map(el => ({
-      value: el,
-      active: true,
-    }));
-
-    this.props.setCard(card);
+    this.props.setCard(getRandomCard(this.props.difficulty));
   }
 
   /**
@@ -47,19 +52,18 @@ class Board extends Component {
     const { usedNumbers, operation } = this.props;
 
     // Return if to many numbers
-    if (this.MAXIMUM_NUMBERS <= usedNumbers.length) { return false; }
+    if (this.MAXIMUM_NUMBERS <= usedNumbers.length) {
+      return;
+    }
 
     // Push number
     if (!isSymbolPossible(number, operation)) {
-      // error
-      return false;
+      return;
     }
 
     this.props.addNumber(number);
     this.props.addSymbol(number);
     this.props.setReady(this.MAXIMUM_NUMBERS <= usedNumbers.length + 1 && !isParenthesisOpen(operation));
-
-    return true;
   }
 
   /**
@@ -72,18 +76,17 @@ class Board extends Component {
     const { usedNumbers, operation } = this.props;
 
     // Return if used all numbers
-    if (this.MAXIMUM_NUMBERS <= usedNumbers.length && !('(' === operator || ')' === operator)) { return false; }
+    if (this.MAXIMUM_NUMBERS <= usedNumbers.length && !('(' === operator || ')' === operator)) {
+      return;
+    }
 
     // Push operator
     if (!isSymbolPossible(operator, operation)) {
-      // error
-      return false;
+      return;
     }
 
     this.props.addSymbol(operator);
     this.props.setReady(this.MAXIMUM_NUMBERS <= usedNumbers.length && !isParenthesisOpen(operation));
-
-    return true;
   }
 
   reset() {
@@ -184,12 +187,14 @@ Board.propTypes = {
   resetOperation: PropTypes.func.isRequired,
   usedNumbers: PropTypes.instanceOf(Array).isRequired,
   operation: PropTypes.instanceOf(Array).isRequired,
+  difficulty: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
   card: state.card,
   usedNumbers: state.usedNumbers,
   operation: state.operation,
+  difficulty: state.difficulty,
 });
 
 const mapDispatchToProps = {

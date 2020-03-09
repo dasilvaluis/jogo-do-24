@@ -1,13 +1,10 @@
 import { types } from '../actions';
 
-const INITIAL_CARD = {
-  grade: 0,
-  numbers: [],
-};
+const INITIAL_DIFFICULTY = -1;
 
-export default (state = INITIAL_CARD, action) => {
+export default (state = INITIAL_DIFFICULTY, action) => {
   switch (action.type) {
-    case types.SET_CARD:
+    case types.SET_DIFFICULTY:
       return action.payload;
     default:
       return state;
