@@ -3,6 +3,7 @@
 html {
   height: 100%;
   background-color: #efefef;
+  font-size: 13px;
 }
 
 body {
@@ -16,8 +17,12 @@ body {
 }
 
 .app-container {
-  padding: 40px 10px 20px;
+  padding: 10px 20px 20px;
   box-sizing: border-box;
+
+  @media (min-width: $breakpoint-medium) {
+    padding: 40px 20px 20px;
+  }
 }
 
 .app-title {
@@ -26,16 +31,17 @@ body {
 }
 
 .app-header {
-  max-width: 600px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   font-family: $font-opensans;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .app-main {
+  max-width: 800px;
+  margin: 0 auto;
   font-family: $font-opensans;
-  margin-bottom: 40px;
 }
 
 .app-footer {

@@ -137,7 +137,6 @@ Calculator.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  usedNumbers: state.usedNumbers,
   operation: state.operation,
   isReady: state.isReady,
 });

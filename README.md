@@ -15,4 +15,3 @@ Play @ [https://luism-s.github.io/jogo-do-24/](https://luism-s.github.io/jogo-do
 ### TODO:
 - Proper Win/Lose response
 - Countdown timer per card
-- Card grade (difficulty)
