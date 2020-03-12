@@ -83,8 +83,7 @@ $card-button-backgroundcolor: #d92a47;
     }
 
     &[disabled] {
-      cursor: default;
-      opacity: .4;
+      display: none;
     }
 
     &[data-value='6']:after,

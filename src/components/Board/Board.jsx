@@ -42,29 +42,6 @@ class Board extends Component {
     this.props.setCard(getRandomCard(this.props.difficulty));
   }
 
-  /**
-   * Registers number in the current operation
-   *
-   * @param {number} number Number to register
-   * @returns {bool} Successful
-   */
-  registerNumber(number) {
-    const { usedNumbers, operation } = this.props;
-
-    // Return if to many numbers
-    if (this.MAXIMUM_NUMBERS <= usedNumbers.length) {
-      return;
-    }
-
-    // Push number
-    if (!isSymbolPossible(number, operation)) {
-      return;
-    }
-
-    this.props.addNumber(number);
-    this.props.addSymbol(number);
-    this.props.setReady(this.MAXIMUM_NUMBERS <= usedNumbers.length + 1 && !isParenthesisOpen(operation));
-  }
 
   /**
    * Registers operator in the current operation
@@ -111,16 +88,20 @@ class Board extends Component {
    * @returns {void}
    */
   handleNumberClick(number, numberIndex) {
-    const {
-      card,
-    } = this.props;
+    const { card, usedNumbers, operation } = this.props;
 
-    // Register number in calculator
-    if (this.registerNumber(number)) {
-      const updatedNumbers = [...card.numbers];
-      updatedNumbers[numberIndex].active = false;
-      this.props.setCard({ ...card, numbers: updatedNumbers });
+    // Return if to many numbers or symbol not possible
+    if (this.MAXIMUM_NUMBERS <= usedNumbers.length || !isSymbolPossible(number, operation)) {
+      return;
     }
+
+    this.props.addNumber(number);
+    this.props.addSymbol(number);
+    this.props.setReady(this.MAXIMUM_NUMBERS <= usedNumbers.length + 1 && !isParenthesisOpen(operation));
+
+    const updatedNumbers = [...card.numbers];
+    updatedNumbers[numberIndex].active = false;
+    this.props.setCard({ ...card, numbers: updatedNumbers });
   }
 
   /**
