@@ -19,6 +19,7 @@
     "browser": true
   },
   "rules": {
+    "arrow-parens" : ["always"],
     "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
     "valid-jsdoc": 1,

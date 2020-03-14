@@ -17,11 +17,11 @@ body {
 }
 
 .app-container {
-  padding: 10px 20px 20px;
+  padding: 10px 20px;
   box-sizing: border-box;
 
   @media (min-width: $breakpoint-medium) {
-    padding: 40px 20px 20px;
+    padding: 20px;
   }
 }
 
@@ -35,16 +35,18 @@ body {
   margin-left: auto;
   margin-right: auto;
   font-family: $font-opensans;
-  margin-bottom: 20px;
-}
+  margin-bottom: 40px;
 
-.app-main {
-  max-width: 800px;
-  margin: 0 auto;
-  font-family: $font-opensans;
+  @media print {
+    page-break-after: always;
+  }
 }
 
 .app-footer {
   margin-top: 75px;
   text-align: center;
+
+  @media print {
+    display: none;
+  }
 }

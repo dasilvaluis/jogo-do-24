@@ -99,7 +99,7 @@ class Calculator extends Component {
         <div className="calculator__controls">
           {
             this.AVAILABLE_OPERATORS.map(
-              el => (
+              (el) => (
                 <button
                   type="button"
                   className="calculator__button calculator__operator"
