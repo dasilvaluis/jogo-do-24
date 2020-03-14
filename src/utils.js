@@ -101,15 +101,8 @@ export const isSymbolPossible = (symbol, operation) => {
   return false;
 };
 
-export const getRandomCard = (difficulty) => {
-  const filteredCards = difficulty > 0
-    ? cards.filter(card => card.grade === difficulty)
-    : cards;
-
-  const randomIndex = Math.floor(Math.random() * filteredCards.length);
-  const card = { ...filteredCards[randomIndex] };
-
-  const numbers = card.numbers.map(el => ({
+export const transfromCard = (card) => {
+  const numbers = card.numbers.map((el) => ({
     value: el,
     active: true,
   }));
@@ -118,4 +111,15 @@ export const getRandomCard = (difficulty) => {
     numbers,
     grade: card.grade,
   };
+};
+
+export const getRandomCard = (difficulty) => {
+  const filteredCards = difficulty > 0
+    ? cards.filter(card => card.grade === difficulty)
+    : cards;
+
+  const randomIndex = Math.floor(Math.random() * filteredCards.length);
+  const card = { ...filteredCards[randomIndex] };
+
+  return transfromCard(card);
 };

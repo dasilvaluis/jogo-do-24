@@ -1,27 +1,5 @@
 @import '../../styles/variables';
 
-$card-width: 320px;
-$card-padding: 10px;
-$card-triangle1-height: $card-width * .409;
-$card-triangle2-height:  $card-width * .118;
-$card-triangle-width: $card-triangle1-height * .577;
-$card-submitbutton-width: $card-width * .227;
-$card-number-width: $card-width * .254;
-$card-number-fontsize: 80px;
-
-$card-width-desktop: 570px;
-$card-padding-desktop: 20px;
-$card-triangle1-height-desktop: $card-width-desktop * .409;
-$card-triangle2-height-desktop:  $card-width-desktop * .118;
-$card-triangle-width-desktop: $card-triangle1-height-desktop * .577;
-$card-submitbutton-width-desktop: $card-width-desktop * .227;
-$card-number-width-desktop: $card-width-desktop * .254;
-$card-number-fontsize-desktop: 135px;
-
-$card-backgroudcolor: #040182;
-$card-circle-backgroundcolor: #ffc90d;
-$card-button-backgroundcolor: #d92a47;
-
 .card {
   width: $card-width;
   height: $card-width;
@@ -51,6 +29,10 @@ $card-button-backgroundcolor: #d92a47;
     @media (min-width: $breakpoint-medium) {
       width: calc(100% - #{$card-padding-desktop} * 2);
       height: calc(100% - #{$card-padding-desktop} * 2);
+    }
+
+    @media print {
+      display: none;
     }
   }
 
@@ -90,10 +72,9 @@ $card-button-backgroundcolor: #d92a47;
     &[data-value='9']:after {
       content: "";
       position: absolute;
-      bottom: .05em;
-      height: 2px;
+      bottom: 0;
       width: 50%;
-      background-color: black;
+      border-top: 2px solid black;
     }
 
     &:nth-of-type(1) {
@@ -185,6 +166,10 @@ $card-button-backgroundcolor: #d92a47;
       width: $card-submitbutton-width-desktop;
       height: $card-submitbutton-width-desktop;
     }
+
+    @media print {
+      display: none;
+    }
   }
 
   &__triangle  {
@@ -239,6 +224,23 @@ $card-button-backgroundcolor: #d92a47;
         border-width: $card-triangle-width-desktop/2 0 $card-triangle-width-desktop/2 $card-triangle2-height-desktop;
         border-color: transparent transparent transparent $card-button-backgroundcolor;
       }
+    }
+
+    @media print {
+      display: none;
+    }
+  }
+
+  &__background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+
+    @media print {
+      display: block;
     }
   }
 }
