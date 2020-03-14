@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import CardBackground from '../../images/card-background.png';
 
 class Card extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class Card extends Component {
 
     return (
       <div className="card">
+        <img src={CardBackground} className="card__background" alt="background"/>
         <div className="card__grade">
           {Array(card.grade).fill(0).map(() => <span key={Math.random() * 100} className="card__grade-point" />)}
         </div>

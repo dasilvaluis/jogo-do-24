@@ -1,0 +1,22 @@
+.print-container {
+  max-width: 1150px;
+  margin: 0 auto;
+}
+.print-container__cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.print-container__cards > * {
+  margin-bottom: 10px;
+}
+.print-container__cards > *:nth-child(2n-1) {
+  margin-right: 10px;
+}
+@media print {
+  .print-container__cards {
+    margin-top: 40px;
+    page-break-after: always;
+  }
+}
+
+/*# sourceMappingURL=print.css.map */
