@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "node-sass": "^4.13.1",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
@@ -19,10 +20,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "sass --update src/styles:src/styles/css src/components:src/components && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass": "sass --watch src/styles:src/styles/css src/components:src/components src/pages:src/pages",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
   },

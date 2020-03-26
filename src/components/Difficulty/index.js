@@ -1,5 +1,5 @@
-import '../../styles/css/Fonts.css';
-import './Difficulty.css';
+import '../../styles/Fonts.scss';
+import './Difficulty.scss';
 import Difficulty from './Difficulty';
 
 export default Difficulty;

@@ -23,6 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .sass-cache
-/src/styles/css/*
+/src/styles/*
 /src/components/**/*.css
 /src/components/**/*.css.map

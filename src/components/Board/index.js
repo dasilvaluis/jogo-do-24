@@ -1,5 +1,5 @@
-import '../../styles/css/Fonts.css';
-import './Board.css';
+import '../../styles/fonts.scss';
+import './Board.scss';
 import Board from './Board';
 
 export default Board;

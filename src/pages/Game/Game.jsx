@@ -3,8 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Board from '../../components/Board';
 import Difficulty from '../../components/Difficulty/Difficulty';
-import './game.css';
-import '../../styles/css/helpers.css';
+import './game.scss';
+import '../../styles/helpers.scss';
 
 export default () => (
   <div className="game-container">

@@ -2,7 +2,7 @@ import React from 'react';
 import { cards } from '../../data/cards.json';
 import Card from '../../components/Card';
 import { transfromCard } from '../../utils';
-import '../../styles/css/helpers.css';
+import '../../styles/helpers.scss';
 
 export default () => {
 
