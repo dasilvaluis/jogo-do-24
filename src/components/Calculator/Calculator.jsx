@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { CalculationActions } from '../../actions';
 import { isNumeric, isParenthesisOpen } from '../../utils';
+import './Calculator.scss';
 
 class Calculator extends Component {
   constructor(props) {

@@ -13,6 +13,7 @@ import {
   isParenthesisOpen,
   getRandomCard,
 } from '../../utils';
+import './Board.scss';
 
 class Board extends Component {
   constructor(props) {
