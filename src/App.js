@@ -36,7 +36,7 @@ export default () => (
         </p>
       </header>
 
-      <Router basename="/jogo-do-24">
+      <Router>
         <Switch>
           <Route path="/print">
             <Print />
