@@ -3,6 +3,9 @@
   "homepage": "http://luism-s.github.io/jogo-do-24",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.16.x"
+  },
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
