@@ -1,12 +1,16 @@
 {
   "name": "jogo-do-24",
-  "homepage": "http://luism-s.github.io/jogo-do-24",
   "version": "0.1.0",
   "private": true,
   "engines": {
     "node": "12.16.x"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luism-s/jogo-do-24.git"
+  },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "node-sass": "^4.13.1",
     "path": "^0.12.7",
@@ -20,6 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-server": "nodemon .src/server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
