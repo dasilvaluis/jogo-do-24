@@ -1,41 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { CalculationActions } from '../../actions';
 import { isNumeric, isParenthesisOpen } from '../../utils';
 import './Calculator.scss';
 
-class Calculator extends Component {
-  constructor(props) {
-    super(props);
-
-    this.AVAILABLE_OPERATORS = [
-      {
-        sign: '+',
-        name: 'add',
-      },
-      {
-        sign: '-',
-        name: 'subtract',
-      },
-      {
-        sign: '/',
-        name: 'divide',
-      },
-      {
-        sign: '*',
-        name: 'multiply',
-      },
-      {
-        sign: '(',
-        name: 'open parenthesis',
-      },
-      {
-        sign: ')',
-        name: 'close parenthesis',
-      },
-    ];
-  }
+const Calculator = (props) => {
+  const { isReady, operation } = props;
 
   /**
    * Returns numeric result of string arithmetic calculation
@@ -44,7 +15,7 @@ class Calculator extends Component {
    * @param {string} calcString String representing the operation
    * @returns {number} Resulting integer, 0 on error
    */
-  getCalculationResult = (calcString) => {
+  const getCalculationResult = (calcString) => {
     // eslint-disable-next-line no-eval
     const result = eval(calcString);
     return isNumeric(result) ? result : 0;
@@ -56,9 +27,12 @@ class Calculator extends Component {
    * @param {event} e DOM Event
    * @returns {void}
    */
-  handleOperatorClick(e) {
-    const operatorValue = e.target.getAttribute('data-operator');
-    this.props.onOperatorClick(operatorValue);
+  const handleOperatorClick = (operator) => {
+    props.onOperatorClick(operator);
+  }
+
+  const handleNumberClick = (value, index) => {
+    props.onNumberClick(value, index);
   }
 
   /**
@@ -66,9 +40,9 @@ class Calculator extends Component {
    *
    * @returns {void}
    */
-  handleClear() {
-    this.props.resetOperation();
-    this.props.onReset();
+  const handleClear = () => {
+    props.resetOperation();
+    props.onReset();
   }
 
   /**
@@ -76,62 +50,65 @@ class Calculator extends Component {
    *
    * @returns {void}
    */
-  handleSubmit() {
-    const { operation } = this.props;
+  const handleSubmit = () => {
     if (!operation.length || isParenthesisOpen(operation)) { return; }
 
     const calc = operation.join('');
 
     // Return result to Board
-    this.props.onFinish({
+    props.onFinish({
       solution: calc,
-      value: this.getCalculationResult(calc),
+      value: getCalculationResult(calc),
     });
-  }
+  };
 
-  render() {
-    const { isReady, operation } = this.props;
-
-    return (
-      <div className="calculator">
-        <div className="calculator__input-container">
-          <input className="calculator__input" type="text" value={operation.join(' ')} disabled />
-        </div>
-        <div className="calculator__controls">
-          {
-            this.AVAILABLE_OPERATORS.map(
-              (el) => (
-                <button
-                  type="button"
-                  className="calculator__button calculator__operator"
-                  key={el.sign}
-                  onClick={e => this.handleOperatorClick(e)}
-                  data-operator={el.sign}
-                  title={el.name}
-                >
-                  {el.sign}
-                </button>
-              ),
-            )
-          }
-          <button type="button" className="calculator__submit" onClick={() => this.handleClear()}>C</button>
-          <button type="button" className="calculator__submit" disabled={!isReady} onClick={() => this.handleSubmit()}>=</button>
-        </div>
+  return (
+    <div className="calculator">
+      <div className="calculator__input-container">
+        <input className="calculator__input" type="text" value={operation.join(' ')} disabled />
       </div>
-    );
-  }
+      <div className="calculator__controls">
+        {props.card.numbers.map((el, index) => (
+          <button
+            type="button"
+            className="calculator__button"
+            key={`calculator--${el.value}--${index}`}
+            onClick={() => handleNumberClick(el.value, index)}
+            disabled={!el.active}
+          >
+            {el.value}
+          </button>
+        ))}
+        {[ '+', '-', '/', '*', '(', ')' ].map((el) => (
+          <button
+            type="button"
+            className="calculator__button"
+            key={el}
+            onClick={() => handleOperatorClick(el)}
+          >
+            {el}
+          </button>
+        ))}
+        <button type="button" className="calculator__submit" onClick={handleClear}>C</button>
+        <button type="button" className="calculator__submit" disabled={!isReady} onClick={handleSubmit}>=</button>
+      </div>
+    </div>
+  );
 }
 
 Calculator.defaultProps = {
   onReset: () => {},
   onFinish: () => {},
   onOperatorClick: () => {},
+  onNumberClick: () => {},
 };
 
 Calculator.propTypes = {
+  card: PropTypes.instanceOf(Object).isRequired,
   onReset: PropTypes.func,
   onFinish: PropTypes.func,
   onOperatorClick: PropTypes.func,
+  onNumberClick: PropTypes.func,
   resetOperation: PropTypes.func.isRequired,
   operation: PropTypes.instanceOf(Array).isRequired,
   isReady: PropTypes.bool.isRequired,

@@ -1,26 +1,19 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CardBackground from '../../images/card-background.png';
 import './Card.scss';
 
-class Card extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      disabled: false,
-    };
-  }
+const Card = (props) => {
+  const { card } = props;
+  const [disabled, setDisabled] = useState(false);
 
   /**
    * Reset component state
    *
    * @returns {void}
    */
-  reset() {
-    this.setState({
-      disabled: false,
-    });
+  const reset = () => {
+    setDisabled(false);
   }
 
   /**
@@ -28,9 +21,9 @@ class Card extends Component {
    *
    * @returns {void}
    */
-  handleResetClick() {
-    this.reset();
-    this.props.onCardReset();
+  const handleResetClick = () => {
+    reset();
+    props.onCardReset();
   }
 
   /**
@@ -39,52 +32,42 @@ class Card extends Component {
    * @param {event} e DOM Event
    * @returns {void}
    */
-  handleNumberClick(e) {
-    const numberIndex = parseInt(e.target.getAttribute('data-index'), 10);
-    const numberValue = parseInt(e.target.getAttribute('data-value'), 10);
-
-    this.props.onNumberClick(numberValue, numberIndex);
+  const handleNumberClick = (value, index) => {
+    props.onNumberClick(value, index);
   }
 
-  render() {
-    const { disabled } = this.state;
-    const { card } = this.props;
+  if (0 === card.numbers.length) {
+    return <div>Loading...</div>;
+  }
 
-    if (0 === card.numbers.length) {
-      return <div>Loading...</div>;
-    }
-
-    return (
-      <div className="card">
-        <img src={CardBackground} className="card__background" alt="background"/>
-        <div className="card__grade">
-          {Array(card.grade).fill(0).map(() => <span key={Math.random() * 100} className="card__grade-point" />)}
-        </div>
-        <div>
-          <span className="card__triangle" />
-          <span className="card__triangle" />
-          <span className="card__triangle" />
-          <span className="card__triangle" />
-        </div>
-        <button type="button" className="card__submit-button" onClick={() => this.handleResetClick()} />
-        <div>
-          {card.numbers.map((number, i) => (
-            <button
-              type="button"
-              className="card__number"
-              disabled={!number.active || disabled}
-              data-index={i}
-              data-value={number.value}
-              onClick={e => this.handleNumberClick(e)}
-              key={`${Math.random() * 100}-${number.value}`}
-            >
-              {number.value}
-            </button>
-          ))}
-        </div>
+  return (
+    <div className="card">
+      <img src={CardBackground} className="card__background" alt="background"/>
+      <div className="card__grade">
+        {Array(card.grade).fill(0).map(() => <span key={Math.random() * 100} className="card__grade-point" />)}
       </div>
-    );
-  }
+      <div>
+        <span className="card__triangle" />
+        <span className="card__triangle" />
+        <span className="card__triangle" />
+        <span className="card__triangle" />
+      </div>
+      <button type="button" className="card__submit-button" onClick={() => handleResetClick()} />
+      <div>
+        {card.numbers.map((number, index) => (
+          <button
+            type="button"
+            className="card__number"
+            disabled={!number.active || disabled}
+            onClick={e => handleNumberClick(number.value, index)}
+            key={`card--${number.value}--${index}`}
+          >
+            {number.value}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 Card.defaultProps = {

@@ -65,7 +65,7 @@
     }
 
     &[disabled] {
-      display: none;
+      opacity: .3;
     }
 
     &[data-value='6']:after,

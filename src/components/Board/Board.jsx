@@ -43,6 +43,29 @@ class Board extends Component {
     this.props.setCard(getRandomCard(this.props.difficulty));
   }
 
+  /**
+   * Number click handler
+   *
+   * @param {number} number Clicked number
+   * @param {number} numberIndex  Index of clicked number
+   * @returns {void}
+   */
+  handleNumberClick(number, numberIndex) {
+    const { card, usedNumbers, operation } = this.props;
+
+    // Return if to many numbers or symbol not possible
+    if (this.MAXIMUM_NUMBERS <= usedNumbers.length || !isSymbolPossible(number, operation)) {
+      return;
+    }
+
+    this.props.addNumber(number);
+    this.props.addSymbol(number);
+    this.props.setReady(this.MAXIMUM_NUMBERS <= usedNumbers.length + 1 && !isParenthesisOpen(operation));
+
+    const updatedNumbers = [...card.numbers];
+    updatedNumbers[numberIndex].active = false;
+    this.props.setCard({ ...card, numbers: updatedNumbers });
+  }
 
   /**
    * Registers operator in the current operation
@@ -50,7 +73,7 @@ class Board extends Component {
    * @param {string} operator Operator string [+-/*()]
    * @returns {bool} Successful
    */
-  registerOperator(operator) {
+  handleOperatorClick(operator) {
     const { usedNumbers, operation } = this.props;
 
     // Return if used all numbers
@@ -79,30 +102,6 @@ class Board extends Component {
    */
   handleCardReset() {
     this.reset();
-  }
-
-  /**
-   * Number click handler
-   *
-   * @param {number} number Clicked number
-   * @param {number} numberIndex  Index of clicked number
-   * @returns {void}
-   */
-  handleNumberClick(number, numberIndex) {
-    const { card, usedNumbers, operation } = this.props;
-
-    // Return if to many numbers or symbol not possible
-    if (this.MAXIMUM_NUMBERS <= usedNumbers.length || !isSymbolPossible(number, operation)) {
-      return;
-    }
-
-    this.props.addNumber(number);
-    this.props.addSymbol(number);
-    this.props.setReady(this.MAXIMUM_NUMBERS <= usedNumbers.length + 1 && !isParenthesisOpen(operation));
-
-    const updatedNumbers = [...card.numbers];
-    updatedNumbers[numberIndex].active = false;
-    this.props.setCard({ ...card, numbers: updatedNumbers });
   }
 
   /**
@@ -150,9 +149,11 @@ class Board extends Component {
         </div>
         <div>
           <Calculator
+            card={card}
             onReset={() => this.handleCalculatorReset()}
             onFinish={result => this.handleFinish(result)}
-            onOperatorClick={operator => this.registerOperator(operator)}
+            onOperatorClick={operator => this.handleOperatorClick(operator)}
+            onNumberClick={(number, index) => this.handleNumberClick(number, index)}
           />
         </div>
       </div>
