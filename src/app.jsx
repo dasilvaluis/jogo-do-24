@@ -5,13 +5,12 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import store from './store';
+import store from './state/store';
 import { Game } from './pages/Game';
-import { Print } from './pages/Print';
-
+import { Print } from './pages/Print';
 
 export const App = () => (
-  <Provider store={store}>
+  <Provider store={ store }>
     <div className="app-container">
       <header className="app-header">
         <h1 className="app-title">
@@ -22,7 +21,8 @@ export const App = () => (
           find a way to manipulate four integers so that the end result is 24.
           e.g. for a card with the numbers 6, 3, 7, 1 a possible solution is 6*3+7-1=24.
           <br />
-          Read more @ <a href="https://en.wikipedia.org/wiki/24_Game" target="_blank" rel="noopener noreferrer">Wikipedia</a>
+          Read more @
+          <a href="https://en.wikipedia.org/wiki/24_Game" target="_blank" rel="noopener noreferrer">Wikipedia</a>
         </p>
         <p>
           <b>Rules:</b>
@@ -48,7 +48,8 @@ export const App = () => (
 
       <footer className="app-footer">
         <small>
-          Luís Silva, Nov. 2018 | <a href="https://github.com/luism-s/jogo-do-24" target="_blank" rel="noopener noreferrer">Github</a>
+          Luís Silva, Nov. 2018 |
+          <a href="https://github.com/luism-s/jogo-do-24" target="_blank" rel="noopener noreferrer">Github</a>
         </small>
       </footer>
     </div>

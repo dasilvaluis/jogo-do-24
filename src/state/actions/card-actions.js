@@ -3,7 +3,7 @@ import {
 } from './types';
 
 export default {
-  setCard: card => ({
+  setCard: (card) => ({
     type: SET_CARD,
     payload: card,
   }),

@@ -1,13 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { CalculationActions } from '../../actions';
+import { CalculationActions } from '../../state/actions';
 import { isNumeric, isParenthesisOpen } from '../../utils';
-import './_calculator.scss';
+import './calculator.scss';
 
-const ProtoCalculator = (props) => {
-  const { isReady, operation } = props;
-
+const ProtoCalculator = ({
+  card,
+  isReady,
+  operation,
+  onOperatorClick,
+  onNumberClick,
+  onResetOperation,
+  onReset,
+  onFinish,
+}) => {
   /**
    * Returns numeric result of string arithmetic calculation
    * Expected format: 4+2/6-1; 5-3*9/1; ...
@@ -28,12 +35,12 @@ const ProtoCalculator = (props) => {
    * @returns {void}
    */
   const handleOperatorClick = (operator) => {
-    props.onOperatorClick(operator);
-  }
+    onOperatorClick(operator);
+  };
 
   const handleNumberClick = (value, index) => {
-    props.onNumberClick(value, index);
-  }
+    onNumberClick(value, index);
+  };
 
   /**
    * Handle click o Clear button
@@ -41,9 +48,9 @@ const ProtoCalculator = (props) => {
    * @returns {void}
    */
   const handleClear = () => {
-    props.resetOperation();
-    props.onReset();
-  }
+    onResetOperation();
+    onReset();
+  };
 
   /**
    * Handle click on Submit button
@@ -56,7 +63,7 @@ const ProtoCalculator = (props) => {
     const calc = operation.join('');
 
     // Return result to Board
-    props.onFinish({
+    onFinish({
       solution: calc,
       value: getCalculationResult(calc),
     });
@@ -65,36 +72,36 @@ const ProtoCalculator = (props) => {
   return (
     <div className="calculator">
       <div className="calculator__input-container">
-        <input className="calculator__input" type="text" value={operation.join(' ')} disabled />
+        <input className="calculator__input" type="text" value={ operation.join(' ') } disabled />
       </div>
       <div className="calculator__controls">
-        {props.card.numbers.map((el, index) => (
+        { card.numbers.map((el, index) => (
           <button
             type="button"
             className="calculator__button"
-            key={`calculator--${el.value}--${index}`}
-            onClick={() => handleNumberClick(el.value, index)}
-            disabled={!el.active}
+            key={ `calculator--${ el.value }--${ el.uuid }` }
+            onClick={ () => handleNumberClick(el.value, index) }
+            disabled={ !el.active }
           >
-            {el.value}
+            { el.value }
           </button>
-        ))}
-        {[ '+', '-', '/', '*', '(', ')' ].map((el) => (
+        )) }
+        { [ '+', '-', '/', '*', '(', ')' ].map((el) => (
           <button
             type="button"
             className="calculator__button"
-            key={el}
-            onClick={() => handleOperatorClick(el)}
+            key={ el }
+            onClick={ () => handleOperatorClick(el) }
           >
-            {el}
+            { el }
           </button>
-        ))}
-        <button type="button" className="calculator__submit" onClick={handleClear}>C</button>
-        <button type="button" className="calculator__submit" disabled={!isReady} onClick={handleSubmit}>=</button>
+        )) }
+        <button type="button" className="calculator__submit" onClick={ handleClear }>C</button>
+        <button type="button" className="calculator__submit" disabled={ !isReady } onClick={ handleSubmit }>=</button>
       </div>
     </div>
   );
-}
+};
 
 ProtoCalculator.defaultProps = {
   onReset: () => {},
@@ -114,7 +121,7 @@ ProtoCalculator.propTypes = {
   onResetOperation: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   operation: state.operation,
   isReady: state.isReady,
 });

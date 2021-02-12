@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { cards } from './data/cards.json';
 
 /**
@@ -6,7 +7,7 @@ import { cards } from './data/cards.json';
  * @param {string|number} value Number or string
  * @returns {bool} Is value an Integer
  */
-export const isNumeric = value => Number.isFinite(value) || (Number.isFinite(Number(value)) && typeof value === 'string');
+export const isNumeric = (value) => Number.isFinite(value) || (Number.isFinite(Number(value)) && typeof value === 'string');
 
 /**
  * Returns the balance of brackets in string
@@ -14,33 +15,25 @@ export const isNumeric = value => Number.isFinite(value) || (Number.isFinite(Num
  * @param {Array} operationArray Operation array
  * @returns {int} Brackets balance
  */
-export const getBracketsBalance = (operationArray) => {
-  const stack = [];
+const getParenthesisBalance = (operationArray) => {
+  const parenthesis = operationArray.filter((el) => el === '(' || el === ')');
 
-  const openBracketsMap = {
-    '(': ')',
-    '[': ']',
-    '{': '}',
-  };
+  const recursiveChecker = (parenthesisList, previousSymbol = null, currentValue = 0) => {
+    if (!parenthesisList.length) {
+      return currentValue;
+    }
 
-  const closedBracketsMap = {
-    ')': true,
-    ']': true,
-    '}': true,
-  };
-
-  let char;
-  for (let i = 0; i < operationArray.length; i++) {
-    char = operationArray[i];
-
-    if (openBracketsMap[char]) {
-      stack.push(char);
-    } else if (closedBracketsMap[char] && openBracketsMap[stack.pop()] !== char) {
+    if (currentValue === 0 && previousSymbol === ')') {
       return -1;
     }
-  }
 
-  return stack.length;
+    const [ firstSymbol ] = parenthesisList;
+    const newValue = currentValue + Number(firstSymbol === '(') - Number(firstSymbol === ')');
+
+    return recursiveChecker(parenthesisList.slice(1), firstSymbol, newValue);
+  };
+
+  return recursiveChecker(parenthesis);
 };
 
 /**
@@ -49,8 +42,7 @@ export const getBracketsBalance = (operationArray) => {
  * @param {*} operationArray Operation Array
  * @returns {bool} Exists parenthesis to close
  */
-export const isParenthesisOpen = operationArray => 0 < getBracketsBalance(operationArray);
-
+export const isParenthesisOpen = (operationArray) => getParenthesisBalance(operationArray) > 0;
 
 /**
  * Test if is possible to append given symbol to operation array
@@ -64,18 +56,23 @@ export const isSymbolPossible = (symbol, operation) => {
 
   // if empty operation or leading (
   if (
-    (null === lastSymbol || '(' === lastSymbol)
-    && (isNumeric(symbol) || '(' === symbol)
+    (
+      lastSymbol === null || lastSymbol === '('
+    ) && (
+      isNumeric(symbol) || symbol === '('
+    )
   ) {
     return true;
   }
 
   // if leading ) - allow only operators and ) if theres is ( to close
   if (
-    ')' === lastSymbol
-    && (
-      (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol)
-      || (')' === symbol && isParenthesisOpen(operation))
+    lastSymbol === ')' && (
+      (
+        !isNumeric(symbol) && symbol !== '(' && symbol !== ')'
+      ) || (
+        symbol === ')' && isParenthesisOpen(operation)
+      )
     )
   ) {
     return true;
@@ -83,18 +80,18 @@ export const isSymbolPossible = (symbol, operation) => {
 
   // if leading number - allow operator, except (
   if (
-    null !== lastSymbol
-    && isNumeric(lastSymbol)
-    && (
-      (')' === symbol && isParenthesisOpen(operation))
-      || (!isNumeric(symbol) && '(' !== symbol && ')' !== symbol)
+    lastSymbol !== null &&
+    isNumeric(lastSymbol) &&
+    (
+      (symbol === ')' && isParenthesisOpen(operation)) ||
+      (!isNumeric(symbol) && symbol !== '(' && symbol !== ')')
     )
   ) {
     return true;
   }
 
   // if leading operator [+-*/] - allow only numbers and (
-  if (!isNumeric(lastSymbol) && (isNumeric(symbol) || '(' === symbol)) {
+  if (!isNumeric(lastSymbol) && (isNumeric(symbol) || symbol === '(')) {
     return true;
   }
 
@@ -105,6 +102,7 @@ export const transfromCard = (card) => {
   const numbers = card.numbers.map((el) => ({
     value: el,
     active: true,
+    uuid: uuidv4(),
   }));
 
   return {
@@ -115,7 +113,7 @@ export const transfromCard = (card) => {
 
 export const getRandomCard = (difficulty) => {
   const filteredCards = difficulty > 0
-    ? cards.filter(card => card.grade === difficulty)
+    ? cards.filter((card) => card.grade === difficulty)
     : cards;
 
   const randomIndex = Math.floor(Math.random() * filteredCards.length);

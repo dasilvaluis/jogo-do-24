@@ -9,12 +9,12 @@ export default {
     type: RESET_CALCULATION,
   }),
 
-  addSymbol: symbol => ({
+  addSymbol: (symbol) => ({
     type: ADD_SYMBOL,
     payload: symbol,
   }),
 
-  setReady: ready => ({
+  setReady: (ready) => ({
     type: SET_READY,
     payload: ready,
   }),

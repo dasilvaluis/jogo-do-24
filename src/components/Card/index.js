@@ -1,1 +1,1 @@
-export { Card } from './_card';
+export { Card } from './card';

@@ -4,7 +4,7 @@ import {
 } from './types';
 
 export default {
-  addNumber: number => ({
+  addNumber: (number) => ({
     type: ADD_NUMBER,
     payload: number,
   }),

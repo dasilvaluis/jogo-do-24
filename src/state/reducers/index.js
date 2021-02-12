@@ -4,7 +4,7 @@ import usedNumbers from './numbers-reducer';
 import card from './card-reducer';
 import difficulty from './difficulty-reducer';
 
-export default combineReducers({
+export const reducers = combineReducers({
   card,
   operation,
   usedNumbers,

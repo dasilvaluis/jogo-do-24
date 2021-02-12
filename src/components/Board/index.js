@@ -1,1 +1,1 @@
-export { Board } from './_board';
+export { Board } from './board';

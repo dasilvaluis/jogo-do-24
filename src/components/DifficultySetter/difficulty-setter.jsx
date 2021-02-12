@@ -1,30 +1,35 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { DifficultyActions, CardActions, CalculationActions } from '../../actions';
+import { DifficultyActions, CardActions, CalculationActions } from '../../state/actions';
 import { getRandomCard } from '../../utils';
 import { LOCAL_STORAGE_DIFFICULTY } from '../../constants';
 
-const ProtoDifficultySetter = (props) => {
+const ProtoDifficultySetter = ({
+  difficulty,
+  onSetDifficulty,
+  onSetCard,
+  onResetOperation,
+}) => {
   useEffect(() => {
-    const difficulty = localStorage.getItem(LOCAL_STORAGE_DIFFICULTY);
+    const settedDifficulty = localStorage.getItem(LOCAL_STORAGE_DIFFICULTY);
 
-    if (difficulty !== null) {
-      props.onSetDifficulty(parseInt(difficulty, 10));
+    if (settedDifficulty) {
+      onSetDifficulty(parseInt(difficulty, 10));
     }
   }, []);
 
-  const handleChange = (event) => {
-    const difficulty = parseInt(event.target.value, 10);
+  const handleChange = ({ target: { value } }) => {
+    const newDifficulty = parseInt(value, 10);
 
-    props.onSetDifficulty(difficulty);
-    props.onSetCard(getRandomCard(difficulty));
-    props.onResetOperation();
-    localStorage.setItem(LOCAL_STORAGE_DIFFICULTY, difficulty);
+    onSetDifficulty(newDifficulty);
+    onSetCard(getRandomCard(newDifficulty));
+    onResetOperation();
+    localStorage.setItem(LOCAL_STORAGE_DIFFICULTY, newDifficulty);
   };
 
   return (
-    <select name="difficulty-selection" value={props.difficulty} onChange={handleChange}>
+    <select name="difficulty-selection" value={ difficulty } onChange={ handleChange }>
       <option value="-1">All</option>
       <option value="1">Easy</option>
       <option value="2">Medium</option>
@@ -40,7 +45,7 @@ ProtoDifficultySetter.propTypes = {
   onResetOperation: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   difficulty: state.difficulty,
 });
 

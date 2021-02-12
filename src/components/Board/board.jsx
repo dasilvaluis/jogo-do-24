@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card } from '../Card';
-import { Calculator } from '../Calculator';
+import { Card } from '../Card';
+import { Calculator } from '../Calculator';
 import {
   CardActions,
   CalculationActions,
   NumbersActions,
-} from '../../actions';
+} from '../../state/actions';
 import {
   isSymbolPossible,
   isParenthesisOpen,
   getRandomCard,
 } from '../../utils';
 import { LOCAL_STORAGE_DIFFICULTY } from '../../constants';
-import './_board.scss';
+import './board.scss';
 
 const ProtoBoard = ({
   card,
@@ -25,16 +25,16 @@ const ProtoBoard = ({
   onAddNumber,
   onAddSymbol,
   onSetReady,
-  onResetOperation
+  onResetOperation,
 }) => {
   const CORRECT_RESULT = 24;
   const MAXIMUM_NUMBERS = 4;
 
   useEffect(() => {
     const storedDifficulty = localStorage.getItem(LOCAL_STORAGE_DIFFICULTY);
-    const _difficulty = !!storedDifficulty ? parseInt(storedDifficulty, 10) : difficulty;
+    const targetDifficulty = storedDifficulty ? parseInt(storedDifficulty, 10) : difficulty;
 
-    onSetCard(getRandomCard(_difficulty));
+    onSetCard(getRandomCard(targetDifficulty));
   }, []);
 
   /**
@@ -44,7 +44,7 @@ const ProtoBoard = ({
    */
   const loadRandomCard = () => {
     onSetCard(getRandomCard(difficulty));
-  }
+  };
 
   /**
    * Number click handler
@@ -63,11 +63,11 @@ const ProtoBoard = ({
     onAddSymbol(number);
     onSetReady(MAXIMUM_NUMBERS <= usedNumbers.length + 1 && !isParenthesisOpen(operation));
 
-    const updatedNumbers = [...card.numbers];
+    const updatedNumbers = [ ...card.numbers ];
     updatedNumbers[numberIndex].active = false;
 
     onSetCard({ ...card, numbers: updatedNumbers });
-  }
+  };
 
   /**
    * Registers operator in the current operation
@@ -77,7 +77,7 @@ const ProtoBoard = ({
    */
   const handleOperatorClick = (operator) => {
     // Return if used all numbers
-    if (MAXIMUM_NUMBERS <= usedNumbers.length && !('(' === operator || ')' === operator)) {
+    if (MAXIMUM_NUMBERS <= usedNumbers.length && !(operator === '(' || operator === ')')) {
       return;
     }
 
@@ -88,12 +88,12 @@ const ProtoBoard = ({
 
     onAddSymbol(operator);
     onSetReady(MAXIMUM_NUMBERS <= usedNumbers.length && !isParenthesisOpen(operation));
-  }
+  };
 
   const reset = () => {
     loadRandomCard();
     onResetOperation();
-  }
+  };
 
   /**
    * Handle Calculator reset
@@ -104,7 +104,7 @@ const ProtoBoard = ({
     const updatedNumbers = card.numbers.map((el) => ({ ...el, active: true }));
 
     onSetCard({ ...card, numbers: updatedNumbers });
-  }
+  };
 
   /**
    *
@@ -115,11 +115,11 @@ const ProtoBoard = ({
     if (CORRECT_RESULT === result.value) {
       alert('Great! Your result is 24!');
     } else {
-      alert(`Wrong, ${result.solution} is not equal to 24! Go back to school!`);
+      alert(`Wrong, ${ result.solution } is not equal to 24! Go back to school!`);
     }
 
     reset();
-  }
+  };
 
   return (
     <div className="board">
@@ -141,7 +141,7 @@ const ProtoBoard = ({
       </div>
     </div>
   );
-}
+};
 
 ProtoBoard.propTypes = {
   card: PropTypes.instanceOf(Object).isRequired,
@@ -152,14 +152,14 @@ ProtoBoard.propTypes = {
   onAddSymbol: PropTypes.func.isRequired,
   onAddNumber: PropTypes.func.isRequired,
   onSetReady: PropTypes.func.isRequired,
-  onResetOperation: PropTypes.func.isRequired
+  onResetOperation: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   card: state.card,
   usedNumbers: state.usedNumbers,
   operation: state.operation,
-  difficulty: state.difficulty
+  difficulty: state.difficulty,
 });
 
 const mapDispatchToProps = {
@@ -167,7 +167,7 @@ const mapDispatchToProps = {
   onAddSymbol: CalculationActions.addSymbol,
   onAddNumber: NumbersActions.addNumber,
   onSetReady: CalculationActions.setReady,
-  onResetOperation: CalculationActions.resetOperation
+  onResetOperation: CalculationActions.resetOperation,
 };
 
 export const Board = connect(mapStateToProps, mapDispatchToProps)(ProtoBoard);

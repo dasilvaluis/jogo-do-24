@@ -3,7 +3,7 @@ import {
 } from './types';
 
 export default {
-  setDifficulty: grade => ({
+  setDifficulty: (grade) => ({
     type: SET_DIFFICULTY,
     payload: grade,
   }),

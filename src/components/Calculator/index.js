@@ -1,1 +1,1 @@
-export { Calculator } from './_calculator.jsx';
+export { Calculator } from './calculator.jsx';
