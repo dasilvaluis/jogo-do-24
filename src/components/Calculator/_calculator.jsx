@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { CalculationActions } from '../../actions';
 import { isNumeric, isParenthesisOpen } from '../../utils';
-import './Calculator.scss';
+import './_calculator.scss';
 
-const Calculator = (props) => {
+const ProtoCalculator = (props) => {
   const { isReady, operation } = props;
 
   /**
@@ -96,22 +96,22 @@ const Calculator = (props) => {
   );
 }
 
-Calculator.defaultProps = {
+ProtoCalculator.defaultProps = {
   onReset: () => {},
   onFinish: () => {},
   onOperatorClick: () => {},
   onNumberClick: () => {},
 };
 
-Calculator.propTypes = {
+ProtoCalculator.propTypes = {
   card: PropTypes.instanceOf(Object).isRequired,
+  operation: PropTypes.instanceOf(Array).isRequired,
+  isReady: PropTypes.bool.isRequired,
   onReset: PropTypes.func,
   onFinish: PropTypes.func,
   onOperatorClick: PropTypes.func,
   onNumberClick: PropTypes.func,
-  resetOperation: PropTypes.func.isRequired,
-  operation: PropTypes.instanceOf(Array).isRequired,
-  isReady: PropTypes.bool.isRequired,
+  onResetOperation: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -120,9 +120,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  addSymbol: CalculationActions.addSymbol,
-  resetOperation: CalculationActions.resetOperation,
-  setReady: CalculationActions.setReady,
+  onResetOperation: CalculationActions.resetOperation,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Calculator);
+export const Calculator = connect(mapStateToProps, mapDispatchToProps)(ProtoCalculator);

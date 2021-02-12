@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import { Provider } from 'react-redux';
 import {
@@ -7,11 +6,11 @@ import {
   Route,
 } from 'react-router-dom';
 import store from './store';
-import Game from './pages/Game';
-import Print from './pages/Print';
+import { Game } from './pages/Game';
+import { Print } from './pages/Print';
 
 
-export default () => (
+export const App = () => (
   <Provider store={store}>
     <div className="app-container">
       <header className="app-header">

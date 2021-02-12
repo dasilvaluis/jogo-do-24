@@ -1,3 +1,1 @@
-import Print from './Print';
-
-export default Print;
+export { Print } from './_print';

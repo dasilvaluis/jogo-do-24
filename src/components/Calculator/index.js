@@ -1,3 +1,1 @@
-import Calculator from './Calculator.jsx';
-
-export default Calculator;
+export { Calculator } from './_calculator.jsx';

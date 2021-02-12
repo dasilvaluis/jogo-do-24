@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CardBackground from '../../images/card-background.png';
-import './Card.scss';
+import './_card.scss';
 
-const Card = (props) => {
+export const Card = (props) => {
   const { card } = props;
   const [disabled, setDisabled] = useState(false);
 
@@ -80,5 +80,3 @@ Card.propTypes = {
   onNumberClick: PropTypes.func,
   onCardReset: PropTypes.func,
 };
-
-export default Card;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { cards } from '../../data/cards.json';
-import Card from '../../components/Card';
+import { Card } from '../../components/Card';
 import { transfromCard } from '../../utils';
 import '../../styles/helpers.scss';
 import './print.scss';
 
-export default () => {
+export const Print = () => {
   const cardsGrouping = cards.reduce((acc, curr) => {
     const group = [ ...acc ];
     const cardsPerGroup = 6;

@@ -3,23 +3,24 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { DifficultyActions, CardActions, CalculationActions } from '../../actions';
 import { getRandomCard } from '../../utils';
+import { LOCAL_STORAGE_DIFFICULTY } from '../../constants';
 
-const Difficulty = (props) => {
+const ProtoDifficultySetter = (props) => {
   useEffect(() => {
-    const difficulty = localStorage.getItem('24game_difficulty');
+    const difficulty = localStorage.getItem(LOCAL_STORAGE_DIFFICULTY);
 
     if (difficulty !== null) {
-      props.setDifficulty(parseInt(difficulty, 10));
+      props.onSetDifficulty(parseInt(difficulty, 10));
     }
   }, []);
 
   const handleChange = (event) => {
     const difficulty = parseInt(event.target.value, 10);
 
-    props.setDifficulty(difficulty);
-    props.setCard(getRandomCard(difficulty));
-    props.resetOperation();
-    localStorage.setItem('24game_difficulty', difficulty);
+    props.onSetDifficulty(difficulty);
+    props.onSetCard(getRandomCard(difficulty));
+    props.onResetOperation();
+    localStorage.setItem(LOCAL_STORAGE_DIFFICULTY, difficulty);
   };
 
   return (
@@ -32,11 +33,11 @@ const Difficulty = (props) => {
   );
 };
 
-Difficulty.propTypes = {
+ProtoDifficultySetter.propTypes = {
   difficulty: PropTypes.number.isRequired,
-  setDifficulty: PropTypes.func.isRequired,
-  setCard: PropTypes.func.isRequired,
-  resetOperation: PropTypes.func.isRequired,
+  onSetDifficulty: PropTypes.func.isRequired,
+  onSetCard: PropTypes.func.isRequired,
+  onResetOperation: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -44,9 +45,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setDifficulty: DifficultyActions.setDifficulty,
-  setCard: CardActions.setCard,
-  resetOperation: CalculationActions.resetOperation,
+  onSetDifficulty: DifficultyActions.setDifficulty,
+  onSetCard: CardActions.setCard,
+  onResetOperation: CalculationActions.resetOperation,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Difficulty);
+export const DifficultySetter = connect(mapStateToProps, mapDispatchToProps)(ProtoDifficultySetter);
