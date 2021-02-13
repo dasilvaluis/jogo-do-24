@@ -9,11 +9,13 @@ import {
   NumbersActions,
 } from '../../state/actions';
 import {
-  isSymbolPossible,
+  isNumeric,
+  isOperator,
   isParenthesisOpen,
   getRandomCard,
+  isParenthesis,
 } from '../../utils';
-import { LOCAL_STORAGE_DIFFICULTY } from '../../constants';
+import { LOCAL_STORAGE_DIFFICULTY, PARENTHESIS, SYMBOLS } from '../../constants';
 import './board.scss';
 
 const ProtoBoard = ({
@@ -54,8 +56,14 @@ const ProtoBoard = ({
    * @returns {void}
    */
   const handleNumberClick = (number, numberIndex) => {
+    const [ lastSymbol ] = operation.slice(-1);
+
     // Return if to many numbers or symbol not possible
-    if (MAXIMUM_NUMBERS <= usedNumbers.length || !isSymbolPossible(number, operation)) {
+    if (
+      MAXIMUM_NUMBERS <= usedNumbers.length ||
+      isNumeric(lastSymbol) ||
+      lastSymbol === PARENTHESIS.CLOSE
+    ) {
       return;
     }
 
@@ -77,18 +85,36 @@ const ProtoBoard = ({
    */
   const handleOperatorClick = (operator) => {
     // Return if used all numbers
-    if (MAXIMUM_NUMBERS <= usedNumbers.length && !(operator === '(' || operator === ')')) {
+    if (MAXIMUM_NUMBERS <= usedNumbers.length && operator !== SYMBOLS.PARENTHESIS) {
       return;
     }
 
-    // Push operator
-    if (!isSymbolPossible(operator, operation)) {
-      return;
-    }
+    const testedOperator = (() => {
+      const [ lastSymbol ] = operation.slice(-1);
 
-    onAddSymbol(operator);
-    onSetReady(MAXIMUM_NUMBERS <= usedNumbers.length && !isParenthesisOpen(operation));
+      if (operator === SYMBOLS.PARENTHESIS) {
+        if (typeof lastSymbol === 'undefined' || isOperator(lastSymbol)) {
+          return PARENTHESIS.OPEN;
+        }
+
+        if ((isNumeric(lastSymbol) || isParenthesis(lastSymbol)) && isParenthesisOpen(operation)) {
+          return PARENTHESIS.CLOSE;
+        }
+      } else if (typeof lastSymbol !== 'undefined' && (isNumeric(lastSymbol) || isParenthesis(lastSymbol))) {
+        return operator;
+      }
+
+      return null;
+    })();
+
+    if (testedOperator) {
+      onAddSymbol(testedOperator);
+    }
   };
+
+  useEffect(() => {
+    onSetReady(MAXIMUM_NUMBERS <= usedNumbers.length && !isParenthesisOpen(operation));
+  }, [ operation ]);
 
   const reset = () => {
     loadRandomCard();

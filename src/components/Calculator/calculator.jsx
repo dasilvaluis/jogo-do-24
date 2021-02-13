@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { CalculationActions } from '../../state/actions';
-import { isNumeric, isParenthesisOpen } from '../../utils';
+import { OPERATORS, SYMBOLS } from '../../constants';
+import { isNumeric, isOperator, isParenthesis, isParenthesisOpen } from '../../utils';
 import './calculator.scss';
 
 const ProtoCalculator = ({
@@ -28,19 +29,7 @@ const ProtoCalculator = ({
     return isNumeric(result) ? result : 0;
   };
 
-  /**
-   * Handle Operator button click
-   *
-   * @param {event} e DOM Event
-   * @returns {void}
-   */
-  const handleOperatorClick = (operator) => {
-    onOperatorClick(operator);
-  };
-
-  const handleNumberClick = (value, index) => {
-    onNumberClick(value, index);
-  };
+  const [ lastSymbol ] = operation.slice(-1);
 
   /**
    * Handle click o Clear button
@@ -79,25 +68,48 @@ const ProtoCalculator = ({
           <button
             type="button"
             className="calculator__button"
-            key={ `calculator--${ el.value }--${ el.uuid }` }
-            onClick={ () => handleNumberClick(el.value, index) }
-            disabled={ !el.active }
+            key={ `calculator-number--${ el.uuid }` }
+            onClick={ () => onNumberClick(el.value, index) }
+            disabled={ !el.active || isNumeric(lastSymbol) }
           >
             { el.value }
           </button>
         )) }
-        { [ '+', '-', '/', '*', '(', ')' ].map((el) => (
+        { Object.values(OPERATORS).map((el) => (
           <button
             type="button"
             className="calculator__button"
             key={ el }
-            onClick={ () => handleOperatorClick(el) }
+            disabled={ typeof lastSymbol === 'undefined' || isOperator(lastSymbol) || isReady }
+            onClick={ () => onOperatorClick(el) }
           >
             { el }
           </button>
         )) }
-        <button type="button" className="calculator__submit" onClick={ handleClear }>C</button>
-        <button type="button" className="calculator__submit" disabled={ !isReady } onClick={ handleSubmit }>=</button>
+        <button
+          type="button"
+          className="calculator__submit"
+          disabled={ isParenthesis(lastSymbol) && !isParenthesisOpen(operation) }
+          onClick={ () => onOperatorClick(SYMBOLS.PARENTHESIS) }
+        >
+          { SYMBOLS.PARENTHESIS }
+        </button>
+        <button
+          type="button"
+          className="calculator__submit"
+          disabled={ !operation.length }
+          onClick={ handleClear }
+        >
+          C
+        </button>
+        <button
+          type="button"
+          className="calculator__submit"
+          disabled={ !isReady }
+          onClick={ handleSubmit }
+        >
+          =
+        </button>
       </div>
     </div>
   );

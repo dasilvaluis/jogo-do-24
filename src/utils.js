@@ -1,40 +1,29 @@
 import { v4 as uuidv4 } from 'uuid';
+import { PARENTHESIS, SYMBOLS } from './constants';
 import { cards } from './data/cards.json';
 
 /**
  * Checks if given value is an integer or string representation of one
  *
  * @param {string|number} value Number or string
- * @returns {bool} Is value an Integer
+ * @returns {bool} Value is an Integer
  */
 export const isNumeric = (value) => Number.isFinite(value) || (Number.isFinite(Number(value)) && typeof value === 'string');
 
+export const isParenthesis = (el) => el === PARENTHESIS.OPEN || el === PARENTHESIS.CLOSE;
+
 /**
- * Returns the balance of brackets in string
+ * Checks if a given value is a operator (+, -, /, *)
  *
- * @param {Array} operationArray Operation array
- * @returns {int} Brackets balance
+ * @param {string} value to test
+ * @returns {bool} Value is an operator
  */
-const getParenthesisBalance = (operationArray) => {
-  const parenthesis = operationArray.filter((el) => el === '(' || el === ')');
-
-  const recursiveChecker = (parenthesisList, previousSymbol = null, currentValue = 0) => {
-    if (!parenthesisList.length) {
-      return currentValue;
-    }
-
-    if (currentValue === 0 && previousSymbol === ')') {
-      return -1;
-    }
-
-    const [ firstSymbol ] = parenthesisList;
-    const newValue = currentValue + Number(firstSymbol === '(') - Number(firstSymbol === ')');
-
-    return recursiveChecker(parenthesisList.slice(1), firstSymbol, newValue);
-  };
-
-  return recursiveChecker(parenthesis);
-};
+export const isOperator = (value) => [
+  SYMBOLS.PLUS,
+  SYMBOLS.MINUS,
+  SYMBOLS.DIVIDE,
+  SYMBOLS.MULTIPLY,
+].includes(value);
 
 /**
  * States if there's parenthesis left to close
@@ -42,60 +31,28 @@ const getParenthesisBalance = (operationArray) => {
  * @param {*} operationArray Operation Array
  * @returns {bool} Exists parenthesis to close
  */
-export const isParenthesisOpen = (operationArray) => getParenthesisBalance(operationArray) > 0;
+export const isParenthesisOpen = (operationArray) => {
+  const parenthesis = operationArray.filter(isParenthesis);
 
-/**
- * Test if is possible to append given symbol to operation array
- *
- * @param {string} symbol Symbol to test
- * @param {Array} operation Operation to test the symbol agaisnt
- * @returns {bool} Symbol is possble
- */
-export const isSymbolPossible = (symbol, operation) => {
-  const lastSymbol = operation.length ? operation[operation.length - 1] : null;
+  const recursiveChecker = (parenthesisList, currentValue = 0) => {
+    if (!parenthesisList.length) {
+      return currentValue;
+    }
 
-  // if empty operation or leading (
-  if (
-    (
-      lastSymbol === null || lastSymbol === '('
-    ) && (
-      isNumeric(symbol) || symbol === '('
-    )
-  ) {
-    return true;
-  }
+    const [ firstSymbol ] = parenthesisList;
 
-  // if leading ) - allow only operators and ) if theres is ( to close
-  if (
-    lastSymbol === ')' && (
-      (
-        !isNumeric(symbol) && symbol !== '(' && symbol !== ')'
-      ) || (
-        symbol === ')' && isParenthesisOpen(operation)
-      )
-    )
-  ) {
-    return true;
-  }
+    if (currentValue === 0 && firstSymbol === PARENTHESIS.CLOSE) {
+      return -1;
+    }
 
-  // if leading number - allow operator, except (
-  if (
-    lastSymbol !== null &&
-    isNumeric(lastSymbol) &&
-    (
-      (symbol === ')' && isParenthesisOpen(operation)) ||
-      (!isNumeric(symbol) && symbol !== '(' && symbol !== ')')
-    )
-  ) {
-    return true;
-  }
+    const newValue = currentValue +
+      Number(firstSymbol === PARENTHESIS.OPEN) -
+      Number(firstSymbol === PARENTHESIS.CLOSE);
 
-  // if leading operator [+-*/] - allow only numbers and (
-  if (!isNumeric(lastSymbol) && (isNumeric(symbol) || symbol === '(')) {
-    return true;
-  }
+    return recursiveChecker(parenthesisList.slice(1), newValue);
+  };
 
-  return false;
+  return recursiveChecker(parenthesis) > 0;
 };
 
 export const transfromCard = (card) => {
