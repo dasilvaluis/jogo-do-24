@@ -34,7 +34,6 @@ export const App = () => (
           - Final result must equal to 24
         </p>
       </header>
-
       <Router>
         <Switch>
           <Route path="/print">
@@ -45,7 +44,6 @@ export const App = () => (
           </Route>
         </Switch>
       </Router>
-
       <footer className="app-footer">
         <small>
           Luís Silva, Nov. 2018 |

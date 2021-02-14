@@ -1,1 +1,1 @@
-export { Print } from './_print';
+export { Print } from './print';

@@ -25,7 +25,6 @@ export const Card = ({
    * @returns {void}
    */
   const handleResetClick = () => {
-    console.log('aa');
     reset();
     onCardReset();
   };
