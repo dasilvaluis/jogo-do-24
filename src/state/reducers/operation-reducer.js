@@ -14,12 +14,3 @@ export const operation = (state = INITIAL_OPERATION, action) => {
       return state;
   }
 };
-
-export const isReady = (state = false, action) => {
-  switch (action.type) {
-    case types.SET_READY:
-      return action.payload;
-    default:
-      return state;
-  }
-};

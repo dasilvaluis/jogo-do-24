@@ -16,3 +16,7 @@ export const PARENTHESIS = {
   OPEN: '(',
   CLOSE: ')',
 };
+
+export const CORRECT_RESULT = 24;
+
+export const MAXIMUM_NUMBERS = 4;

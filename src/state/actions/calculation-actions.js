@@ -1,7 +1,6 @@
 import {
   RESET_OPERATION,
   ADD_SYMBOL,
-  SET_READY,
 } from './types';
 
 export default {
@@ -12,10 +11,5 @@ export default {
   addSymbol: (symbol) => ({
     type: ADD_SYMBOL,
     payload: symbol,
-  }),
-
-  setReady: (ready) => ({
-    type: SET_READY,
-    payload: ready,
   }),
 };

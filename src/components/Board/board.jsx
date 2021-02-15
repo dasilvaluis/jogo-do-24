@@ -14,9 +14,15 @@ import {
   getRandomCard,
   isParenthesis,
 } from '../../utils';
-import { LOCAL_STORAGE_DIFFICULTY, PARENTHESIS, SYMBOLS } from '../../constants';
+import {
+  CORRECT_RESULT,
+  LOCAL_STORAGE_DIFFICULTY,
+  MAXIMUM_NUMBERS,
+  PARENTHESIS,
+  SYMBOLS,
+} from '../../constants';
 import './board.scss';
-import { getUsedNumbers } from '../../state/selectors';
+import { getUsedNumbers, isOperationReady } from '../../state/selectors';
 
 const ProtoBoard = ({
   card,
@@ -26,22 +32,14 @@ const ProtoBoard = ({
   isReady,
   onSetCard,
   onAddSymbol,
-  onSetReady,
   onResetOperation,
 }) => {
-  const CORRECT_RESULT = 24;
-  const MAXIMUM_NUMBERS = 4;
-
   useEffect(() => {
     const storedDifficulty = localStorage.getItem(LOCAL_STORAGE_DIFFICULTY);
     const targetDifficulty = storedDifficulty ? parseInt(storedDifficulty, 10) : difficulty;
 
     onSetCard(getRandomCard(targetDifficulty));
   }, []);
-
-  useEffect(() => {
-    onSetReady(MAXIMUM_NUMBERS <= usedNumbers.length && !isParenthesisOpen(operation));
-  }, [ operation, usedNumbers ]);
 
   const loadRandomCard = () => {
     onSetCard(getRandomCard(difficulty));
@@ -147,13 +145,12 @@ ProtoBoard.propTypes = {
   difficulty: PropTypes.number.isRequired,
   onSetCard: PropTypes.func.isRequired,
   onAddSymbol: PropTypes.func.isRequired,
-  onSetReady: PropTypes.func.isRequired,
   onResetOperation: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   card: state.card,
-  isReady: state.isReady,
+  isReady: isOperationReady(state),
   usedNumbers: getUsedNumbers(state),
   operation: state.operation,
   difficulty: state.difficulty,
@@ -162,7 +159,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   onSetCard: CardActions.setCard,
   onAddSymbol: CalculationActions.addSymbol,
-  onSetReady: CalculationActions.setReady,
   onResetOperation: CalculationActions.resetOperation,
 };
 
