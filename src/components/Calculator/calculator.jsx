@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { CalculationActions } from '../../state/actions';
 import { OPERATORS, SYMBOLS } from '../../constants';
 import { isNumeric, isOperator, isParenthesis, isParenthesisOpen } from '../../utils';
 import './calculator.scss';
 
-const ProtoCalculator = ({
+export const Calculator = ({
   card,
   isReady,
   operation,
-  onOperatorClick,
   onNumberClick,
-  onResetOperation,
-  onReset,
+  onOperatorClick,
+  onParenthesisClick,
+  onClear,
   onFinish,
 }) => {
   /**
@@ -26,26 +24,12 @@ const ProtoCalculator = ({
   const getCalculationResult = (calcString) => {
     // eslint-disable-next-line no-eval
     const result = eval(calcString);
+
     return isNumeric(result) ? result : 0;
   };
 
   const [ lastSymbol ] = operation.slice(-1);
 
-  /**
-   * Handle click o Clear button
-   *
-   * @returns {void}
-   */
-  const handleClear = () => {
-    onResetOperation();
-    onReset();
-  };
-
-  /**
-   * Handle click on Submit button
-   *
-   * @returns {void}
-   */
   const handleSubmit = () => {
     if (!operation.length || isParenthesisOpen(operation)) { return; }
 
@@ -90,7 +74,7 @@ const ProtoCalculator = ({
           type="button"
           className="calculator__submit"
           disabled={ isParenthesis(lastSymbol) && !isParenthesisOpen(operation) }
-          onClick={ () => onOperatorClick(SYMBOLS.PARENTHESIS) }
+          onClick={ onParenthesisClick }
         >
           { SYMBOLS.PARENTHESIS }
         </button>
@@ -98,7 +82,7 @@ const ProtoCalculator = ({
           type="button"
           className="calculator__submit"
           disabled={ !operation.length }
-          onClick={ handleClear }
+          onClick={ onClear }
         >
           C
         </button>
@@ -115,31 +99,21 @@ const ProtoCalculator = ({
   );
 };
 
-ProtoCalculator.defaultProps = {
-  onReset: () => {},
+Calculator.defaultProps = {
+  onClear: () => {},
   onFinish: () => {},
-  onOperatorClick: () => {},
   onNumberClick: () => {},
+  onOperatorClick: () => {},
+  onParenthesisClick: () => {},
 };
 
-ProtoCalculator.propTypes = {
+Calculator.propTypes = {
   card: PropTypes.instanceOf(Object).isRequired,
   operation: PropTypes.instanceOf(Array).isRequired,
   isReady: PropTypes.bool.isRequired,
-  onReset: PropTypes.func,
+  onClear: PropTypes.func,
   onFinish: PropTypes.func,
-  onOperatorClick: PropTypes.func,
   onNumberClick: PropTypes.func,
-  onResetOperation: PropTypes.func.isRequired,
+  onOperatorClick: PropTypes.func,
+  onParenthesisClick: PropTypes.func,
 };
-
-const mapStateToProps = (state) => ({
-  operation: state.operation,
-  isReady: state.isReady,
-});
-
-const mapDispatchToProps = {
-  onResetOperation: CalculationActions.resetOperation,
-};
-
-export const Calculator = connect(mapStateToProps, mapDispatchToProps)(ProtoCalculator);
