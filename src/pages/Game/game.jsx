@@ -1,20 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Board } from '../../components/Board';
 import { DifficultySetter } from '../../components/DifficultySetter';
 import './game.scss';
 import '../../styles/helpers.scss';
+import { About } from '../../components/About';
 
 export const Game = () => (
   <div className="game-container">
-    <div className="h-marginbottom-small">
-      Difficulty:
+    <header className="app-header">
+      <h1 className="app-title">
+        The 24 Game
+      </h1>
+    </header>
+    <Board />
+    <div className="h-margintop-sm">
+      Difficulty:&nbsp;
       <DifficultySetter />
     </div>
-    <Board />
-    <small className="h-display-block h-margintop-small">
-      For the print version of all cards click
-      <Link to="/print">here</Link>
-    </small>
+    <div className="h-margintop-sm">
+      <About />
+    </div>
   </div>
 );

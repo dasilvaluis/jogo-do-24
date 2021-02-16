@@ -2,7 +2,7 @@
 
 .board {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
 
   @media (max-width: $breakpoint-desktop - 1px) {
     flex-direction: column;

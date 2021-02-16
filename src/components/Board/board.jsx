@@ -73,7 +73,7 @@ const ProtoBoard = ({
 
     const [ lastSymbol ] = operation.slice(-1);
 
-    if (typeof lastSymbol !== 'undefined' && (isNumeric(lastSymbol) || isParenthesis(lastSymbol))) {
+    if (typeof lastSymbol !== 'undefined' && (isNumeric(lastSymbol) || lastSymbol === PARENTHESIS.CLOSE)) {
       onAddSymbol(operator);
     }
   };
@@ -114,25 +114,21 @@ const ProtoBoard = ({
 
   return (
     <div className="board">
-      <div>
-        <Card
-          card={ card }
-          onCardReset={ reset }
-          onNumberClick={ handleNumberClick }
-        />
-      </div>
-      <div>
-        <Calculator
-          card={ card }
-          operation={ operation }
-          isReady={ isReady }
-          onClear={ handleCalculatorClear }
-          onFinish={ handleFinish }
-          onNumberClick={ handleNumberClick }
-          onOperatorClick={ handleOperatorClick }
-          onParenthesisClick={ handleParenthesisClick }
-        />
-      </div>
+      <Card
+        card={ card }
+        onCardReset={ reset }
+        onNumberClick={ handleNumberClick }
+      />
+      <Calculator
+        card={ card }
+        operation={ operation }
+        isReady={ isReady }
+        onClear={ handleCalculatorClear }
+        onFinish={ handleFinish }
+        onNumberClick={ handleNumberClick }
+        onOperatorClick={ handleOperatorClick }
+        onParenthesisClick={ handleParenthesisClick }
+      />
     </div>
   );
 };
