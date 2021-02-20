@@ -5,3 +5,5 @@ export const ADD_SYMBOL = 'ADD_SYMBOL';
 export const ADD_NUMBER = 'ADD_NUMBER';
 export const CLEAR_NUMBERS = 'CLEAR_NUMBERS';
 export const SET_DIFFICULTY = 'SET_DIFFICULTY';
+export const ADD_POINT = 'ADD_POINT';
+export const SET_POINTS = 'SET_POINTS';

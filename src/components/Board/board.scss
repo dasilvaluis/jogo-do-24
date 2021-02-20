@@ -3,6 +3,7 @@
 .board {
   display: flex;
   flex-direction: row;
+  margin: 30px auto 45px;
 
   @media (max-width: $breakpoint-desktop - 1px) {
     flex-direction: column;

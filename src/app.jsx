@@ -14,11 +14,11 @@ export const App = () => (
     <div className="app-container">
       <Router>
         <Switch>
-          <Route path="/print">
-            <Print />
-          </Route>
-          <Route path="/">
+          <Route strict path="/">
             <Game />
+          </Route>
+          <Route strict path="/print">
+            <Print />
           </Route>
         </Switch>
       </Router>

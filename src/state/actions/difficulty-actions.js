@@ -1,6 +1,4 @@
-import {
-  SET_DIFFICULTY,
-} from './types';
+import { SET_DIFFICULTY } from './types';
 
 export default {
   setDifficulty: (grade) => ({

@@ -12,7 +12,7 @@ export const Calculator = ({
   onOperatorClick,
   onParenthesisClick,
   onClear,
-  onFinish,
+  onSubmit,
 }) => {
   /**
    * Returns numeric result of string arithmetic calculation
@@ -45,7 +45,7 @@ export const Calculator = ({
     const calc = operation.join('');
 
     // Return result to Board
-    onFinish({
+    onSubmit({
       solution: calc,
       value: getCalculationResult(calc),
     });
@@ -116,7 +116,7 @@ export const Calculator = ({
 
 Calculator.defaultProps = {
   onClear: () => {},
-  onFinish: () => {},
+  onSubmit: () => {},
   onNumberClick: () => {},
   onOperatorClick: () => {},
   onParenthesisClick: () => {},
@@ -127,7 +127,7 @@ Calculator.propTypes = {
   operation: PropTypes.instanceOf(Array).isRequired,
   isReady: PropTypes.bool.isRequired,
   onClear: PropTypes.func,
-  onFinish: PropTypes.func,
+  onSubmit: PropTypes.func,
   onNumberClick: PropTypes.func,
   onOperatorClick: PropTypes.func,
   onParenthesisClick: PropTypes.func,

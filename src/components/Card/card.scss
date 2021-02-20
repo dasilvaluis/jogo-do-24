@@ -41,14 +41,11 @@
     height: $card-number-width;
     position: absolute;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    color: #050c19;
     font-size: $card-number-fontsize;
     font-family: $font-oldstandard;
     font-weight: 400;
+    line-height: 1em;
+    color: #050c19;
 
     background-color: transparent;
     border: none;

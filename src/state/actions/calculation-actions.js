@@ -1,7 +1,4 @@
-import {
-  RESET_OPERATION,
-  ADD_SYMBOL,
-} from './types';
+import { RESET_OPERATION, ADD_SYMBOL } from './types';
 
 export default {
   resetOperation: () => ({

@@ -1,6 +1,4 @@
-import {
-  SET_CARD,
-} from './types';
+import { SET_CARD } from './types';
 
 export default {
   setCard: (card) => ({

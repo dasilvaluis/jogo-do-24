@@ -6,6 +6,7 @@ import { Calculator } from '../Calculator';
 import {
   CardActions,
   CalculationActions,
+  ScoreActions,
 } from '../../state/actions';
 import {
   isNumeric,
@@ -33,6 +34,7 @@ const ProtoBoard = ({
   onSetCard,
   onAddSymbol,
   onResetOperation,
+  onCorrect,
 }) => {
   useEffect(() => {
     const storedDifficulty = localStorage.getItem(LOCAL_STORAGE_DIFFICULTY);
@@ -102,11 +104,9 @@ const ProtoBoard = ({
     onResetOperation();
   };
 
-  const handleFinish = (result) => {
+  const handleSubmit = (result) => {
     if (CORRECT_RESULT === result.value) {
-      alert('Great! Your result is 24!');
-    } else {
-      alert(`Wrong, ${ result.solution } is not equal to 24! Go back to school!`);
+      onCorrect(Number(card.grade));
     }
 
     reset();
@@ -124,7 +124,7 @@ const ProtoBoard = ({
         operation={ operation }
         isReady={ isReady }
         onClear={ handleCalculatorClear }
-        onFinish={ handleFinish }
+        onSubmit={ handleSubmit }
         onNumberClick={ handleNumberClick }
         onOperatorClick={ handleOperatorClick }
         onParenthesisClick={ handleParenthesisClick }
@@ -142,6 +142,7 @@ ProtoBoard.propTypes = {
   onSetCard: PropTypes.func.isRequired,
   onAddSymbol: PropTypes.func.isRequired,
   onResetOperation: PropTypes.func.isRequired,
+  onCorrect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -156,6 +157,7 @@ const mapDispatchToProps = {
   onSetCard: CardActions.setCard,
   onAddSymbol: CalculationActions.addSymbol,
   onResetOperation: CalculationActions.resetOperation,
+  onCorrect: ScoreActions.addPoint,
 };
 
 export const Board = connect(mapStateToProps, mapDispatchToProps)(ProtoBoard);
