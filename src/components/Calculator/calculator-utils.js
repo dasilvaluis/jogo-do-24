@@ -35,13 +35,15 @@ export const doSimpleCalculation = (operation) => operation
     }
 
     if (isNumeric(curr) && (array[index - 1] === '*' || array[index - 1] === '/')) {
+      const lastNumber = acc[acc.length - 1];
+      const withoutLastNumber = acc.slice(0, acc.length - 1);
       const calc = doOperation(
         array[index - 1],
-        acc.pop(),
+        lastNumber,
         parseFloat(curr, 10),
       );
 
-      return [ ...acc, calc.toString() ];
+      return [ ...withoutLastNumber, calc.toString() ];
     }
 
     return [ ...acc, curr ];
