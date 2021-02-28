@@ -14,6 +14,8 @@ import {
   isParenthesisOpen,
   getRandomCard,
   isParenthesis,
+  isOpenParenthesis,
+  isCloseParenthesis,
 } from '../../utils';
 import {
   CORRECT_RESULT,
@@ -54,7 +56,7 @@ const ProtoBoard = ({
     if (
       MAXIMUM_NUMBERS <= usedNumbers.length ||
       isNumeric(lastSymbol) ||
-      lastSymbol === PARENTHESIS.CLOSE
+      isCloseParenthesis(lastSymbol)
     ) {
       return;
     }
@@ -75,7 +77,7 @@ const ProtoBoard = ({
 
     const [ lastSymbol ] = operation.slice(-1);
 
-    if (typeof lastSymbol !== 'undefined' && (isNumeric(lastSymbol) || lastSymbol === PARENTHESIS.CLOSE)) {
+    if (typeof lastSymbol !== 'undefined' && (isNumeric(lastSymbol) || isCloseParenthesis(lastSymbol))) {
       onAddSymbol(operator);
     }
   };
@@ -83,7 +85,7 @@ const ProtoBoard = ({
   const handleParenthesisClick = () => {
     const [ lastSymbol ] = operation.slice(-1);
 
-    if (typeof lastSymbol === 'undefined' || isOperator(lastSymbol) || lastSymbol === PARENTHESIS.OPEN) {
+    if (typeof lastSymbol === 'undefined' || isOperator(lastSymbol) || isOpenParenthesis(lastSymbol)) {
       onAddSymbol(PARENTHESIS.OPEN);
     } else if (
       (isNumeric(lastSymbol) || isParenthesis(lastSymbol)) && isParenthesisOpen(operation)

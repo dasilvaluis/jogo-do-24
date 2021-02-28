@@ -6,17 +6,37 @@ import { cards } from './data/cards.json';
  * Checks if given value is an integer or string representation of one
  *
  * @param {string|number} value Number or string
- * @returns {bool} Value is an Integer
+ * @returns {Boolean} Value is an Integer
  */
 export const isNumeric = (value) => Number.isFinite(value) || (Number.isFinite(Number(value)) && typeof value === 'string');
 
-export const isParenthesis = (el) => el === PARENTHESIS.OPEN || el === PARENTHESIS.CLOSE;
+/**
+ * Checks if given string is a open parenthesis
+ *
+ * @param {String} character
+ */
+export const isOpenParenthesis = (character) => character === PARENTHESIS.OPEN;
+
+/**
+ * Checks if given string is a closing parenthesis
+ *
+ * @param {String} character
+ */
+export const isCloseParenthesis = (character) => character === PARENTHESIS.CLOSE;
+
+/**
+ * Checks if given string is a open parenthesis
+ *
+ * @param {String} character
+ */
+export const isParenthesis = (character) => isOpenParenthesis(character) ||
+  isCloseParenthesis(character);
 
 /**
  * Checks if a given value is a operator (+, -, /, *)
  *
- * @param {string} value to test
- * @returns {bool} Value is an operator
+ * @param {String} value to test
+ * @returns {Boolean} Value is an operator
  */
 export const isOperator = (value) => [
   SYMBOLS.PLUS,
@@ -25,13 +45,7 @@ export const isOperator = (value) => [
   SYMBOLS.MULTIPLY,
 ].includes(value);
 
-/**
- * States if there's parenthesis left to close
- *
- * @param {*} operationArray Operation Array
- * @returns {bool} Exists parenthesis to close
- */
-export const isParenthesisOpen = (operationArray) => {
+export function getParenthesisBalance(operationArray) {
   const parenthesis = operationArray.filter(isParenthesis);
 
   const recursiveChecker = (parenthesisList, currentValue = 0) => {
@@ -41,21 +55,58 @@ export const isParenthesisOpen = (operationArray) => {
 
     const [ firstSymbol ] = parenthesisList;
 
-    if (currentValue === 0 && firstSymbol === PARENTHESIS.CLOSE) {
+    if (currentValue === 0 && isCloseParenthesis(firstSymbol)) {
       return -1;
     }
 
     const newValue = currentValue +
-      Number(firstSymbol === PARENTHESIS.OPEN) -
-      Number(firstSymbol === PARENTHESIS.CLOSE);
+      Number(isOpenParenthesis(firstSymbol)) -
+      Number(isCloseParenthesis(firstSymbol));
 
     return recursiveChecker(parenthesisList.slice(1), newValue);
   };
 
-  return recursiveChecker(parenthesis) > 0;
-};
+  return recursiveChecker(parenthesis);
+}
 
-export const transfromCard = (card) => {
+/**
+ * States if there's parenthesis left to close
+ *
+ * @param {Array.<string>} operationArray Operation Array
+ * @returns {Boolean} Exists parenthesis to close
+ */
+export function isParenthesisOpen(operationArray) {
+  return getParenthesisBalance(operationArray) > 0;
+}
+
+/**
+ * @typedef CardNumber
+ * @type {object}
+ * @property {Number} value - Number value
+ * @property {Boolean} active - Number is active
+ * @property {String} uuid - Number Id
+ */
+
+/**
+ * @typedef DBCard
+ * @type {object}
+ * @property {Array.<Number>} numbers -  Card Numbers
+ * @property {Number} grade - Card Grade
+ */
+
+/**
+ * @typedef GameCard
+ * @type {object}
+ * @property {Array.<CardNumber>} numbers -  Card Numbers
+ * @property {Number} grade - Card Grade
+ */
+
+/**
+  * Takes a card from the DB and gives the numbers extra properties
+  * @param {DBCard} card
+  * @returns {Card} New Card
+  */
+export function transfromCard(card) {
   const numbers = card.numbers.map((el) => ({
     value: el,
     active: true,
@@ -66,9 +117,15 @@ export const transfromCard = (card) => {
     numbers,
     grade: card.grade,
   };
-};
+}
 
-export const getRandomCard = (difficulty) => {
+/**
+ * Gets a random card.
+ *
+ * @param {Number} difficulty
+ * @returns {Card} New Card
+ */
+export function getRandomCard(difficulty) {
   const filteredCards = difficulty > 0
     ? cards.filter((card) => card.grade === difficulty)
     : cards;
@@ -77,4 +134,4 @@ export const getRandomCard = (difficulty) => {
   const card = { ...filteredCards[randomIndex] };
 
   return transfromCard(card);
-};
+}

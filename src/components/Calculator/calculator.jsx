@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OPERATORS, PARENTHESIS, SYMBOLS } from '../../constants';
-import { isNumeric, isOperator, isParenthesis, isParenthesisOpen } from '../../utils';
+import { OPERATORS, SYMBOLS } from '../../constants';
+import { isNumeric, isOpenParenthesis, isOperator, isParenthesis, isParenthesisOpen } from '../../utils';
+import { doCalculation } from './calculator-utils';
 import './calculator.scss';
 
 export const Calculator = ({
@@ -14,25 +15,11 @@ export const Calculator = ({
   onClear,
   onSubmit,
 }) => {
-  /**
-   * Returns numeric result of string arithmetic calculation
-   * Expected format: 4+2/6-1; 5-3*9/1; ...
-   *
-   * @param {string} calcString String representing the operation
-   * @returns {number} Resulting integer, 0 on error
-   */
-  const getCalculationResult = (calcString) => {
-    // eslint-disable-next-line no-eval
-    const result = eval(calcString);
-
-    return isNumeric(result) ? result : 0;
-  };
-
   const [ lastSymbol ] = operation.slice(-1);
 
   const operatorsDisabled = typeof lastSymbol === 'undefined' ||
     isOperator(lastSymbol) ||
-    lastSymbol === PARENTHESIS.OPEN ||
+    isOpenParenthesis(lastSymbol) ||
     isReady;
   const parenthesisDisabled = isReady || (
     isParenthesis(lastSymbol) &&
@@ -42,12 +29,9 @@ export const Calculator = ({
   const handleSubmit = () => {
     if (!operation.length || isParenthesisOpen(operation)) { return; }
 
-    const calc = operation.join('');
-
-    // Return result to Board
     onSubmit({
-      solution: calc,
-      value: getCalculationResult(calc),
+      solution: operation.join(''),
+      value: doCalculation(operation),
     });
   };
 
