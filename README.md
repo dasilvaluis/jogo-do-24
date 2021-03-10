@@ -4,7 +4,7 @@ The 24 Game is an arithmetical card game in which the objective is to find a way
 
 Read more @ [Wikipedia](https://en.wikipedia.org/wiki/24_Game)
 
-Play @ [https://luism-s.github.io/jogo-do-24/](https://luism-s.github.io/jogo-do-24/)
+Play @ [https://jogo-do-24.herokuapp.com/](https://ejogo-do-24.herokuapp.com)
 
 ### Instructions:
 - Click on each number and signs in the correct order, filling the blanks bellow the card.
