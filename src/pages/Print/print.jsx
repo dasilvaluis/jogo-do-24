@@ -1,7 +1,7 @@
 import React from 'react';
 import { cards as cardsList } from '../../data/cards.json';
 import { Card } from '../../components/Card';
-import { transfromCard } from '../../utils';
+import { transformCard } from '../../utils';
 import '../../styles/helpers.scss';
 import './print.scss';
 
@@ -23,7 +23,7 @@ export const Print = () => {
       { cardsGrouping.map((cards) => (
         <div className="print-container__cards" key={ Math.random() * 100 }>
           { cards.map((card) => (
-            <Card key={ card.numbers.join('') } card={ transfromCard(card) } />
+            <Card key={ card.numbers.join('') } card={ transformCard(card) } />
           )) }
         </div>
       )) }

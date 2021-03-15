@@ -19,15 +19,13 @@ import {
 } from '../../utils';
 import {
   CORRECT_RESULT,
-  LOCAL_STORAGE_DIFFICULTY,
   MAXIMUM_NUMBERS,
   PARENTHESIS,
-  SYMBOLS,
 } from '../../constants';
 import './board.scss';
 import { getUsedNumbers, isOperationReady } from '../../state/selectors';
 
-const ProtoBoard = ({
+function ProtoBoard({
   card,
   usedNumbers,
   operation,
@@ -37,103 +35,92 @@ const ProtoBoard = ({
   onAddSymbol,
   onResetOperation,
   onCorrect,
-}) => {
-  useEffect(() => {
-    const storedDifficulty = localStorage.getItem(LOCAL_STORAGE_DIFFICULTY);
-    const targetDifficulty = storedDifficulty ? parseInt(storedDifficulty, 10) : difficulty;
+}) {
+  const [ lastSymbol ] = operation.slice(-1);
 
-    onSetCard(getRandomCard(targetDifficulty));
-  }, []);
+  function resetBoard() {
+    const newRandomCard = getRandomCard(difficulty);
 
-  const loadRandomCard = () => {
-    onSetCard(getRandomCard(difficulty));
-  };
+    onSetCard(newRandomCard);
+    onResetOperation();
+  }
 
-  const handleNumberClick = (number, numberIndex) => {
-    const [ lastSymbol ] = operation.slice(-1);
+  useEffect(resetBoard, [ difficulty ]);
 
-    // Return if to many numbers or symbol not possible
-    if (
-      MAXIMUM_NUMBERS <= usedNumbers.length ||
-      isNumeric(lastSymbol) ||
-      isCloseParenthesis(lastSymbol)
-    ) {
-      return;
+  function handleNumberClick(number, numberIndex) {
+    const isNumberAllowed = typeof lastSymbol === 'undefined' || isOperator(lastSymbol);
+
+    if (isNumberAllowed) {
+      onAddSymbol(number);
+
+      const updatedNumbers = [ ...card.numbers ];
+      updatedNumbers[numberIndex].active = false;
+
+      onSetCard({ ...card, numbers: updatedNumbers });
     }
+  }
 
-    onAddSymbol(number);
+  function addOperatorToOperation(operator) {
+    const isOperatorAllowed = MAXIMUM_NUMBERS > usedNumbers.length && (
+      isNumeric(lastSymbol) || isCloseParenthesis(lastSymbol)
+    );
 
-    const updatedNumbers = [ ...card.numbers ];
-    updatedNumbers[numberIndex].active = false;
-
-    onSetCard({ ...card, numbers: updatedNumbers });
-  };
-
-  const handleOperatorClick = (operator) => {
-    // Return if used all numbers
-    if (MAXIMUM_NUMBERS <= usedNumbers.length && operator !== SYMBOLS.PARENTHESIS) {
-      return;
-    }
-
-    const [ lastSymbol ] = operation.slice(-1);
-
-    if (typeof lastSymbol !== 'undefined' && (isNumeric(lastSymbol) || isCloseParenthesis(lastSymbol))) {
+    if (isOperatorAllowed) {
       onAddSymbol(operator);
     }
-  };
+  }
 
-  const handleParenthesisClick = () => {
-    const [ lastSymbol ] = operation.slice(-1);
+  function addParenthesisToOperation() {
+    const isOpenParenthesisAllowed = typeof lastSymbol === 'undefined' ||
+      isOperator(lastSymbol) ||
+      isOpenParenthesis(lastSymbol);
 
-    if (typeof lastSymbol === 'undefined' || isOperator(lastSymbol) || isOpenParenthesis(lastSymbol)) {
+    const isCloseParenthesisAllowed = isParenthesisOpen(operation) && (
+      isNumeric(lastSymbol) || isParenthesis(lastSymbol)
+    );
+
+    if (isOpenParenthesisAllowed) {
       onAddSymbol(PARENTHESIS.OPEN);
-    } else if (
-      (isNumeric(lastSymbol) || isParenthesis(lastSymbol)) && isParenthesisOpen(operation)
-    ) {
+    } else if (isCloseParenthesisAllowed) {
       onAddSymbol(PARENTHESIS.CLOSE);
     }
-  };
+  }
 
-  const reset = () => {
-    loadRandomCard();
-    onResetOperation();
-  };
-
-  const handleCalculatorClear = () => {
+  function handleCalculatorClear() {
     const updatedNumbers = card.numbers.map((el) => ({ ...el, active: true }));
 
     onSetCard({ ...card, numbers: updatedNumbers });
     onResetOperation();
-  };
+  }
 
-  const handleSubmit = (result) => {
+  function handleSubmit(result) {
     if (CORRECT_RESULT === result.value) {
       onCorrect(Number(card.grade));
     }
 
-    reset();
-  };
+    resetBoard();
+  }
 
   return (
     <div className="board">
       <Card
         card={ card }
-        onCardReset={ reset }
+        onCardReset={ resetBoard }
         onNumberClick={ handleNumberClick }
       />
       <Calculator
         card={ card }
-        operation={ operation }
         isReady={ isReady }
-        onClear={ handleCalculatorClear }
+        operation={ operation }
         onSubmit={ handleSubmit }
+        onClear={ handleCalculatorClear }
         onNumberClick={ handleNumberClick }
-        onOperatorClick={ handleOperatorClick }
-        onParenthesisClick={ handleParenthesisClick }
+        onOperatorClick={ addOperatorToOperation }
+        onParenthesisClick={ addParenthesisToOperation }
       />
     </div>
   );
-};
+}
 
 ProtoBoard.propTypes = {
   card: PropTypes.instanceOf(Object).isRequired,
