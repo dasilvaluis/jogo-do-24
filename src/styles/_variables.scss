@@ -1,10 +1,11 @@
+$breakpoint-small: 420px;
 $breakpoint-medium: 768px;
 $breakpoint-desktop: 1024px;
 
 $font-oldstandard: 'Old Standard TT', Georgia, serif;
 $font-text: Arial, sans-serif;;
 
-$card-width: 300px;
+$card-width: 290px;
 $card-padding: 10px;
 $card-triangle1-height: $card-width * .409;
 $card-triangle2-height:  $card-width * .118;
@@ -22,6 +23,4 @@ $card-submitbutton-width-desktop: $card-width-desktop * .227;
 $card-number-width-desktop: $card-width-desktop * .254;
 $card-number-fontsize-desktop: 120px;
 
-$card-backgroudcolor: #040182;
-$card-circle-backgroundcolor: #ffc90d;
 $card-button-backgroundcolor: #d92a47;

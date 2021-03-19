@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { PARENTHESIS, SYMBOLS } from './constants';
+import { LOCAL_STORAGE_DIFFICULTY, PARENTHESIS, SYMBOLS } from './constants';
 import { cards } from './data/cards.json';
 
 /**
@@ -8,29 +8,36 @@ import { cards } from './data/cards.json';
  * @param {string|number} value Number or string
  * @returns {Boolean} Value is an Integer
  */
-export const isNumeric = (value) => Number.isFinite(value) || (Number.isFinite(Number(value)) && typeof value === 'string');
+export function isNumeric(value) {
+  return Number.isFinite(value) || (Number.isFinite(Number(value)) && typeof value === 'string');
+}
 
 /**
  * Checks if given string is a open parenthesis
  *
  * @param {String} character
  */
-export const isOpenParenthesis = (character) => character === PARENTHESIS.OPEN;
+export function isOpenParenthesis(character) {
+  return character === PARENTHESIS.OPEN;
+}
 
 /**
  * Checks if given string is a closing parenthesis
  *
  * @param {String} character
  */
-export const isCloseParenthesis = (character) => character === PARENTHESIS.CLOSE;
+export function isCloseParenthesis(character) {
+  return character === PARENTHESIS.CLOSE;
+}
 
 /**
  * Checks if given string is a open parenthesis
  *
  * @param {String} character
  */
-export const isParenthesis = (character) => isOpenParenthesis(character) ||
-  isCloseParenthesis(character);
+export function isParenthesis(character) {
+  return isOpenParenthesis(character) || isCloseParenthesis(character);
+}
 
 /**
  * Checks if a given value is a operator (+, -, /, *)
@@ -38,12 +45,16 @@ export const isParenthesis = (character) => isOpenParenthesis(character) ||
  * @param {String} value to test
  * @returns {Boolean} Value is an operator
  */
-export const isOperator = (value) => [
-  SYMBOLS.PLUS,
-  SYMBOLS.MINUS,
-  SYMBOLS.DIVIDE,
-  SYMBOLS.MULTIPLY,
-].includes(value);
+export function isOperator(value) {
+  const operators = [
+    SYMBOLS.PLUS,
+    SYMBOLS.MINUS,
+    SYMBOLS.DIVIDE,
+    SYMBOLS.MULTIPLY,
+  ];
+
+  return operators.includes(value);
+}
 
 export function getParenthesisBalance(operationArray) {
   const parenthesis = operationArray.filter(isParenthesis);
@@ -80,33 +91,11 @@ export function isParenthesisOpen(operationArray) {
 }
 
 /**
- * @typedef CardNumber
- * @type {object}
- * @property {Number} value - Number value
- * @property {Boolean} active - Number is active
- * @property {String} uuid - Number Id
- */
-
-/**
- * @typedef DBCard
- * @type {object}
- * @property {Array.<Number>} numbers -  Card Numbers
- * @property {Number} grade - Card Grade
- */
-
-/**
- * @typedef GameCard
- * @type {object}
- * @property {Array.<CardNumber>} numbers -  Card Numbers
- * @property {Number} grade - Card Grade
- */
-
-/**
   * Takes a card from the DB and gives the numbers extra properties
   * @param {DBCard} card
   * @returns {Card} New Card
   */
-export function transfromCard(card) {
+export function transformCard(card) {
   const numbers = card.numbers.map((el) => ({
     value: el,
     active: true,
@@ -133,5 +122,24 @@ export function getRandomCard(difficulty) {
   const randomIndex = Math.floor(Math.random() * filteredCards.length);
   const card = { ...filteredCards[randomIndex] };
 
-  return transfromCard(card);
+  return transformCard(card);
+}
+
+/**
+ * Returns the difficulty stored in storage
+ *
+ * @returns {Number} Stored difficulty. Returns 0 if no value is found.
+ */
+export function getStoredDifficulty() {
+  const storedDifficulty = localStorage.getItem(LOCAL_STORAGE_DIFFICULTY);
+  return storedDifficulty ? parseInt(storedDifficulty, 10) : 0;
+}
+
+/**
+ * Stores difficuty in storage
+ *
+ * @param {Number} Difficulty grade to store.
+ */
+export function setStoredDifficulty(value) {
+  localStorage.setItem(LOCAL_STORAGE_DIFFICULTY, value);
 }

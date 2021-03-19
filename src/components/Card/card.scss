@@ -4,35 +4,11 @@
   width: $card-width;
   height: $card-width;
   position: relative;
-  background-color: $card-backgroudcolor;
 
   @media (min-width: $breakpoint-medium) {
+    margin: initial;
     width: $card-width-desktop;
     height: $card-width-desktop;
-  }
-
-  &::before {
-    content: "";
-    display: inline-block;
-    width: calc(100% - #{$card-padding} * 2);
-    height: calc(100% - #{$card-padding} * 2);
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    background-color: $card-circle-backgroundcolor;
-    border-radius: 50%;
-
-    @media (min-width: $breakpoint-medium) {
-      width: calc(100% - #{$card-padding-desktop} * 2);
-      height: calc(100% - #{$card-padding-desktop} * 2);
-    }
-
-    @media print {
-      display: none;
-    }
   }
 
   &__number {
@@ -154,72 +130,9 @@
 
     cursor: pointer;
 
-    &:active{
-      transform: scale(.96) translate(-50%, -50%) translateZ(0);
-    }
-
     @media (min-width: $breakpoint-medium) {
       width: $card-submitbutton-width-desktop;
       height: $card-submitbutton-width-desktop;
-    }
-
-    @media print {
-      display: none;
-    }
-  }
-
-  &__triangle  {
-    display: flex;
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform-origin: left center;
-
-    &:nth-of-type(1) {
-      transform: translate(0, -50%) rotate(45deg);
-    }
-
-    &:nth-of-type(2) {
-      transform: translate(0, -50%) rotate(135deg);
-    }
-
-    &:nth-of-type(3) {
-      transform: translate(0, -50%) rotate(225deg);
-    }
-
-    &:nth-of-type(4) {
-      transform: translate(0, -50%) rotate(315deg);
-    }
-
-    &::before,
-    &::after {
-      content: "";
-      width: 0;
-      height: 0;
-      border-style: solid;
-    }
-
-    &::before {
-      border-width: $card-triangle-width/2 $card-triangle1-height $card-triangle-width/2 0;
-      border-color: transparent $card-button-backgroundcolor transparent transparent;
-    }
-
-    &::after {
-      border-width: $card-triangle-width/2 0 $card-triangle-width/2 $card-triangle2-height;
-      border-color: transparent transparent transparent $card-button-backgroundcolor;
-    }
-
-    @media (min-width: $breakpoint-medium) {
-      &::before {
-        border-width: $card-triangle-width-desktop/2 $card-triangle1-height-desktop $card-triangle-width-desktop/2 0;
-        border-color: transparent $card-button-backgroundcolor transparent transparent;
-      }
-
-      &::after {
-        border-width: $card-triangle-width-desktop/2 0 $card-triangle-width-desktop/2 $card-triangle2-height-desktop;
-        border-color: transparent transparent transparent $card-button-backgroundcolor;
-      }
     }
 
     @media print {
@@ -233,10 +146,5 @@
     position: absolute;
     top: 0;
     left: 0;
-    display: none;
-
-    @media print {
-      display: block;
-    }
   }
 }

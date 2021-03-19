@@ -30,23 +30,17 @@ $calculator-buttons-gutter: 5px;
     }
   }
 
-  &__input-container {
-    margin-bottom: $calculator-buttons-gutter;
-  }
-
   &__controls {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: -$calculator-buttons-gutter;
     margin-left: -$calculator-buttons-gutter;
   }
 
   &__column {
     display: flex;
     flex-wrap: wrap;
-
     width: $calculator-button-width * 2 + $calculator-buttons-gutter * 2;
 
     &.-sm {
@@ -73,7 +67,7 @@ $calculator-buttons-gutter: 5px;
       transform: scale(.96) translateZ(0);
     }
 
-    &.-tall {
+    &.-vertical-rect {
       height: $calculator-button-width * 2 + $calculator-buttons-gutter;
     }
   }
