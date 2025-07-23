@@ -1,13 +1,13 @@
 {
   "name": "jogo-do-24",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "engines": {
     "node": ">=12.16.x"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/luism-s/jogo-do-24.git"
+    "url": "https://github.com/dasilvaluis/jogo-do-24.git"
   },
   "dependencies": {
     "dotenv": "8.2.0",
