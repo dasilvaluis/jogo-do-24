@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@use '../../styles/variables' as *;
 
 .print-container {
   max-width: $card-width-desktop * 2 + 10px;

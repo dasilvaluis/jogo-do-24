@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@use '../../styles/variables' as *;
 
 $calculator-button-width: 45px;
 $calculator-buttons-gutter: 5px;
