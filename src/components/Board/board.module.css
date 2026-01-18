@@ -1,0 +1,22 @@
+.board {
+  display: flex;
+  flex-direction: row;
+  margin: 15px auto 22px;
+}
+
+@media (max-width: 1023px) {
+  .board {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .board > *:not(:last-of-type) {
+    margin-bottom: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .board {
+    margin: 30px auto 45px;
+  }
+}

@@ -1,6 +1,6 @@
 import CardBackground from "../../images/card-background.png";
 import type { GameCard } from "../../types";
-import "./card.scss";
+import styles from "./card.module.css";
 
 type CardProps = {
   card: GameCard;
@@ -14,18 +14,22 @@ export function Card({ card, onCardReset, onNumberClick }: CardProps) {
   }
 
   return (
-    <div className="card">
-      <img src={CardBackground} className="card__background" alt="background" />
-      <div className="card__grade">
+    <div className={styles.card}>
+      <img
+        src={CardBackground}
+        className={styles.background}
+        alt="background"
+      />
+      <div className={styles.grade}>
         {Array(card.grade)
           .fill(0)
           .map((_, i) => (
-            <span key={i} className="card__grade-point" />
+            <span key={i} className={styles.gradePoint} />
           ))}
       </div>
       {onCardReset && (
         <button
-          className="card__submit-button"
+          className={styles.submitButton}
           type="submit"
           tabIndex={0}
           aria-label="Reset"
@@ -36,7 +40,7 @@ export function Card({ card, onCardReset, onNumberClick }: CardProps) {
         {card.numbers.map((number, index) => (
           <button
             type="button"
-            className="card__number"
+            className={styles.number}
             disabled={!number.active}
             onClick={() => onNumberClick?.(number.value, index)}
             key={`card--${number.value}--${number.uuid}`}

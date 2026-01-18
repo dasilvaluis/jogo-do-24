@@ -12,7 +12,7 @@ import {
 import { CORRECT_RESULT, MAXIMUM_NUMBERS } from "../../constants";
 import { isParenthesisOpen } from "../../utils";
 import type { SubmitResult, Message, Parenthesis } from "../../types";
-import "./board.scss";
+import styles from "./board.module.css";
 
 export function Board() {
   const {
@@ -113,7 +113,7 @@ export function Board() {
   }
 
   return (
-    <div className="board">
+    <div className={styles.board}>
       <Card
         card={card}
         onCardReset={resetBoard}

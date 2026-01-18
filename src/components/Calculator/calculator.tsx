@@ -11,7 +11,7 @@ import { getParenthesisBalance, isNumeric, isOperator } from "../../utils";
 import { CalculatorButton } from "./calculator-button";
 import { useButtonsDisabled } from "./calculator-hooks";
 import { doCalculation } from "./calculator-utils";
-import "./calculator.scss";
+import styles from "./calculator.module.css";
 
 type CalculatorProps = {
   card: GameCard;
@@ -123,15 +123,15 @@ export function Calculator({
   }, [handleKeyDown]);
 
   return (
-    <div className="calculator">
+    <div className={styles.calculator}>
       <input
-        className="calculator__input"
+        className={styles.input}
         type="text"
         value={operation.join(" ")}
         disabled
       />
-      <div className="calculator__controls">
-        <div className="calculator__column">
+      <div className={styles.controls}>
+        <div className={styles.column}>
           {card.numbers.map((el, index) => (
             <CalculatorButton
               key={`calculator-number--${el.uuid}`}
@@ -146,7 +146,7 @@ export function Calculator({
             </CalculatorButton>
           ))}
         </div>
-        <div className="calculator__column">
+        <div className={styles.column}>
           {Object.values(OPERATORS).map((el) => (
             <CalculatorButton
               key={el}
@@ -157,7 +157,7 @@ export function Calculator({
             </CalculatorButton>
           ))}
         </div>
-        <div className="calculator__column -sm">
+        <div className={styles.columnSm}>
           <CalculatorButton
             disabled={isReady || openParenDisabled}
             onClick={() => onParenthesisClick(PARENTHESIS.OPEN)}
@@ -171,7 +171,7 @@ export function Calculator({
             {PARENTHESIS.CLOSE}
           </CalculatorButton>
         </div>
-        <div className="calculator__column -sm">
+        <div className={styles.columnSm}>
           <CalculatorButton disabled={!operation.length} onClick={onClear}>
             C
           </CalculatorButton>
@@ -182,7 +182,11 @@ export function Calculator({
       </div>
       {message && (
         <div
-          className={`calculator__message calculator__message--${message.type}`}
+          className={
+            message.type === "error"
+              ? styles.messageError
+              : styles.messageSuccess
+          }
         >
           {message.message}
         </div>

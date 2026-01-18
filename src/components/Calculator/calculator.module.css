@@ -1,0 +1,81 @@
+.calculator {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.input {
+  width: 100%;
+  height: 50px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  background-color: white;
+  -moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.message {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.messageError {
+  composes: message;
+  color: #d92a47;
+}
+
+.messageSuccess {
+  composes: message;
+  color: #2a9d2a;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: -5px;
+}
+
+.column {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100px;
+}
+
+.columnSm {
+  composes: column;
+  width: 45px;
+}
+
+.button {
+  width: 45px;
+  height: 45px;
+  font-size: 20px;
+  cursor: pointer;
+  background: white;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  transition: transform 100ms ease;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.button:active {
+  transform: scale(0.96) translateZ(0);
+}
+
+.buttonVertical {
+  composes: button;
+  height: 95px;
+}

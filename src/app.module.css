@@ -1,0 +1,21 @@
+.container {
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+}
+
+.footer {
+  margin-top: 75px;
+  text-align: center;
+}
+
+@media print {
+  .footer {
+    display: none;
+  }
+}

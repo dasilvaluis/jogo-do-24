@@ -2,31 +2,30 @@ import { Link } from "react-router-dom";
 import { Board } from "../../components/Board";
 import { DifficultySetter } from "../../components/DifficultySetter";
 import { useGameStore } from "../../state/store";
-import "./game.scss";
-import "../../styles/helpers.scss";
+import styles from "./game.module.css";
 
 export function Game() {
   const score = useGameStore((state) => state.score);
 
   return (
-    <div className="game-container">
-      <div className="app-header__wrapper">
-        <header className="app-header">
-          <h1 className="app-header__title">The 24 Game</h1>
-          <span className="app-header__sub-title">
+    <div className={styles.container}>
+      <div className={styles.headerWrapper}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>The 24 Game</h1>
+          <span className={styles.subTitle}>
             Combine these numbers in order to equal&nbsp;<b>24</b>!
           </span>
         </header>
-        <div className="app-header__tools">
+        <div className={styles.tools}>
           <div>{`Score: ${score}`}</div>
-          <div className="app-header__settings">
+          <div>
             Difficulty:&nbsp;
             <DifficultySetter />
           </div>
         </div>
       </div>
       <Board />
-      <div className="h-margintop-sm">
+      <div className={styles.marginTopSm}>
         <p>
           <b>The 24 Game</b>&nbsp;is an arithmetical card game in which the
           objective is to find a way to manipulate four integers so that the end

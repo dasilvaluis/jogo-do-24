@@ -1,0 +1,31 @@
+:root {
+  --breakpoint-small: 420px;
+  --breakpoint-medium: 768px;
+  --breakpoint-desktop: 1024px;
+  --font-oldstandard: "Old Standard TT", Georgia, serif;
+  --font-text: Arial, sans-serif;
+  --card-width: 290px;
+  --card-width-desktop: 475px;
+  --card-padding-desktop: 20px;
+  --card-submitbutton-width: 65.83px;
+  --card-submitbutton-width-desktop: 107.825px;
+  --card-number-width: 73.66px;
+  --card-number-width-desktop: 120.65px;
+  --card-number-fontsize: 80px;
+  --card-number-fontsize-desktop: 120px;
+  --card-button-backgroundcolor: #d92a47;
+}
+
+html {
+  height: 100%;
+  background-color: #efefef;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import "./calculator.scss";
+import styles from "./calculator.module.css";
 
 type CalculatorButtonProps = {
   children: ReactNode;
@@ -17,7 +17,9 @@ export function CalculatorButton({
   return (
     <button
       type="button"
-      className={`calculator__button -${type}`}
+      className={
+        type === "vertical-rect" ? styles.buttonVertical : styles.button
+      }
       disabled={disabled}
       onClick={onClick}
     >
