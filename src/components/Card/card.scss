@@ -1,4 +1,4 @@
-@use '../../styles/variables' as *;
+@use "../../styles/variables" as *;
 
 .card {
   width: $card-width;
@@ -37,11 +37,11 @@
     }
 
     &[disabled] {
-      opacity: .3;
+      opacity: 0.3;
     }
 
-    &[data-value='6']:after,
-    &[data-value='9']:after {
+    &[data-value="6"]:after,
+    &[data-value="9"]:after {
       content: "";
       position: absolute;
       bottom: 0;
@@ -73,7 +73,6 @@
       transform: translate(0, -50%) rotate(270deg);
     }
     @media (min-width: $breakpoint-medium) {
-
       &:nth-of-type(1) {
         top: $card-padding-desktop + 10px;
       }
