@@ -8,7 +8,10 @@ export const operation = (state = INITIAL_OPERATION, action) => {
       return INITIAL_OPERATION;
 
     case types.ADD_SYMBOL:
-      return [ ...state, action.payload ];
+      return [...state, action.payload];
+
+    case types.REMOVE_LAST_SYMBOL:
+      return state.slice(0, -1);
 
     default:
       return state;

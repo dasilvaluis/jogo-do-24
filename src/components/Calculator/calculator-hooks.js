@@ -1,16 +1,26 @@
-import { isOpenParenthesis, isOperator, isParenthesis, isParenthesisOpen } from '../../utils';
+import { isOpenParenthesis, isCloseParenthesis, isOperator, isParenthesisOpen, isNumeric } from '../../utils';
 
 export function useButtonsDisabled(operation) {
-  const [ lastSymbol ] = operation.slice(-1);
+  const [lastSymbol] = operation.slice(-1);
 
   const operatorsDisabled = typeof lastSymbol === 'undefined' ||
     isOperator(lastSymbol) ||
     isOpenParenthesis(lastSymbol);
 
-  const parenthesisDisabled = isParenthesis(lastSymbol) && !isParenthesisOpen(operation);
+  // ( allowed after: nothing, operator, or (
+  const openParenDisabled = !(
+    typeof lastSymbol === 'undefined' ||
+    isOperator(lastSymbol) ||
+    isOpenParenthesis(lastSymbol)
+  );
+
+  // ) allowed when: there's an open paren AND last is number or )
+  const closeParenDisabled = !isParenthesisOpen(operation) ||
+    !(isNumeric(lastSymbol) || isCloseParenthesis(lastSymbol));
 
   return {
     operatorsDisabled,
-    parenthesisDisabled,
+    openParenDisabled,
+    closeParenDisabled,
   };
 }

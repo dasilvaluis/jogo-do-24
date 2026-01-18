@@ -30,6 +30,20 @@ $calculator-buttons-gutter: 5px;
     }
   }
 
+  &__message {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+
+    &--error {
+      color: #d92a47;
+    }
+
+    &--success {
+      color: #2a9d2a;
+    }
+  }
+
   &__controls {
     display: flex;
     justify-content: center;
@@ -72,4 +86,3 @@ $calculator-buttons-gutter: 5px;
     }
   }
 }
-

@@ -9,7 +9,6 @@ export const OPERATORS = {
 
 export const SYMBOLS = {
   ...OPERATORS,
-  PARENTHESIS: '( )',
 };
 
 export const PARENTHESIS = {
